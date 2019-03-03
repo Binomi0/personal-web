@@ -18,12 +18,13 @@
     position: absolute;
     pointer-events: none;
 
-    // opacity: .1;
-
     &.logo1 {
         width: 320px;
         height: 320px;
+        border-radius: 50%;
         animation: App-logo-spin infinite 20s ease;
+        border-top-color: #fff;
+        border-bottom-color: #fff;
         opacity: .4;
     }
 
