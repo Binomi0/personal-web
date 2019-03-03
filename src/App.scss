@@ -22,7 +22,7 @@
         width: 320px;
         height: 320px;
         border-radius: 50%;
-        animation: App-logo-spin infinite 20s ease;
+        animation: App-logo-spin infinite 20s 2s ease;
         border-top-color: #fff;
         border-bottom-color: #fff;
         opacity: .4;
@@ -31,21 +31,21 @@
     &.logo2 {
         width: 215px;
         height: 215px;
-        animation: App-logo-reverse-spin infinite 20s ease-in-out;
+        animation: App-logo-reverse-spin infinite 20s 2s ease-in-out;
         opacity: .3;
     }
 
     &.logo3 {
         width: 140px;
         height: 140px;
-        animation: App-logo-spin infinite 20s ease-out;
+        animation: App-logo-spin infinite 20s 2s ease-out;
         opacity: .2;
     }
 
     &.logo4 {
         width: 90px;
         height: 90px;
-        animation: App-logo-reverse-spin infinite 20s ease-in;
+        animation: App-logo-reverse-spin infinite 20s 2s ease-in;
         opacity: .1;
     }
 }
@@ -70,19 +70,19 @@
             color: #61dafb;
         }
     }
-}
 
-.App-header h4 {
-    color: #61dafb;
-    text-shadow: 1px 1px #2b6474;
-}
+    h4 {
+        color: #61dafb;
+        text-shadow: 1px 1px #2b6474;
+    }
 
-.App-header p {
-    font-size: .8rem;
-    letter-spacing: .25rem;
-    text-transform: uppercase;
-    color: grey;
-    text-shadow: 0.5px 0.5px #255968;
+    p {
+        font-size: .75rem;
+        letter-spacing: .25rem;
+        text-transform: uppercase;
+        color: #ccc;
+        text-shadow: 0.5px 0.5px #255968;
+    }
 }
 
 .App-link {
