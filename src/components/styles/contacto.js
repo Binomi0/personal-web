@@ -2,6 +2,6 @@ import styled from 'styled-components';
 
 export const ContactoStyled = styled.div`
   position: absolute;
-  top: 3%;
-  right: 3%;
+  top: 0;
+  right: 1rem;
 `;

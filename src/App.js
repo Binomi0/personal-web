@@ -25,6 +25,16 @@ class App extends Component {
             <BackEnd>Backend</BackEnd>
             <Tools>Tools</Tools>
           </Content>
+          <footer>
+            <a
+              href="https://github.com/Binomi0/"
+              alt="GitHub"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @Binomio 2019
+            </a>
+          </footer>
         </header>
       </div>
     );
