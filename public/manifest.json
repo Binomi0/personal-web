@@ -11,6 +11,11 @@
       "src": "logo_adolfo_web.png",
       "sizes": "192x192",
       "type": "image/png"
+    },
+    {
+      "src": "logo_adolfo_512.png",
+      "sizes": "512x512 256x256",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
