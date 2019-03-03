@@ -1,0 +1,91 @@
+.App {
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.App-logo {
+    background: transparent;
+    border: 10px solid #61dafb;
+    position: absolute;
+    pointer-events: none;
+
+    // opacity: .1;
+
+    &.logo1 {
+        width: 320px;
+        height: 320px;
+        animation: App-logo-spin infinite 20s ease;
+        opacity: .4;
+    }
+
+    &.logo2 {
+        width: 240px;
+        height: 240px;
+        animation: App-logo-reverse-spin infinite 20s ease-out;
+        opacity: .3;
+    }
+
+    &.logo3 {
+        width: 160px;
+        height: 160px;
+        animation: App-logo-spin infinite 20s ease-in;
+        opacity: .2;
+    }
+
+    &.logo4 {
+        width: 80px;
+        height: 80px;
+        animation: App-logo-reverse-spin infinite 20s ease-in-out;
+        opacity: .1;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-header h4 {
+    line-height: 0rem;
+    color: #61dafb;
+    text-shadow: 1px 1px #2b6474;
+}
+
+.App-header p {
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 0rem;
+    color: gray;
+    text-shadow: .5px .5px #255968;
+}
+
+.App-link {
+    font-size: .8rem;
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes App-logo-reverse-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
