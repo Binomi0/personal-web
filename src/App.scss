@@ -1,3 +1,12 @@
+$small: 90px;
+$medium: 140px;
+$large: 215px;
+$x-large: 320px;
+$xx-large: 440px;
+
+// $sizes: "$small", "medium", "large", "x-large", "xx-large";
+$sizes: $small, $medium, $large, $x-large, $xx-large;
+
 .App {
     text-align: center;
     box-sizing: border-box;
@@ -13,14 +22,31 @@
 
 .App-logo {
     background: transparent;
-    border: 10px solid #61dafb;
+    border: 3px solid #61dafb;
     border-radius: 5px;
     position: absolute;
-    pointer-events: none;
+
+    // pointer-events: none;
+
+    @media (min-width: 480px) {
+        border: 4px solid #61dafb;
+    }
+
+    @media (min-width: 768px) {
+        border: 6px solid #61dafb;
+    }
+
+    @media (min-width: 1024px) {
+        border: 8px solid #61dafb;
+    }
+
+    @media (min-width: 1280px) {
+        border: 10px solid #61dafb;
+    }
 
     &.logo1 {
-        width: 320px;
-        height: 320px;
+        width: nth($sizes, 4);
+        height: nth($sizes, 4);
         border-radius: 50%;
         animation: App-logo-spin infinite 20s 2s ease;
         border-top-color: #fff;
@@ -29,22 +55,22 @@
     }
 
     &.logo2 {
-        width: 215px;
-        height: 215px;
+        width: $large;
+        height: $large;
         animation: App-logo-reverse-spin infinite 20s 2s ease-in-out;
         opacity: .3;
     }
 
     &.logo3 {
-        width: 140px;
-        height: 140px;
+        width: $medium;
+        height: $medium;
         animation: App-logo-spin infinite 20s 2s ease-out;
         opacity: .2;
     }
 
     &.logo4 {
-        width: 90px;
-        height: 90px;
+        width: $small;
+        height: $small;
         animation: App-logo-reverse-spin infinite 20s 2s ease-in;
         opacity: .1;
     }
