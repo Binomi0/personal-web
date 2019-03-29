@@ -1,46 +1,21 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import FrontEnd from './components/FrontEnd';
-import BackEnd from './components/Backend';
-import Tools from './components/Tools';
-import Contacto from './components/Contacto';
+import Trading from './routes/Trading';
+import Home from './components/Home';
 
-import { Content } from './styles';
 import './App.scss';
-
-const Footer = () => (
-  <footer>
-    <a
-      href="https://github.com/Binomi0/"
-      alt="GitHub"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      @Binomio 2019
-    </a>
-  </footer>
-);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <div className="App-logo logo1" />
-          <div className="App-logo logo2" />
-          <div className="App-logo logo3" />
-          <div className="App-logo logo4" />
-          <h4>Adolfo J. Onrubia Albalá</h4>
-          <p>Full Stack Developer</p>
-          <Contacto />
-          <Content>
-            <FrontEnd>Frontend</FrontEnd>
-            <BackEnd>Backend</BackEnd>
-            <Tools>Tools</Tools>
-          </Content>
-          <Footer />
-        </header>
-      </div>
+      <Router>
+        <Route path="/" exact component={Home} />
+        <Route path="/trader" exact component={Trading} />
+        <Route path="/frontend" exact component={Home} />
+        <Route path="/backend" exact component={Home} />
+        <Route path="/tools" exact component={Home} />
+      </Router>
     );
   }
 }

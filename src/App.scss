@@ -76,7 +76,7 @@ $sizes: $small, $medium, $large, $x-large, $xx-large;
     }
 }
 
-.App-header {
+.App-Home {
     background-color: #282c34;
     min-height: 100vh;
     display: flex;
@@ -85,6 +85,17 @@ $sizes: $small, $medium, $large, $x-large, $xx-large;
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+
+    h4 {
+        color: #61dafb;
+        text-shadow: 1px 1px #2b6474;
+    }
+
+    p {
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: .2rem;
+    }
 
     footer {
         position: absolute;
@@ -96,24 +107,6 @@ $sizes: $small, $medium, $large, $x-large, $xx-large;
             color: #61dafb;
         }
     }
-
-    h4 {
-        color: #61dafb;
-        text-shadow: 1px 1px #2b6474;
-    }
-
-    p {
-        font-size: .75rem;
-        letter-spacing: .25rem;
-        text-transform: uppercase;
-        color: #ccc;
-        text-shadow: 0.5px 0.5px #255968;
-    }
-}
-
-.App-link {
-    font-size: .8rem;
-    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
