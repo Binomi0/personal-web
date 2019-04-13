@@ -1,9 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import ReactGA from 'react-ga';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { Provider } from 'react-redux';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './containers/App';
+import * as serviceWorker from './serviceWorker';
+import createStore from './redux/create-store';
+import './index.scss';
+import theme from './styles/theme';
+
+if (!process.env.NODE_ENV === 'development') {
+  console.log('process.env =>', process.env);
+} else {
+  // Analytics
+  ReactGA.initialize(process.env.REACT_APP_GA_ID);
+}
+
+const store = createStore();
+
+const Root = () => (
+  <MuiThemeProvider theme={theme}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </MuiThemeProvider>
+);
+
+ReactDOM.render(<Root />, document.getElementById('root'));
 
 serviceWorker.register();
