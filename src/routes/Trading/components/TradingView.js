@@ -1,7 +1,41 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import Trades from './Trades';
+import { TradingContainer, ErrorContainer } from '../styles/trading';
+import { Typography } from '@material-ui/core';
 
 export default class TradingView extends Component {
+  state = {
+    auth: false,
+  };
+  componentDidMount() {
+    const auth = prompt('Introduce la clave de acceso', 'Harry Potter');
+    if (auth) {
+      this.setState({ auth: auth === 'koky' && true });
+    }
+  }
+
   render() {
-    return <h1>TradingView</h1>;
+    return (
+      <TradingContainer>
+        {this.state.auth ? (
+          <>
+            <h1>TradingView</h1>
+            <Trades {...this.props} />
+            <button>New Trade</button>
+          </>
+        ) : (
+          <ErrorContainer>
+            <h1>No tienes acceso para ver esta sección</h1>
+            <Link to="/">
+              <Typography variant="subtitle2">
+                Ir a la página principal
+              </Typography>
+            </Link>
+          </ErrorContainer>
+        )}
+      </TradingContainer>
+    );
   }
 }

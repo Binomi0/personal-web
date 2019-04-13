@@ -8,7 +8,7 @@ import Contacto from './Contacto';
 import Footer from './Footer';
 
 import { StyledContent } from './styles';
-import '../App.scss';
+import '../containers/App.scss';
 
 class Home extends Component {
   render() {
@@ -23,7 +23,7 @@ class Home extends Component {
         <p>Full Stack Developer</p>
         <Contacto />
         <StyledContent>
-          <Link to="/trader">Trader</Link>
+          <Link to="/trading">Trader</Link>
           <FrontEnd>
             <Link to="/frontend">Frontend</Link>
           </FrontEnd>

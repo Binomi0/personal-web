@@ -1,3 +1,15 @@
-import TradingView from '../components/TradingView';
+import { connect } from 'react-redux';
 
-export default TradingView;
+import TradingView from '../components/TradingView';
+import { actions } from '../modules/trading';
+
+export const mapStateToProps = ({ trading }) => ({
+  ethereum: trading.ethereum,
+});
+
+export const mapDispatchToProps = { ...actions };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TradingView);
