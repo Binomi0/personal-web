@@ -5,6 +5,7 @@ import { actions } from '../modules/trading';
 
 export const mapStateToProps = ({ trading }) => ({
   ethereum: trading.ethereum,
+  positions: trading.positions,
 });
 
 export const mapDispatchToProps = { ...actions };

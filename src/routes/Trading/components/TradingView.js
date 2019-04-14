@@ -10,7 +10,7 @@ export default class TradingView extends Component {
     auth: false,
   };
   componentDidMount() {
-    const auth = prompt('Introduce la clave de acceso', 'Harry Potter');
+    const auth = prompt('Introduce la clave de acceso', '');
     if (auth) {
       this.setState({ auth: auth === 'koky' && true });
     }
@@ -23,7 +23,6 @@ export default class TradingView extends Component {
           <>
             <h1>TradingView</h1>
             <Trades {...this.props} />
-            <button>New Trade</button>
           </>
         ) : (
           <ErrorContainer>

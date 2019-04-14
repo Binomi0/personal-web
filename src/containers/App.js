@@ -8,7 +8,6 @@ import './App.scss';
 
 class App extends Component {
   render() {
-    console.log('this.props', this.props);
     return (
       <Router>
         <Route path="/" exact component={Home} />
