@@ -11,7 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 import styles from '../styles/trading';
 
-class SelectMarket extends React.Component {
+class ExitPosition extends React.Component {
   state = {
     exitPrice: 11234,
     quantity: 1,
@@ -31,10 +31,10 @@ class SelectMarket extends React.Component {
     return (
       <Dialog
         onClose={this.handleClose}
-        aria-labelledby="simple-dialog-title"
+        aria-labelledby="exit-position-dialog"
         {...other}
       >
-        <DialogTitle id="simple-dialog-title">Cerrando posición</DialogTitle>
+        <DialogTitle id="exit-position-dialog">Cerrando posición</DialogTitle>
         <div className={classes.container}>
           <FormControl className={classes.formControl} variant="filled">
             <InputLabel htmlFor="exitPrice">Precio Salida</InputLabel>
@@ -58,11 +58,11 @@ class SelectMarket extends React.Component {
   }
 }
 
-SelectMarket.propTypes = {
+ExitPosition.propTypes = {
   classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
-const SelectMarketWrapped = withStyles(styles)(SelectMarket);
+const ExitPositionWrapped = withStyles(styles)(ExitPosition);
 
-export default SelectMarketWrapped;
+export default ExitPositionWrapped;

@@ -44,7 +44,9 @@ class PositionTable extends Component {
                   )}
                 </TableCell>
                 <TableCell align="right">{position.enterPrice}</TableCell>
-                <TableCell align="right">{position.status}</TableCell>
+                <TableCell align="right">
+                  {position.status || 'Abierta'}
+                </TableCell>
                 <TableCell align="right">{position.direction}</TableCell>
                 <TableCell align="right">{position.quantity}</TableCell>
                 {isAdmin && (

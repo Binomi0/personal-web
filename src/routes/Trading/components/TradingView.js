@@ -21,7 +21,7 @@ export default class TradingView extends Component {
       <TradingContainer>
         {this.state.auth ? (
           <>
-            <h1>TradingView</h1>
+            <h1>Mis operaciones en bolsa</h1>
             <Trades {...this.props} />
           </>
         ) : (

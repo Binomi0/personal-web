@@ -14,7 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 import styles from '../styles/trading';
 
-class SelectMarket extends React.Component {
+class NewTrade extends React.Component {
   state = {
     enterPrice: 11234,
     direction: 'Long',
@@ -30,15 +30,15 @@ class SelectMarket extends React.Component {
   };
 
   render() {
-    const { classes, onClose, selectedMarket, ...other } = this.props;
+    const { classes, selectedMarket, ...other } = this.props;
 
     return (
       <Dialog
         onClose={this.handleClose}
-        aria-labelledby="simple-dialog-title"
+        aria-labelledby="new-trade-dialog"
         {...other}
       >
-        <DialogTitle id="simple-dialog-title">
+        <DialogTitle id="new-trade-dialog">
           Abriendo posición en {this.props.selectedMarket}
         </DialogTitle>
         <div className={classes.container}>
@@ -88,12 +88,12 @@ class SelectMarket extends React.Component {
   }
 }
 
-SelectMarket.propTypes = {
+NewTrade.propTypes = {
   classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func,
-  selectedMarket: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+  selectedMarket: PropTypes.string.isRequired,
 };
 
-const SelectMarketWrapped = withStyles(styles)(SelectMarket);
+const NewTradeWrapped = withStyles(styles)(NewTrade);
 
-export default SelectMarketWrapped;
+export default NewTradeWrapped;

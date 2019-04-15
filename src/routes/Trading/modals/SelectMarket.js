@@ -30,15 +30,15 @@ class SelectMarket extends React.Component {
   };
 
   render() {
-    const { classes, onClose, selectedMarket, ...other } = this.props;
+    const { classes, selectedMarket, ...other } = this.props;
 
     return (
       <Dialog
         onClose={this.handleClose}
-        aria-labelledby="simple-dialog-title"
+        aria-labelledby="select-market-dialog"
         {...other}
       >
-        <DialogTitle id="simple-dialog-title">Selecciona activo</DialogTitle>
+        <DialogTitle id="select-market-dialog">Selecciona activo</DialogTitle>
         <div>
           <List>
             {products.map((product) => (
@@ -75,8 +75,8 @@ class SelectMarket extends React.Component {
 
 SelectMarket.propTypes = {
   classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func,
-  selectedMarket: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+  selectedMarket: PropTypes.string.isRequired,
 };
 
 const SelectMarketWrapped = withStyles(styles)(SelectMarket);

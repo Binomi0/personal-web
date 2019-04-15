@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import MUIDataTable from 'mui-datatables';
 import { Typography, Button } from '@material-ui/core';
 
-import Table from '../Table';
-import SelectMarket from '../../modals/SelectMarket';
-import NewTrade from '../../modals/NewTrade';
-import ExitPosition from '../../modals/ExitPosition';
+import Table from './Table';
+import SelectMarket from '../modals/SelectMarket';
+import NewTrade from '../modals/NewTrade';
+import ExitPosition from '../modals/ExitPosition';
 
-import { PositionContainer } from '../../styles/trading';
-import { myMarkets, columns, data } from '../../modules/constants';
+import { PositionContainer, TradingContainer } from '../styles/trading';
+import { myMarkets, columns, data } from '../modules/constants';
 
 const options = {
   filterType: 'checkbox',
@@ -37,11 +37,15 @@ class Trades extends Component {
   };
 
   handleCloseSelectMarket = (value) => {
-    this.setState({
-      selectedMarket: value,
-      selectMarketOpen: false,
-      newTradeOpen: true,
-    });
+    if (value) {
+      this.setState({
+        selectedMarket: value,
+        selectMarketOpen: false,
+        newTradeOpen: true,
+      });
+    } else {
+      this.setState({ selectMarketOpen: false });
+    }
   };
 
   handleCloseNewTrade = (position) => {
@@ -51,12 +55,13 @@ class Trades extends Component {
   };
 
   handleCloseExitPosition = (closePosition) => {
-    this.setState({ newTradeOpen: false }, () => {
+    this.setState({ exitPositionOpen: false }, () => {
       this.props.exitPosition(this.state.selectedMarket, closePosition);
     });
   };
 
   exitPosition = (market) => {
+    console.log('exitPosition =>', market);
     this.setState({ selectedMarket: market, exitPositionOpen: true });
   };
 
@@ -78,7 +83,7 @@ class Trades extends Component {
     const isAdmin = Boolean(localStorage.getItem('isAdmin'));
 
     return (
-      <div>
+      <TradingContainer>
         <SelectMarket
           selectedMarket={this.state.selectedMarket}
           open={this.state.selectMarketOpen}
@@ -93,7 +98,7 @@ class Trades extends Component {
           open={this.state.exitPositionOpen}
           onClose={this.handleCloseExitPosition}
         />
-        <h1>Trades</h1>
+        <h2>Posiciones abiertas en el mercado</h2>
         <Typography variant="h5">{this.state.selectedMarket}</Typography>
         {myMarkets.map((market) => (
           <PositionContainer key={market}>
@@ -115,9 +120,15 @@ class Trades extends Component {
           />
         </PositionContainer>
         {isAdmin && (
-          <Button onClick={this.handleClickOpen}>Open Position</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleClickOpen}
+          >
+            Open Position
+          </Button>
         )}
-      </div>
+      </TradingContainer>
     );
   }
 }
