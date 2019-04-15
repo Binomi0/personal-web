@@ -26,6 +26,7 @@ export default (theme) => ({
 });
 
 export const TradingContainer = styled.div`
+  margin: 1rem;
   background-color: '#282c33';
 `;
 
@@ -40,5 +41,5 @@ export const ErrorContainer = styled.div`
 `;
 
 export const PositionContainer = styled.div`
-  margin: 1rem;
+  margin: 1rem 0;
 `;

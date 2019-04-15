@@ -81,19 +81,36 @@ export default createMuiTheme({
     //     boxShadow: '0 2px 34px 0 rgba(0,0,0,0.13)',
     //   },
     // },
-    // MuiButton: {
-    //   root: {
-    //     color: '#fff',
-    //     '&:hover': {
-    //       backgroundColor: '#D8604B',
-    //     },
-    //     boxShadow: 'none',
-    //   },
-    //   containedPrimary: {
-    //     color: '#fff',
-    //     marginRight: '10px',
-    //   },
-    // },
+    MuiButton: {
+      root: {
+        color: '#282c33',
+        background: '#fff',
+        '&:hover': {
+          backgroundColor: '#D8604B',
+          color: '#fff',
+        },
+        // boxShadow: 'none',
+      },
+      // containedPrimary: {
+      //   color: '#fff',
+      //   marginRight: '10px',
+      // },
+    },
+    MuiButtonBase: {
+      root: {
+        color: '#282c33',
+        background: '#fff',
+        '&:hover': {
+          backgroundColor: '#D8604B',
+          color: '#fff',
+        },
+        // boxShadow: 'none',
+      },
+      // containedPrimary: {
+      //   color: '#fff',
+      //   marginRight: '10px',
+      // },
+    },
     // MUIDataTableBodyCell: {
     //   root: {
     //     textAlign: 'right',
@@ -223,9 +240,10 @@ export default createMuiTheme({
     h6: {},
   },
   palette: {
-    type: 'dark',
+    // type: 'dark',
     primary: {
       main: '#282c33',
+      contrastText: '#aec0e0',
     },
     secondary: {
       main: '#8ee7ff',
