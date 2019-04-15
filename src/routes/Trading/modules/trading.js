@@ -27,32 +27,20 @@ const openPosition = (market, position) => async (dispatch) => {
   dispatch({ type: 'TRADING_ADD_POSITION_REQUEST' });
 
   try {
-    // const newPosKey = firebase
-    //   .database()
-    //   .ref()
-    //   .child('market')
-    //   .push().key;
+    const ref = `/market/${market}/position`;
+    const newPosition = {
+      enterPrice: position.enterPrice,
+      direction: position.direction,
+      quantity: position.quantity,
+      date: Date.now(),
+    };
 
     firebase
       .database()
-      .ref('/market/' + market + '/position')
-      .set({
-        enterPrice: position.enterPrice,
-        direction: position.direction,
-        quantity: position.quantity,
-        date: Date.now(),
-      });
+      .ref(ref)
+      .set(newPosition);
 
-    const posCountRef = firebase
-      .database()
-      .ref('market/' + market + '/position');
-    posCountRef.on('value', function(position) {
-      // ¿Llamar a la Cloud Function 'calculateStatusPosition'?
-      dispatch({
-        type: 'TRADING_ADD_POSITION_SUCCESS',
-        payload: { market, position },
-      });
-    });
+    getPositions();
   } catch (err) {
     dispatch({ type: 'TRADING_ADD_POSITION_FAILURE' });
     console.error(err);
@@ -60,14 +48,20 @@ const openPosition = (market, position) => async (dispatch) => {
 };
 
 export const getPositions = () => async (dispatch) => {
-  myMarkets.forEach((market) => {
-    const markets = firebase.database().ref(`/market/${market}/position`);
-    markets.on('value', (snapshot) => {
-      console.log('snapshot', snapshot.val());
-      dispatch({
-        type: 'TRADING_GET_POSITIONS_SUCCESS',
-        payload: { [market]: snapshot.val() },
-      });
+  const DAX = firebase.database().ref('/market/DAX/position');
+  const US30 = firebase.database().ref('/market/US30/position');
+
+  DAX.on('value', (snapshot) => {
+    dispatch({
+      type: 'TRADING_GET_POSITIONS_SUCCESS',
+      payload: { DAX: snapshot.val() },
+    });
+  });
+
+  US30.on('value', (snapshot) => {
+    dispatch({
+      type: 'TRADING_GET_POSITIONS_SUCCESS',
+      payload: { US30: snapshot.val() },
     });
   });
 };
@@ -84,10 +78,131 @@ export const getPositions = () => async (dispatch) => {
 //   }
 // };
 
+const exitPosition = (market, exitPosition) => async (dispatch, getState) => {
+  dispatch({ type: 'TRADING_EXIT_POSITION_REQUEST' });
+
+  const enterPosition = await getState().trading.positions[market];
+
+  try {
+    await firebase
+      .database()
+      .ref(`/market/${market}/position`)
+      .remove();
+
+    dispatch(finishTrade(market, enterPosition, exitPosition));
+
+    const positions = delete getState().trading.positions[market];
+
+    dispatch({ type: 'TRADING_EXIT_POSITION_SUCCESS', payload: positions });
+  } catch (err) {
+    dispatch({ type: 'TRADING_EXIT_POSITION_FAILURE' });
+  }
+};
+
+/**
+ * @name finishTrade
+ * @description Saves last operation into database
+ *
+ * @param {*} trade
+ */
+const finishTrade = (market, position, exitPosition) => async (dispatch) => {
+  const result = calculateResult(
+    position.enterPrice,
+    exitPosition.exitPrice,
+    position.direction,
+  );
+  const newPosKey = firebase
+    .database()
+    .ref()
+    .child('market')
+    .push().key;
+
+  const newTrade = {
+    ...position,
+    exitPosition,
+    finishTime: Date.now(),
+    result,
+  };
+
+  // Transforma la posición en una operación terminada
+  try {
+    const ref = `market/${market}/trades/${newPosKey}`;
+
+    await firebase
+      .database()
+      .ref(ref)
+      .set(newTrade);
+
+    dispatch(getTrades());
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const getTrades = () => (dispatch) => {
+  const DAX = firebase.database().ref('/market/DAX/trades');
+  const US30 = firebase.database().ref('/market/US30/trades');
+
+  const daxTrades = [];
+  const us30Trades = [];
+
+  DAX.on('child_added', (snapshot) => {
+    dispatch({
+      type: 'TRADING_GET_TRADES_SUCCESS',
+      payload: { DAX: snapshot.val() },
+    });
+  });
+
+  US30.on('child_added', (snapshot) => {
+    dispatch({
+      type: 'TRADING_GET_TRADES_SUCCESS',
+      payload: { US30: snapshot.val() },
+    });
+  });
+};
+
+/**
+ * @name calculateResult
+ * @description Gives the result of the operation in points
+ *
+ * @param {Object} trade
+ * @param {string} trade.enterPrice
+ * @param {string} trade.exitPrice
+ * @param {string} trade.direction
+ *
+ * @returns {Number}
+ */
+function calculateResult(enterPrice, exitPrice, direction) {
+  if (!enterPrice) {
+    throw new Error('No se recibe enterPrice');
+  }
+  if (!exitPrice) {
+    throw new Error('No se recibe exitPrice');
+  }
+  if (!direction) {
+    throw new Error('No se recibe direction');
+  }
+  let result;
+  console.log('direction =>', direction);
+
+  if (direction === 'Long') {
+    result = parseInt(exitPrice) - parseInt(enterPrice);
+  } else {
+    console.log(enterPrice);
+    console.log(exitPrice);
+    result = parseInt(enterPrice) - parseInt(exitPrice);
+  }
+  console.log('result =>', result);
+
+  return result;
+}
+
 export const actions = {
   getEthereumPrice,
   openPosition,
   getPositions,
+  exitPosition,
+  getTrades,
 };
 
 const defaultState = {
@@ -96,6 +211,7 @@ const defaultState = {
   },
   positions: {},
   orders: [],
+  trades: {},
 };
 
 const INITIAL_STATE = { ...defaultState };
@@ -109,6 +225,10 @@ const ACTION_HANDLERS = {
   TRADING_ADD_POSITION_SUCCESS: (state, { payload }) => ({
     ...state,
     positions: payload,
+  }),
+  TRADING_GET_TRADES_SUCCESS: (state, { payload }) => ({
+    ...state,
+    trades: { ...state.trades, ...payload },
   }),
   TRADING_GET_POSITIONS_SUCCESS: (state, { payload }) => ({
     ...state,

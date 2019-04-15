@@ -7,13 +7,13 @@ import { Typography } from '@material-ui/core';
 
 export default class TradingView extends Component {
   state = {
-    auth: false,
+    auth: true,
   };
   componentDidMount() {
-    const auth = prompt('Introduce la clave de acceso', '');
-    if (auth) {
-      this.setState({ auth: auth === 'koky' && true });
-    }
+    // const auth = prompt('Introduce la clave de acceso', '');
+    // if (auth) {
+    //   this.setState({ auth: auth === 'koky' && true });
+    // }
   }
 
   render() {

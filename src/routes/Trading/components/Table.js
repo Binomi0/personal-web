@@ -14,6 +14,10 @@ import styles from '../styles/trading';
 import { Typography, Button } from '@material-ui/core';
 
 class PositionTable extends Component {
+  handleClose = () => {
+    this.props.exitPosition(this.props.market);
+  };
+
   render() {
     const isAdmin = Boolean(localStorage.getItem('isAdmin'));
     const { classes, position, market } = this.props;
@@ -45,7 +49,11 @@ class PositionTable extends Component {
                 <TableCell align="right">{position.quantity}</TableCell>
                 {isAdmin && (
                   <TableCell align="right">
-                    <Button variant="contained" color="secondary">
+                    <Button
+                      onClick={this.handleClose}
+                      variant="contained"
+                      color="secondary"
+                    >
                       <Typography variant="body1">x</Typography>
                     </Button>
                   </TableCell>
