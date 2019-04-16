@@ -192,6 +192,40 @@ export default createMuiTheme({
     //     color: '#fff',
     //   },
     // },
+    MuiAppBar: {
+      root: {
+        background: '#282c33',
+      },
+      positionFixed: {
+        background: '#282c33',
+      },
+      positionAbsolute: {
+        background: '#282c33',
+      },
+      positionSticky: {
+        background: '#282c33',
+      },
+      positionStatic: {
+        background: '#282c33',
+      },
+      positionRelative: {
+        background: '#282c33',
+      },
+      colorDefault: {
+        background: '#282c33',
+      },
+      colorPrimary: {
+        background: '#282c33',
+      },
+      colorSecondary: {
+        background: '#282c33',
+      },
+    },
+    MUIDataTableSelectCell: {
+      fixedHeader: {
+        background: '#aaa',
+      },
+    },
   },
   typography: {
     useNextVariants: true,
@@ -227,7 +261,10 @@ export default createMuiTheme({
       fontSize: '16px',
     },
     h1: {},
-    h2: {},
+    h2: {
+      fontFamily: 'Rubik-Medium, sans-serif',
+      fontSize: '1.5rem',
+    },
     h3: {
       fontFamily: 'Rubik-Medium, sans-serif',
       fontSize: '16px',
@@ -237,13 +274,31 @@ export default createMuiTheme({
       fontSize: '28px',
       fontWeight: 300,
     },
-    h6: {},
+    h6: {
+      fontFamily: 'Rubik-Medium',
+      '&span': {
+        fontFamily: 'Rubik-Light ',
+      },
+    },
   },
   palette: {
     // type: 'dark',
     primary: {
       main: '#282c33',
-      contrastText: '#aec0e0',
+      light: '#3f5782',
+      contrastText: '#8ee7ff',
+    },
+    textSecondary: {
+      main: '#fff',
+      color: '#fff',
+    },
+    text: {
+      main: '#282c33',
+      bull: '#07ac00',
+      bear: '#ff0000',
+    },
+    colorTextSecondary: {
+      color: '#fff',
     },
     secondary: {
       main: '#8ee7ff',

@@ -23,11 +23,32 @@ export default (theme) => ({
       minWidth: 700,
     },
   },
+  h1: {
+    margin: '1rem 0',
+    textTransform: 'uppercase',
+    color: theme.palette.secondary.main,
+    textShadow: `0.1rem 0.1rem ${theme.palette.primary.light}`,
+    '@media (min-width: 960px)': {
+      letterSpacing: '0.5rem',
+    },
+  },
+  h2: {
+    margin: '1rem 0',
+    fontWeight: 100,
+    color: theme.palette.secondary.main,
+    textShadow: `0.05rem 0.05rem ${theme.palette.primary.light}`,
+    '@media (max-width: 768px)': {
+      margin: 0,
+    },
+  },
 });
 
-export const TradingContainer = styled.div`
+export const TradingContent = styled.div`
   margin: 1rem;
-  background-color: '#282c33';
+`;
+
+export const TradingContainer = styled.div`
+  background: #282c33;
 `;
 
 export const ErrorContainer = styled.div`

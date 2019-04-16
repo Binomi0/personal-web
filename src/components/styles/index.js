@@ -25,3 +25,39 @@ export const StyledContent = styled.div`
     }
   }
 `;
+
+export const Box = styled.div`
+  margin-right: 1rem;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: 0.1rem solid #282c33;
+  }
+`;
+
+export const Box1 = styled.div`
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 0.03rem solid #282c33;
+`;
+export const Box2 = styled.div`
+  width: 30px;
+  height: 30px;
+  transform: rotate(45deg);
+  border: 0.03rem solid #282c33;
+`;
+export const Box3 = styled.div`
+  width: 20px;
+  height: 20px;
+  transform: rotate(30deg);
+  border: 0.03rem solid #282c33;
+`;
+export const Box4 = styled.div`
+  transform: rotate(15deg);
+  width: 10px;
+  height: 10px;
+  border: 0.03rem solid #282c33;
+`;

@@ -1,8 +1,8 @@
 import createReducer from '../../../redux/create-reducer';
 import axios from '../../../config/axios';
+import moment from 'moment';
 
 import firebase from '../../../config/firebase';
-import { myMarkets } from './constants';
 
 const getEthereumPrice = (price) => async (dispatch) => {
   dispatch({ type: 'GET_COINBASE_PRICE_REQUEST' });
@@ -145,18 +145,44 @@ const getTrades = () => (dispatch) => {
 
   const daxTrades = [];
   const us30Trades = [];
+  const operations = [];
+  let result = 0;
+
+  function parseTrades(trade) {
+    return [
+      moment(trade.finishTime).format('DD/MM/YY HH:MM'),
+      trade.enterPrice,
+      trade.exitPosition.exitPrice,
+      trade.direction,
+      trade.result,
+    ];
+  }
 
   DAX.on('child_added', (snapshot) => {
+    result += snapshot.val().result;
+    operations.push(result);
+    daxTrades.push(parseTrades(snapshot.val()));
     dispatch({
       type: 'TRADING_GET_TRADES_SUCCESS',
-      payload: { DAX: snapshot.val() },
+      payload: { DAX: daxTrades },
+    });
+    dispatch({
+      type: 'TRADING_CALCULATE_EQUITY_SUCCESS',
+      payload: operations,
     });
   });
 
   US30.on('child_added', (snapshot) => {
+    result += snapshot.val().result;
+    operations.push(result);
+    us30Trades.push(parseTrades(snapshot.val()));
     dispatch({
       type: 'TRADING_GET_TRADES_SUCCESS',
-      payload: { US30: snapshot.val() },
+      payload: { US30: us30Trades },
+    });
+    dispatch({
+      type: 'TRADING_CALCULATE_EQUITY_SUCCESS',
+      payload: operations,
     });
   });
 };
@@ -211,7 +237,11 @@ const defaultState = {
   },
   positions: {},
   orders: [],
-  trades: {},
+  trades: {
+    DAX: [],
+    US30: [],
+  },
+  equity: [],
 };
 
 const INITIAL_STATE = { ...defaultState };
@@ -237,6 +267,10 @@ const ACTION_HANDLERS = {
   TRADING_GET_POSITION_SUCCESS: (state, { payload }) => ({
     ...state,
     positions: { ...state.positions, ...payload },
+  }),
+  TRADING_CALCULATE_EQUITY_SUCCESS: (state, { payload }) => ({
+    ...state,
+    equity: [...payload],
   }),
 };
 

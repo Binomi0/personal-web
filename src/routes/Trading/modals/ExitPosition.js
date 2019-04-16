@@ -18,7 +18,7 @@ class ExitPosition extends React.Component {
   };
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: Number(value) });
+    this.setState({ [name]: parseFloat(value) });
   };
 
   handleClose = () => {

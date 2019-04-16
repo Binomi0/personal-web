@@ -24,7 +24,9 @@ class PositionTable extends Component {
     if (position) {
       return (
         <Paper className={classes.table.root}>
-          <Typography variant="h5">{market}</Typography>
+          <div style={{ margin: '1.5rem 1rem' }}>
+            <Typography variant="h2">{market}</Typography>
+          </div>
           <Table className={classes.table.table}>
             <TableHead>
               <TableRow>

@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { withStyles, AppBar, Toolbar, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+import Positions from './Positions';
 import Trades from './Trades';
-import { TradingContainer, ErrorContainer } from '../styles/trading';
-import { Typography } from '@material-ui/core';
+import BalanceCards from './BalanceCards';
+import styles, {
+  TradingContainer,
+  ErrorContainer,
+  TradingContent,
+} from '../styles/trading';
+import LogoAppBar from '../../../components/LogoAppBar';
+import LinearGraph from '../../../components/LinearGraph';
 
-export default class TradingView extends Component {
+import literals from '../../../i18n/es-ES';
+
+const humanDate = 'DD [de] MMMM [de] YYYY';
+
+class TradingView extends Component {
   state = {
     auth: true,
   };
@@ -17,13 +31,37 @@ export default class TradingView extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <TradingContainer>
+        <AppBar position="sticky" color="secondary">
+          <Toolbar>
+            <LogoAppBar />
+            <Typography variant="h6" color="inherit">
+              Adolfo Onrubia |{' '}
+              <span
+                style={{
+                  textTransform: 'uppercase',
+                  fontFamily: 'Rubik-Light',
+                  fontSize: '.9rem',
+                }}
+              >
+                Trading
+              </span>
+            </Typography>
+          </Toolbar>
+        </AppBar>
         {this.state.auth ? (
-          <>
-            <h1>Mis operaciones en bolsa</h1>
+          <TradingContent>
+            <h1 className={classes.h1}>{literals.TRADING.title}</h1>
+            <BalanceCards {...this.props} />
+            <h2 className={classes.h2}>
+              Balance Actual {moment().format(humanDate)}
+            </h2>
+            <LinearGraph data={this.props.equity} />
+            <Positions {...this.props} />
             <Trades {...this.props} />
-          </>
+          </TradingContent>
         ) : (
           <ErrorContainer>
             <h1>No tienes acceso para ver esta sección</h1>
@@ -38,3 +76,9 @@ export default class TradingView extends Component {
     );
   }
 }
+
+TradingView.propTypes = {
+  equity: PropTypes.oneOfType([PropTypes.number, PropTypes.array]).isRequired,
+};
+
+export default withStyles(styles)(TradingView);

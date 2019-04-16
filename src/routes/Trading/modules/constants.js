@@ -2,8 +2,8 @@ export const columns = [
   'Fecha',
   'Precio Entrada',
   'Precio Salida',
-  'Cantidad',
   'Dirección',
+  'Resultado',
 ];
 
 export const data = [
