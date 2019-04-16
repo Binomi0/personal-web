@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
+
 import TradingView from '../components/TradingView';
 import { actions } from '../modules/trading';
+import { actions as ig } from '../modules/ig';
 
 import styles from '../styles/trading';
 
@@ -12,7 +14,7 @@ export const mapStateToProps = ({ trading }) => ({
   equity: trading.equity,
 });
 
-export const mapDispatchToProps = { ...actions };
+export const mapDispatchToProps = { ...actions, ...ig };
 
 export default connect(
   mapStateToProps,

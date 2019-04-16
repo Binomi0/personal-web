@@ -24,6 +24,9 @@ class TradingView extends Component {
     auth: true,
   };
   componentDidMount() {
+    this.props.getMarketPrice().then((auth) => {
+      console.log('IG auth', auth);
+    });
     // const auth = prompt('Introduce la clave de acceso', '');
     // if (auth) {
     //   this.setState({ auth: auth === 'koky' && true });
@@ -79,6 +82,7 @@ class TradingView extends Component {
 
 TradingView.propTypes = {
   equity: PropTypes.oneOfType([PropTypes.number, PropTypes.array]).isRequired,
+  getMarketPrice: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(TradingView);
