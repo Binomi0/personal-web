@@ -1,25 +1,34 @@
 import createReducer from '../../../redux/create-reducer';
 import axios from 'axios';
+// import IG from 'ig-api';
 // import moment from 'moment';
+const igAPIKey = process.env.REACT_APP_IG_API_KEY;
+// const isDemo = process.env.REACT_APP_IG_ISDEMO;
+const identifier = process.env.REACT_APP_IG_USERNAME;
+const password = process.env.REACT_APP_IG_PASSWORD;
+
+// const ig = new IG(igAPIKey, isDemo);
 
 const getMarketPrice = (market) => async (dispatch) => {
   dispatch({ type: 'TRADING_IG_GET_PRICES_REQUEST' });
 
   try {
     const URL = 'https://demo-api.ig.com/gateway/deal/session';
-    const body = {
-      identifier: 'onrubia',
-      password: 'Aoar12003',
-    };
+    const body = { identifier, password };
     const config = {
       headers: {
-        'X-IG-API-KEY': 'b33a31199708bd754979bba54c74aaa7f7315431',
+        'X-IG-API-KEY': igAPIKey,
         Version: 2,
         Accept: 'application/json; charset=UTF-8',
         'Content-Type': 'application/json; charset=UTF-8',
       },
     };
-    const response = await axios.post(URL, { ...body }, config);
+    // await ig.login(identifier, password, true);
+    // const prices = await ig.get('prices/IX.D.DAX.IFD.IP/MINUTE_2/10000', 2);
+    // const watchlist = await ig.get('watchlist', 1, {
+    //   watchlistId: '4310913',
+    // });
+    const response = await axios.post(URL, body, config);
 
     console.log('RESPONSE =>', response);
     dispatch({ type: 'TRADING_IG_GET_PRICES_SUCCESS' });

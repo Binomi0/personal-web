@@ -10,16 +10,16 @@ admin.initializeApp(functions.config().firebase);
 //  response.send("Hello from Firebase!");
 // });
 
-exports.calculatePositionStatus = functions.firestore
-  .document('/market/DAX/position')
-  .onCreate((snapshot) => {
-    console.log('snapshot =>', snapshot);
-    // const buyPrice = snapshot.data.data().enterPrice;
+// exports.calculatePositionStatus = functions.firestore
+//   .document('/market/DAX/position')
+//   .onCreate((snapshot) => {
+//     console.log('snapshot =>', snapshot);
+//     // const buyPrice = snapshot.data.data().enterPrice;
 
-    const positionRef = admin
-      .firestore()
-      .collection('react-mongo-test')
-      .doc('market/DAX/position');
+//     const positionRef = admin
+//       .firestore()
+//       .collection('react-mongo-test')
+//       .doc('market/DAX/position');
 
-    return positionRef.update({ status: 12000 });
-  });
+//     return positionRef.update({ status: 12000 });
+//   });
