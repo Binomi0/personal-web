@@ -1,37 +1,29 @@
 import createReducer from '../../../redux/create-reducer';
-import axios from 'axios';
-// import IG from 'ig-api';
-// import moment from 'moment';
-const igAPIKey = process.env.REACT_APP_IG_API_KEY;
-// const isDemo = process.env.REACT_APP_IG_ISDEMO;
-const identifier = process.env.REACT_APP_IG_USERNAME;
-const password = process.env.REACT_APP_IG_PASSWORD;
+import axios from '../../../config/axios';
 
+const epicDow = 'IX.D.DOW.IFS.IP';
 // const ig = new IG(igAPIKey, isDemo);
 
-const getMarketPrice = (market) => async (dispatch) => {
+const igAuthentication = () => async (dispatch) => {};
+
+const getMarketPrice = (market) => async (dispatch, getState) => {
+  dispatch(igAuthentication());
+
   dispatch({ type: 'TRADING_IG_GET_PRICES_REQUEST' });
 
   try {
-    const URL = 'https://demo-api.ig.com/gateway/deal/session';
-    const body = { identifier, password };
-    const config = {
-      headers: {
-        'X-IG-API-KEY': igAPIKey,
-        Version: 2,
-        Accept: 'application/json; charset=UTF-8',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    };
-    // await ig.login(identifier, password, true);
-    // const prices = await ig.get('prices/IX.D.DAX.IFD.IP/MINUTE_2/10000', 2);
-    // const watchlist = await ig.get('watchlist', 1, {
-    //   watchlistId: '4310913',
-    // });
-    const response = await axios.post(URL, body, config);
+    axios.defaults.baseURL = 'http://localhost:3008';
+    if (!market) {
+      market = epicDow;
+    }
+    const URL = `v1/trading/${market}/price`;
+    const response = await axios(URL);
 
     console.log('RESPONSE =>', response);
-    dispatch({ type: 'TRADING_IG_GET_PRICES_SUCCESS' });
+    dispatch({
+      type: 'TRADING_IG_GET_PRICES_SUCCESS',
+      payload: { [market]: response.data },
+    });
   } catch (error) {
     console.error(error);
     dispatch({ type: 'TRADING_IG_GET_PRICES_FAILURE' });
@@ -44,17 +36,22 @@ export const actions = {
 
 const defaultState = {
   prices: {
-    market: '',
+    market: {},
   },
 };
 
 const INITIAL_STATE = { ...defaultState };
 
 const ACTION_HANDLERS = {
-  GET_COINBASE_PRICE_REQUEST: (state) => ({ ...state, ...defaultState }),
-  GET_COINBASE_PRICE_SUCESS: (state, { payload }) => ({
+  TRADING_IG_GET_PRICES_SUCCESS: (state, { payload }) => ({
     ...state,
-    market: payload,
+    prices: {
+      ...state.prices,
+      market: {
+        ...state.prices.market,
+        ...payload,
+      },
+    },
   }),
 };
 

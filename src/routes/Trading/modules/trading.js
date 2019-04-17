@@ -15,7 +15,7 @@ const getEthereumPrice = (price) => async (dispatch) => {
 
     dispatch({
       type: 'GET_COINBASE_PRICE_SUCESS',
-      payload: response.amount,
+      payload: response.data.data.amount,
     });
   } catch (err) {
     dispatch({ type: 'GET_COINBASE_PRICE_FAILURE' });
@@ -247,7 +247,6 @@ const defaultState = {
 const INITIAL_STATE = { ...defaultState };
 
 const ACTION_HANDLERS = {
-  GET_COINBASE_PRICE_REQUEST: (state) => ({ ...state, ...defaultState }),
   GET_COINBASE_PRICE_SUCESS: (state, { payload }) => ({
     ...state,
     ethereum: { buy: payload },
