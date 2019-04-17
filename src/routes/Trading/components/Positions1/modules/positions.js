@@ -1,27 +1,7 @@
-import createReducer from '../../../redux/create-reducer';
-import axios from '../../../config/axios';
+import createReducer from '../../../../../redux/create-reducer';
 import moment from 'moment';
 
-import firebase from '../../../config/firebase';
-
-const getEthereumPrice = (price) => async (dispatch) => {
-  dispatch({ type: 'GET_COINBASE_PRICE_REQUEST' });
-
-  try {
-    axios.defaults.headers['CB-ACCESS-SIGN'] = 'sdkfjaldskghakdlghjkla';
-    const response = await axios(
-      `https://api.coinbase.com/v2/prices/ETH-EUR/${price}`,
-    );
-
-    dispatch({
-      type: 'GET_COINBASE_PRICE_SUCESS',
-      payload: response.data.data.amount,
-    });
-  } catch (err) {
-    dispatch({ type: 'GET_COINBASE_PRICE_FAILURE' });
-    console.error(err);
-  }
-};
+import firebase from '../../../../../config/firebase';
 
 const openPosition = (market, position) => async (dispatch) => {
   dispatch({ type: 'TRADING_ADD_POSITION_REQUEST' });
@@ -51,7 +31,7 @@ export const getPositions = () => async (dispatch) => {
   const DAX = firebase.database().ref('/market/DAX/position');
   const US30 = firebase.database().ref('/market/US30/position');
 
-  DAX.once('value', (snapshot) => {
+  DAX.on('value', (snapshot) => {
     dispatch({
       type: 'TRADING_GET_POSITIONS_SUCCESS',
       payload: { DAX: snapshot.val() },
@@ -224,7 +204,6 @@ function calculateResult(enterPrice, exitPrice, direction) {
 }
 
 export const actions = {
-  getEthereumPrice,
   openPosition,
   getPositions,
   exitPosition,
@@ -232,9 +211,6 @@ export const actions = {
 };
 
 const defaultState = {
-  ethereum: {
-    buy: '',
-  },
   positions: {},
   orders: [],
   trades: {
@@ -247,10 +223,6 @@ const defaultState = {
 const INITIAL_STATE = { ...defaultState };
 
 const ACTION_HANDLERS = {
-  GET_COINBASE_PRICE_SUCESS: (state, { payload }) => ({
-    ...state,
-    ethereum: { buy: payload },
-  }),
   TRADING_ADD_POSITION_SUCCESS: (state, { payload }) => ({
     ...state,
     positions: payload,

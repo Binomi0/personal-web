@@ -35,6 +35,7 @@ class TradingView extends Component {
 
   render() {
     const { classes } = this.props;
+    console.log('PATH =>', this.props.match);
     return (
       <TradingContainer>
         <AppBar position="sticky" color="secondary">
@@ -63,7 +64,9 @@ class TradingView extends Component {
             </h2>
             <LinearGraph data={this.props.equity} />
             <Positions {...this.props} />
-            <Trades {...this.props} />
+            {this.props.match.url === '/trading/trades' && (
+              <Trades {...this.props} />
+            )}
           </TradingContent>
         ) : (
           <ErrorContainer>

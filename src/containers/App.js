@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <Router>
         <Route path="/" exact component={Home} />
-        <Route path="/trading" exact component={Trading} />
+        <Route path="/trading*" exact component={Trading} />
         <Route path="/frontend" exact component={Home} />
         <Route path="/backend" exact component={Home} />
         <Route path="/tools" exact component={Home} />
