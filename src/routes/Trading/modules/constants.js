@@ -23,6 +23,8 @@ export const MARKETS = {
   DOW: 'IX.D.DOW.IFS.IP',
   DAX: 'IX.D.DAX.IFS.IP',
   'ETH-EUR': 'ETH',
+  INDICES: ['DOW', 'DAX'],
+  CRYPTOS: ['ETH'],
 };
 
 export const CRYPTOS = {

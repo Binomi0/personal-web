@@ -31,6 +31,9 @@ export default (theme) => ({
     '@media (min-width: 960px)': {
       letterSpacing: '0.5rem',
     },
+    '@media (max-width: 768px)': {
+      fontSize: '1rem',
+    },
   },
   h2: {
     margin: '1rem 0',

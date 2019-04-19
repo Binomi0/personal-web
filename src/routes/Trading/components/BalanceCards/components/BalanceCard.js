@@ -26,7 +26,10 @@ class BalanceCard extends React.Component {
     const index = prices.ig[market] && prices.ig[market].bid;
     const bull = <span className={classes.bullet}>•</span>;
 
-    // console.log(this.constructor.name, this.props);
+    console.log(
+      this.constructor.name,
+      balance.startTrade && balance.startTrade,
+    );
     // console.log('fdsf');
     return (
       <Card className={classes.card}>
@@ -57,7 +60,7 @@ class BalanceCard extends React.Component {
           <Typography className={classes.pos} variant="caption" paragraph>
             {balance.startTrade &&
               moment(balance.startTrade).format(
-                'DD [de] MMMM [de] YYYY [a las] HH:MM:SS',
+                'DD [de] MMMM [de] YYYY [a las] HH:MM',
               )}
           </Typography>
         </CardContent>

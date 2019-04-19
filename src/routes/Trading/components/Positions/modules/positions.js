@@ -15,6 +15,7 @@ import {
 import calculateContracts from '../../../../../utils/trading/calculateContracts';
 import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
 import { actions as tradingActions } from '../../../modules/trading';
+import { MARKETS } from '../../../modules/constants';
 
 const openPosition = (market, position) => async (dispatch) => {
   dispatch({ type: ADD_POSITION.REQUEST });
@@ -34,7 +35,12 @@ const openPosition = (market, position) => async (dispatch) => {
     dispatch({ type: ADD_POSITION.SUCCESS });
     dispatch({ type: ADD_POSITION.SET, payload: { [market]: response.data } });
     dispatch(getPositions());
-    dispatch(tradingActions.getIGMarketPrice(market));
+    if (MARKETS.INDICES.includes(market)) {
+      dispatch(tradingActions.getIGMarketPrice(market));
+    }
+    if (MARKETS.CRYPTOS.includes(market)) {
+      dispatch(tradingActions.getCoinbasePrice(market));
+    }
   } catch (err) {
     dispatch({ type: ADD_POSITION.FAILURE });
     console.error(err);
@@ -222,6 +228,32 @@ export const calculateEquity = (market, price) => (dispatch, getState) => {
     dispatch({
       type: GET_POSITION_EQUITY.SET,
       payload: { [market]: equity },
+    });
+  }
+};
+
+export const calculateCryptosEquity = (crypto, price) => (
+  dispatch,
+  getState,
+) => {
+  const positions = getState().trading.positions.open;
+  const marketPositions = positions.filter((pos) => pos.market === crypto);
+
+  // console.log(crypto);
+  // console.log(marketPositions);
+  if (marketPositions.length) {
+    console.log(calculateMediumPrice(marketPositions));
+    let equity = {};
+    equity.mediumPrice = calculateMediumPrice(marketPositions);
+    equity.openContracts = calculateContracts(marketPositions);
+    equity.amount =
+      (price.amount - calculateMediumPrice(marketPositions)) *
+      equity.openContracts;
+    equity.startTrade = positions[0].startDate;
+
+    dispatch({
+      type: GET_POSITION_EQUITY.SET,
+      payload: { [crypto]: equity },
     });
   }
 };

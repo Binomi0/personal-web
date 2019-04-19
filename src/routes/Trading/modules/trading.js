@@ -3,7 +3,10 @@ import axios from '../../../config/axios';
 
 import { GET_COINBASE_PRICE, GET_IG_PRICES } from '../../../action-types';
 import { MARKETS } from './constants';
-import { calculateEquity } from '../components/Positions/modules/positions';
+import {
+  calculateEquity,
+  calculateCryptosEquity,
+} from '../components/Positions/modules/positions';
 
 const version = '/v1';
 
@@ -29,6 +32,7 @@ const getCoinbasePrice = (crypto) => async (dispatch) => {
       type: GET_COINBASE_PRICE.SET,
       payload: response.data,
     });
+    dispatch(calculateCryptosEquity(MARKETS[crypto], response.data));
   } catch (err) {
     dispatch({ type: GET_COINBASE_PRICE.FAILURE });
     console.error(err);
