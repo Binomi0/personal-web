@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { CardsContainer } from '../styles/balanceCards';
 import BalanceCard from './BalanceCard';
@@ -10,6 +11,7 @@ function BalanceCards({ equity, ...rest }) {
     }
     return {};
   };
+  // console.log(this.constructor.name, this.props);
   return (
     <CardsContainer>
       <BalanceCard
@@ -34,5 +36,9 @@ function BalanceCards({ equity, ...rest }) {
     </CardsContainer>
   );
 }
+
+BalanceCard.propTypes = {
+  equity: PropTypes.object,
+};
 
 export default BalanceCards;

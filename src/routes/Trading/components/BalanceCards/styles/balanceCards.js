@@ -6,7 +6,12 @@ export default (theme) => ({
     background: '#8ee7ff',
     '@media (max-width: 960px)': {
       marginBottom: '1rem',
+      marginRight: 0,
     },
+    '&:last-child': {
+      marginRight: 0,
+    },
+    marginRight: '1rem',
   },
   bullet: {
     display: 'inline-block',

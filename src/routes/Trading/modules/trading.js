@@ -36,6 +36,7 @@ const getCoinbasePrice = (crypto) => async (dispatch) => {
 };
 
 const getIGMarketPrice = (market) => async (dispatch) => {
+  console.log('market =>', market);
   if (!market) {
     throw new Error('No recibo market');
   }

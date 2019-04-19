@@ -9,16 +9,25 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import styles from '../styles/balanceCards';
+import formatter from '../../../../../utils/formatAmount';
 
 class BalanceCard extends React.Component {
   render() {
-    const { classes, title, market, balance, prices } = this.props;
+    const {
+      classes,
+      title,
+      market,
+      balance,
+      prices,
+      exitPosition,
+    } = this.props;
 
     const crypto = prices.coinbase[market] && prices.coinbase[market].amount;
     const index = prices.ig[market] && prices.ig[market].bid;
     const bull = <span className={classes.bullet}>•</span>;
 
-    console.log(this.constructor.name, this.props);
+    // console.log(this.constructor.name, this.props);
+    // console.log('fdsf');
     return (
       <Card className={classes.card}>
         <CardContent>
@@ -27,37 +36,38 @@ class BalanceCard extends React.Component {
             color="textSecondary"
             gutterBottom
           >
-            {title} {bull} {market} {bull} {crypto || index}
+            {title} {bull} {market} {bull} <b>{crypto || index}</b>
           </Typography>
           <Typography
             variant="h5"
             component="h2"
             color={balance.amount > 0 ? 'textSecondary' : 'error'}
           >
-            {balance.amount ? balance.amount : '-'} €
+            {balance.amount > 0 && '+ '}
+            {balance.amount && formatter.format(balance.amount)}
           </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            {balance.mediumPrice ? 'Abierta en: ' : 'Cerrada'}
-            {balance.mediumPrice && balance.mediumPrice}
+          <Typography color="textSecondary">
+            {balance.mediumPrice ? 'Posición: ' : 'Cerrada'}
+            {balance.mediumPrice && balance.mediumPrice}{' '}
+            {balance.openContracts &&
+              `(${balance.openContracts} contrato${
+                balance.openContracts === 1 ? '' : 's'
+              })`}
           </Typography>
-          <Typography variant="caption">
+          <Typography className={classes.pos} variant="caption" paragraph>
             {balance.startTrade &&
               moment(balance.startTrade).format(
                 'DD [de] MMMM [de] YYYY [a las] HH:MM:SS',
               )}
           </Typography>
-          <Typography component="p">
-            Patrón detectado ABCD
-            <br />
-            entrando en pull-back
-            <br />
-            al toque a la media móvil
-            <br />
-            de 20 períodos
-          </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" color="primary" size="small">
+          <Button
+            onClick={exitPosition}
+            variant="contained"
+            color="primary"
+            size="small"
+          >
             Cerrar Posición
           </Button>
         </CardActions>
