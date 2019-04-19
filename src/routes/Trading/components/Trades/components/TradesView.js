@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import MUIDataTable from 'mui-datatables';
 import { Typography } from '@material-ui/core';
 
-import { PositionContainer, TradingContainer } from '../styles/trading';
-import { myMarkets, columns } from '../modules/constants';
+import { PositionContainer, TradingContainer } from '../styles/trades';
+import { myMarkets, columns } from '../../../modules/constants';
 
 class Trades extends Component {
   state = {
-    US30: [],
+    DOW: [],
     DAX: [],
   };
 
@@ -24,8 +24,8 @@ class Trades extends Component {
     if (nextProps.trades.DAX.length !== nextState.DAX.length) {
       this.setState({ DAX: [...nextProps.trades.DAX] });
     }
-    if (nextProps.trades.US30.length !== nextState.US30.length) {
-      this.setState({ US30: [...nextProps.trades.US30] });
+    if (nextProps.trades.DOW.length !== nextState.DOW.length) {
+      this.setState({ DOW: [...nextProps.trades.DOW] });
     }
   }
 
@@ -47,7 +47,7 @@ class Trades extends Component {
 
     const title = {
       DAX: 'Indice Alemania 30',
-      US30: 'Indice Dow Jones US30',
+      DOW: 'Indice Dow Jones DOW',
     };
 
     return (
@@ -77,7 +77,7 @@ class Trades extends Component {
 Trades.propTypes = {
   classes: PropTypes.object.isRequired,
   trades: PropTypes.shape({
-    US30: PropTypes.array.isRequired,
+    DOW: PropTypes.array.isRequired,
     DAX: PropTypes.array.isRequired,
   }).isRequired,
 };

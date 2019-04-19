@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import blue from '@material-ui/core/colors/blue';
 
 export default (theme) => ({
@@ -41,3 +42,7 @@ export default (theme) => ({
     },
   },
 });
+
+export const PositionContainer = styled.div`
+  margin: 1rem 0;
+`;

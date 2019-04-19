@@ -60,7 +60,3 @@ export const ErrorContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-export const PositionContainer = styled.div`
-  margin: 1rem 0;
-`;

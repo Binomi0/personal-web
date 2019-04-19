@@ -6,7 +6,12 @@ import { actions } from '../modules/positions';
 
 import styles from '../styles/positions';
 
-export const mapStateToProps = ({ positions }) => ({ positions });
+export const mapStateToProps = ({ trading }) => ({
+  prices: trading.prices,
+  trades: trading.trades,
+  equity: trading.positions.equity,
+  positions: trading.positions,
+});
 
 export const mapDispatchToProps = { ...actions };
 

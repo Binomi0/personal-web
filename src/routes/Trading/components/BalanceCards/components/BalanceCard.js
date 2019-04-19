@@ -1,0 +1,81 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+import styles from '../styles/balanceCards';
+
+class BalanceCard extends React.Component {
+  render() {
+    const { classes, title, market, balance, prices } = this.props;
+
+    const crypto = prices.coinbase[market] && prices.coinbase[market].amount;
+    const index = prices.ig[market] && prices.ig[market].bid;
+    const bull = <span className={classes.bullet}>•</span>;
+
+    console.log(this.constructor.name, this.props);
+    return (
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            {title} {bull} {market} {bull} {crypto || index}
+          </Typography>
+          <Typography
+            variant="h5"
+            component="h2"
+            color={balance.amount > 0 ? 'textSecondary' : 'error'}
+          >
+            {balance.amount ? balance.amount : '-'} €
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            {balance.mediumPrice ? 'Abierta en: ' : 'Cerrada'}
+            {balance.mediumPrice && balance.mediumPrice}
+          </Typography>
+          <Typography variant="caption">
+            {balance.startTrade &&
+              moment(balance.startTrade).format(
+                'DD [de] MMMM [de] YYYY [a las] HH:MM:SS',
+              )}
+          </Typography>
+          <Typography component="p">
+            Patrón detectado ABCD
+            <br />
+            entrando en pull-back
+            <br />
+            al toque a la media móvil
+            <br />
+            de 20 períodos
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button variant="contained" color="primary" size="small">
+            Cerrar Posición
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
+}
+
+BalanceCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  market: PropTypes.string.isRequired,
+  balance: PropTypes.shape({
+    mediumPrice: PropTypes.number,
+    amount: PropTypes.number,
+    quantity: PropTypes.number,
+  }).isRequired,
+  prices: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(BalanceCard);

@@ -13,8 +13,18 @@ export const data = [
   ['14 de Agosto de 2018', 233.06, null, 0.9489, 'Largo'],
 ];
 
-export const myMarkets = ['DAX', 'US30'];
+export const myMarkets = ['DAX', 'DOW'];
 
 export const Ethereum = {
   date: '7 de Mayo de 2019',
+};
+
+export const MARKETS = {
+  DOW: 'IX.D.DOW.IFS.IP',
+  DAX: 'IX.D.DAX.IFS.IP',
+  'ETH-EUR': 'ETH',
+};
+
+export const CRYPTOS = {
+  ETH: 'ETH-EUR',
 };

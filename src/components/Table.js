@@ -10,7 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import styles from '../styles/trading';
+import styles from '../routes/Trading/styles/trading';
 import { Typography, Button } from '@material-ui/core';
 
 class PositionTable extends Component {

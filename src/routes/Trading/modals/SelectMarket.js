@@ -12,7 +12,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import blue from '@material-ui/core/colors/blue';
 
-const products = ['DAX', 'US30', 'ETH'];
+const products = ['DAX', 'DOW', 'ETH'];
 const styles = {
   avatar: {
     backgroundColor: blue[100],

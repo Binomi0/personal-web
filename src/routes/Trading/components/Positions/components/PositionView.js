@@ -3,19 +3,20 @@ import PropTypes from 'prop-types';
 import MUIDataTable from 'mui-datatables';
 import { Typography, Button } from '@material-ui/core';
 
-import Table from './Table';
-import SelectMarket from '../modals/SelectMarket';
-import NewTrade from '../modals/NewTrade';
-import ExitPosition from '../modals/ExitPosition';
+import Table from '../../../../../components/Table';
+import SelectMarket from '../../../modals/SelectMarket';
+import NewTrade from '../../../modals/NewTrade';
+import ExitPosition from '../../../modals/ExitPosition';
 
-import { PositionContainer, TradingContainer } from '../styles/trading';
-import { myMarkets, columns, data } from '../modules/constants';
+import { PositionContainer } from '../styles/positions';
+import { TradingContainer } from '../../../styles/trading';
+import { myMarkets, columns, data } from '../../../modules/constants';
 
 const options = {
   filterType: 'checkbox',
 };
 
-class Positions extends Component {
+class PositionsView extends Component {
   state = {
     product: '',
     selectMarketOpen: false,
@@ -25,7 +26,6 @@ class Positions extends Component {
     position: {},
   };
   componentDidMount() {
-    this.props.getEthereumPrice('buy');
     this.getPositions();
   }
 
@@ -73,7 +73,7 @@ class Positions extends Component {
   };
 
   render() {
-    const { buy } = this.props.ethereum;
+    const amount = this.props.prices.coinbase.ETH.amount || '-';
     const { classes, positions } = this.props;
     const isAdmin = Boolean(localStorage.getItem('isAdmin'));
 
@@ -95,7 +95,7 @@ class Positions extends Component {
         />
         <h2 className={classes.h2}>Posiciones abiertas en el mercado</h2>
         <Typography variant="h5">{this.state.selectedMarket}</Typography>
-        {positions && (positions['DAX'] || positions['US30']) && (
+        {positions && (positions['DAX'] || positions['DOW']) && (
           <Typography variant="h6" color="secondary">
             Intradía
           </Typography>
@@ -116,7 +116,7 @@ class Positions extends Component {
             Largo Plazo
           </Typography>
           <MUIDataTable
-            title={`Precio ETH: ${buy} €`}
+            title={`Precio ETH: ${amount} €`}
             data={data}
             columns={columns}
             options={options}
@@ -136,16 +136,21 @@ class Positions extends Component {
   }
 }
 
-Positions.propTypes = {
+PositionsView.propTypes = {
   classes: PropTypes.object.isRequired,
   openPosition: PropTypes.func.isRequired,
-  getEthereumPrice: PropTypes.func.isRequired,
-  ethereum: PropTypes.shape({
-    buy: PropTypes.string.isRequired,
-  }),
+  prices: PropTypes.shape({
+    coinbase: PropTypes.shape({
+      ETH: PropTypes.object.isRequired,
+    }).isRequired,
+    ig: PropTypes.shape({
+      DOW: PropTypes.object.isRequired,
+      DAX: PropTypes.object.isRequired,
+    }).isRequired,
+  }).isRequired,
   positions: PropTypes.object.isRequired,
   getTrades: PropTypes.func.isRequired,
   getPositions: PropTypes.func.isRequired,
 };
 
-export default Positions;
+export default PositionsView;

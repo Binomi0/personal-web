@@ -1,65 +1,58 @@
-import createReducer from '../../../../../redux/create-reducer';
 import moment from 'moment';
+import axios from '../../../../../config/axios';
 
+import createReducer from '../../../../../redux/create-reducer';
+// import axios from '../../../../../config/axios';
 import firebase from '../../../../../config/firebase';
+import {
+  GET_POSITIONS,
+  GET_TRADES,
+  CALCULATE_EQUITY,
+  ADD_POSITION,
+  EXIT_POSITION,
+  GET_POSITION_EQUITY,
+} from '../../../../../action-types';
 
 const openPosition = (market, position) => async (dispatch) => {
-  dispatch({ type: 'TRADING_ADD_POSITION_REQUEST' });
+  dispatch({ type: ADD_POSITION.REQUEST });
 
   try {
-    const ref = `/market/${market}/position`;
+    const URL = `v1/trading/position`;
     const newPosition = {
       enterPrice: position.enterPrice,
       direction: position.direction,
       quantity: position.quantity,
       date: Date.now(),
+      market,
     };
 
-    firebase
-      .database()
-      .ref(ref)
-      .set(newPosition);
+    const response = await axios.post(URL, newPosition);
 
-    getPositions();
+    dispatch({ type: ADD_POSITION.SUCCESS });
+    dispatch({ type: ADD_POSITION.SET, payload: { [market]: response.data } });
   } catch (err) {
-    dispatch({ type: 'TRADING_ADD_POSITION_FAILURE' });
+    dispatch({ type: ADD_POSITION.FAILURE });
     console.error(err);
   }
 };
 
 export const getPositions = () => async (dispatch) => {
-  const DAX = firebase.database().ref('/market/DAX/position');
-  const US30 = firebase.database().ref('/market/US30/position');
+  dispatch({ type: GET_POSITIONS.REQUEST });
 
-  DAX.on('value', (snapshot) => {
-    dispatch({
-      type: 'TRADING_GET_POSITIONS_SUCCESS',
-      payload: { DAX: snapshot.val() },
-    });
-  });
+  try {
+    const URL = 'v1/trading/positions';
+    const response = await axios(URL);
 
-  US30.on('value', (snapshot) => {
-    dispatch({
-      type: 'TRADING_GET_POSITIONS_SUCCESS',
-      payload: { US30: snapshot.val() },
-    });
-  });
+    dispatch({ type: GET_POSITIONS.SUCCESS });
+    dispatch({ type: GET_POSITIONS.SET, payload: response.data });
+  } catch (err) {
+    console.error(err);
+    dispatch({ type: GET_POSITIONS.FAILURE });
+  }
 };
 
-// export const getPosition = (market) => async (dispatch) => {
-//   if (market) {
-//     const markets = firebase.database().ref('/market/' + market + '/position');
-//     markets.on('child_added', (snapshot) => {
-//       dispatch({
-//         type: 'TRADING_GET_POSITION_SUCCESS',
-//         payload: { [market]: snapshot.val() },
-//       });
-//     });
-//   }
-// };
-
 const exitPosition = (market, exitPosition) => async (dispatch, getState) => {
-  dispatch({ type: 'TRADING_EXIT_POSITION_REQUEST' });
+  dispatch({ type: EXIT_POSITION.REQUEST });
 
   const enterPosition = await getState().trading.positions[market];
 
@@ -73,9 +66,10 @@ const exitPosition = (market, exitPosition) => async (dispatch, getState) => {
 
     const positions = delete getState().trading.positions[market];
 
-    dispatch({ type: 'TRADING_EXIT_POSITION_SUCCESS', payload: positions });
+    dispatch({ type: EXIT_POSITION.SUCCESS });
+    dispatch({ type: EXIT_POSITION.SET, payload: positions });
   } catch (err) {
-    dispatch({ type: 'TRADING_EXIT_POSITION_FAILURE' });
+    dispatch({ type: EXIT_POSITION.FAILURE });
   }
 };
 
@@ -120,8 +114,10 @@ const finishTrade = (market, position, exitPosition) => async (dispatch) => {
 };
 
 const getTrades = () => (dispatch) => {
+  dispatch({ type: GET_TRADES.REQUEST });
+
   const DAX = firebase.database().ref('/market/DAX/trades');
-  const US30 = firebase.database().ref('/market/US30/trades');
+  const DOW = firebase.database().ref('/market/DOW/trades');
 
   const daxTrades = [];
   const us30Trades = [];
@@ -143,28 +139,30 @@ const getTrades = () => (dispatch) => {
     operations.push(result);
     daxTrades.push(parseTrades(snapshot.val()));
     dispatch({
-      type: 'TRADING_GET_TRADES_SUCCESS',
+      type: GET_TRADES.SET,
       payload: { DAX: daxTrades },
     });
     dispatch({
-      type: 'TRADING_CALCULATE_EQUITY_SUCCESS',
+      type: CALCULATE_EQUITY.SET,
       payload: operations,
     });
   });
 
-  US30.on('child_added', (snapshot) => {
+  DOW.on('child_added', (snapshot) => {
     result += snapshot.val().result;
     operations.push(result);
     us30Trades.push(parseTrades(snapshot.val()));
     dispatch({
-      type: 'TRADING_GET_TRADES_SUCCESS',
-      payload: { US30: us30Trades },
+      type: GET_TRADES.SET,
+      payload: { DOW: us30Trades },
     });
     dispatch({
-      type: 'TRADING_CALCULATE_EQUITY_SUCCESS',
+      type: CALCULATE_EQUITY.SET,
       payload: operations,
     });
   });
+
+  dispatch({ type: GET_TRADES.SUCCESS });
 };
 
 /**
@@ -180,28 +178,53 @@ const getTrades = () => (dispatch) => {
  */
 function calculateResult(enterPrice, exitPrice, direction) {
   if (!enterPrice) {
-    throw new Error('No se recibe enterPrice');
+    throw new Error('Missing enterPrice parameter in `calculateResult`');
   }
   if (!exitPrice) {
-    throw new Error('No se recibe exitPrice');
+    throw new Error('Missing exitPrice parameter in `calculateResult`');
   }
   if (!direction) {
-    throw new Error('No se recibe direction');
+    throw new Error('Missing direction parameter in `calculateResult`');
   }
   let result;
-  console.log('direction =>', direction);
 
   if (direction === 'Long') {
     result = parseInt(exitPrice) - parseInt(enterPrice);
   } else {
-    console.log(enterPrice);
-    console.log(exitPrice);
     result = parseInt(enterPrice) - parseInt(exitPrice);
   }
-  console.log('result =>', result);
 
   return result;
 }
+
+const calculateMediumPrice = (positions) => {
+  return positions.reduce(
+    (prev, current) => (prev.enterPrice + current.enterPrice) / 2,
+  );
+};
+
+const calculateContracts = (positions) => {
+  return positions.reduce((prev, current) => prev.quantity + current.quantity);
+};
+
+export const calculateEquity = (market, price) => (dispatch, getState) => {
+  const positions = getState().trading.positions.open;
+
+  positions.forEach((position) => {
+    if (position.market === market) {
+      let equity = {};
+      const direction = positions[0].direction === 'Long' ? 'bid' : 'offer';
+      equity.mediumPrice = calculateMediumPrice(positions);
+      equity.openContracts = calculateContracts(positions);
+      equity.amount = price[direction] - calculateMediumPrice(positions);
+      equity.startTrade = positions[0].startDate;
+      dispatch({
+        type: GET_POSITION_EQUITY.SET,
+        payload: { [market]: equity },
+      });
+    }
+  });
+};
 
 export const actions = {
   openPosition,
@@ -211,37 +234,35 @@ export const actions = {
 };
 
 const defaultState = {
-  positions: {},
-  orders: [],
-  trades: {
-    DAX: [],
-    US30: [],
-  },
-  equity: [],
+  open: [],
+  equity: {},
 };
 
 const INITIAL_STATE = { ...defaultState };
 
 const ACTION_HANDLERS = {
-  TRADING_ADD_POSITION_SUCCESS: (state, { payload }) => ({
+  [ADD_POSITION.SET]: (state, { payload }) => ({
     ...state,
-    positions: payload,
+    open: { ...state.open, ...payload },
   }),
-  TRADING_GET_TRADES_SUCCESS: (state, { payload }) => ({
+  [GET_TRADES.SET]: (state, { payload }) => ({
     ...state,
     trades: { ...state.trades, ...payload },
   }),
-  TRADING_GET_POSITIONS_SUCCESS: (state, { payload }) => ({
+  [GET_POSITIONS.SET]: (state, { payload }) => ({
     ...state,
-    positions: { ...state.positions, ...payload },
+    open: payload,
   }),
-  TRADING_GET_POSITION_SUCCESS: (state, { payload }) => ({
-    ...state,
-    positions: { ...state.positions, ...payload },
-  }),
-  TRADING_CALCULATE_EQUITY_SUCCESS: (state, { payload }) => ({
+  [CALCULATE_EQUITY.SET]: (state, { payload }) => ({
     ...state,
     equity: [...payload],
+  }),
+  [GET_POSITION_EQUITY.SET]: (state, { payload }) => ({
+    ...state,
+    equity: {
+      ...state.equity,
+      ...payload,
+    },
   }),
 };
 
