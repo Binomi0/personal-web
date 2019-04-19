@@ -5,9 +5,7 @@ export default class Contacto extends Component {
   render() {
     return (
       <ContactoStyled>
-        <a className="App-link" href="mailto:adolfo@onrubia.es">
-          Contacto
-        </a>
+        <a href="mailto:adolfo@onrubia.es">Contacto</a>
       </ContactoStyled>
     );
   }
