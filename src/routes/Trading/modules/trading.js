@@ -1,9 +1,16 @@
 import createReducer from '../../../redux/create-reducer';
 import axios from '../../../config/axios';
 
-import { GET_COINBASE_PRICE, GET_IG_PRICES } from '../../../action-types';
+import {
+  GET_COINBASE_PRICE,
+  GET_IG_PRICES,
+  GET_CHART_DATA,
+} from '../../../action-types';
 import { MARKETS } from './constants';
-import { calculateEquity } from '../components/Positions/modules/positions';
+import {
+  calculateEquity,
+  calculateCryptosEquity,
+} from '../components/Positions/modules/positions';
 
 const version = '/v1';
 
@@ -29,6 +36,7 @@ const getCoinbasePrice = (crypto) => async (dispatch) => {
       type: GET_COINBASE_PRICE.SET,
       payload: response.data,
     });
+    dispatch(calculateCryptosEquity(MARKETS[crypto], response.data));
   } catch (err) {
     dispatch({ type: GET_COINBASE_PRICE.FAILURE });
     console.error(err);
@@ -36,7 +44,6 @@ const getCoinbasePrice = (crypto) => async (dispatch) => {
 };
 
 const getIGMarketPrice = (market) => async (dispatch) => {
-  console.log('market =>', market);
   if (!market) {
     throw new Error('No recibo market');
   }
@@ -58,9 +65,43 @@ const getIGMarketPrice = (market) => async (dispatch) => {
   }
 };
 
+const getChartData = (market, bars) => async (dispatch) => {
+  dispatch({ type: GET_CHART_DATA.REQUEST });
+  try {
+    const URL = `${version}/trading/prices/chart/${MARKETS[market]}/${bars}`;
+    const response = await axios(URL);
+
+    const DAX = market.includes('DAX') && 'DAX';
+    const DOW = market.includes('DOW') && 'DOW';
+
+    const chartData = [];
+    response.data.forEach((tickData) => {
+      const chartItems = {};
+      chartItems.x = tickData.snapshotTime;
+      chartItems.open = tickData.openPrice.bid;
+      chartItems.close = tickData.closePrice.bid;
+      chartItems.high = tickData.highPrice.bid;
+      chartItems.low = tickData.lowPrice.bid;
+      chartData.push(chartItems);
+    });
+
+    console.log('chartData =>', chartData);
+
+    dispatch({ type: GET_CHART_DATA.SUCCESS });
+    dispatch({
+      type: GET_CHART_DATA.SET,
+      payload: { [DAX || DOW]: chartData },
+    });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: GET_CHART_DATA.FAILURE });
+  }
+};
+
 export const actions = {
   getCoinbasePrice,
   getIGMarketPrice,
+  getChartData,
 };
 
 const defaultState = {
@@ -71,6 +112,7 @@ const defaultState = {
     DAX: {},
     DOW: {},
   },
+  charts: {},
 };
 
 const INITIAL_STATE = { ...defaultState };
@@ -90,6 +132,13 @@ const ACTION_HANDLERS = {
     coinbase: {
       ...state.coinbase,
       ETH: payload,
+    },
+  }),
+  [GET_CHART_DATA.SET]: (state, { payload }) => ({
+    ...state,
+    charts: {
+      ...state.charts,
+      ...payload,
     },
   }),
 };

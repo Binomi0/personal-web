@@ -15,7 +15,7 @@ import { Typography, Button } from '@material-ui/core';
 
 class PositionTable extends Component {
   handleClose = () => {
-    this.props.exitPosition(this.props.market);
+    this.props.onExitPosition(this.props.market);
   };
 
   render() {

@@ -22,7 +22,7 @@ export default (theme) => ({
     fontSize: 14,
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 0,
   },
 });
 
@@ -32,4 +32,8 @@ export const CardsContainer = styled.div`
     justify-content: space-between;
   }
   margin: 1rem 0;
+`;
+
+export const GraphContent = styled.div`
+  padding: 1rem 0;
 `;

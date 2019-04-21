@@ -1,0 +1,490 @@
+{
+  "DOW": {
+    "trades": {
+      "-LcTl0ZNl2owYR3eob7V": {
+        "startDate": 1555294313160,
+        "direction": "Short",
+        "enterPrice": "26437",
+        "onExitPosition": {
+          "exitPrice": 26420,
+          "quantity": 1
+        },
+        "finishTime": 1555294329267,
+        "quantity": 1,
+        "result": 17
+      },
+      "-LcTnW-90NThlO8N9Z-4": {
+        "startDate": 1555294974921,
+        "direction": "Short",
+        "enterPrice": "26422.5",
+        "onExitPosition": {
+          "exitPrice": 26429.5,
+          "quantity": 1
+        },
+        "finishTime": 1555294982215,
+        "quantity": 1,
+        "result": -7
+      },
+      "-LcX5CLJkgRnxj9pqv0W": {
+        "startDate": 1555349970480,
+        "direction": "Long",
+        "enterPrice": 26348.5,
+        "onExitPosition": {
+          "exitPrice": 26372.5,
+          "quantity": 1
+        },
+        "finishTime": 1555350214167,
+        "quantity": 1,
+        "result": 24
+      },
+      "-LcXnLhhf709TxuHPl9j": {
+        "startDate": 1555362040090,
+        "direction": "Short",
+        "enterPrice": "26398",
+        "onExitPosition": {
+          "exitPrice": 26389,
+          "quantity": 1
+        },
+        "finishTime": 1555362049019,
+        "quantity": "4",
+        "result": 36
+      },
+      "-LcXrb3NIvJppjtXk2A1": {
+        "startDate": 1555363158856,
+        "direction": "Long",
+        "enterPrice": "26385",
+        "onExitPosition": {
+          "exitPrice": 26387,
+          "quantity": 1
+        },
+        "finishTime": 1555363164580,
+        "quantity": 1,
+        "result": 2
+      },
+      "-LcXrhoRooFdIVB8k8Fv": {
+        "startDate": 1555363185596,
+        "direction": "Short",
+        "enterPrice": "26388",
+        "onExitPosition": {
+          "exitPrice": 26385,
+          "quantity": 1
+        },
+        "finishTime": 1555363192231,
+        "quantity": 1,
+        "result": 3
+      },
+      "-Lc_xNnSHwFnPUvq_eQE": {
+        "startDate": 1555414843306,
+        "direction": "Long",
+        "enterPrice": "26523.5",
+        "onExitPosition": {
+          "exitPrice": 26525,
+          "quantity": 1
+        },
+        "finishTime": 1555415010760,
+        "quantity": 1,
+        "result": 2
+      },
+      "-LcaHd1CzBYxMRqKZCky": {
+        "startDate": 1555419689473,
+        "direction": "Short",
+        "enterPrice": "26541",
+        "onExitPosition": {
+          "exitPrice": 26537,
+          "quantity": 1
+        },
+        "finishTime": 1555420582099,
+        "quantity": 1,
+        "result": 4
+      },
+      "-LcaTScoOj_zPzpkolKB": {
+        "startDate": 1555423667495,
+        "direction": "Short",
+        "enterPrice": "26451",
+        "onExitPosition": {
+          "exitPrice": 26443,
+          "quantity": 1
+        },
+        "finishTime": 1555423681282,
+        "quantity": 1,
+        "result": 8
+      },
+      "-LcaZsaBqVYsNZnOag2f": {
+        "startDate": 1555424113125,
+        "direction": "Short",
+        "enterPrice": "26446",
+        "onExitPosition": {
+          "exitPrice": 26434,
+          "quantity": 1
+        },
+        "finishTime": 1555425364458,
+        "quantity": 1,
+        "result": 12
+      },
+      "-Lcai9ql2luqWvCL789g": {
+        "startDate": 1555425520754,
+        "direction": "Long",
+        "enterPrice": "26437",
+        "onExitPosition": {
+          "exitPrice": 26457,
+          "quantity": 1
+        },
+        "finishTime": 1555427798518,
+        "quantity": 1,
+        "result": 20
+      },
+      "-LcapXuEgVu_IZeco4hd": {
+        "startDate": 1555429723230,
+        "direction": "Long",
+        "enterPrice": "26432",
+        "onExitPosition": {
+          "exitPrice": 26453,
+          "quantity": 1
+        },
+        "finishTime": 1555429732048,
+        "quantity": 1,
+        "result": 21
+      },
+      "-LcbLZ8sQr60Jf3vA4Gn": {
+        "startDate": 1555431059397,
+        "direction": "Long",
+        "enterPrice": "26447",
+        "onExitPosition": {
+          "exitPrice": 26617,
+          "quantity": 1
+        },
+        "finishTime": 1555438387923,
+        "quantity": 1,
+        "result": 170
+      },
+      "-Lce_8mBCc5k_n9BENI9": {
+        "startDate": 1555492535652,
+        "direction": "Short",
+        "enterPrice": "26480",
+        "onExitPosition": {
+          "exitPrice": 26473,
+          "quantity": 1
+        },
+        "finishTime": 1555492543695,
+        "quantity": 1,
+        "result": 7
+      },
+      "-LcepnXsGnhcach6zto_": {
+        "startDate": 1555496886422,
+        "direction": "Long",
+        "enterPrice": "26471",
+        "onExitPosition": {
+          "exitPrice": 26478,
+          "quantity": 1
+        },
+        "finishTime": 1555496909051,
+        "quantity": 1,
+        "result": 7
+      },
+      "-LcfJArSNxEZwXIq1mRN": {
+        "startDate": 1555504859567,
+        "direction": "Long",
+        "enterPrice": "26480",
+        "onExitPosition": {
+          "exitPrice": 26492,
+          "quantity": 1
+        },
+        "finishTime": 1555504873061,
+        "quantity": 1,
+        "result": 12
+      },
+      "-LcfgSzXcu6nBgKKrmF2": {
+        "startDate": 1555511229722,
+        "direction": "Long",
+        "enterPrice": "26413",
+        "onExitPosition": {
+          "exitPrice": 26439,
+          "quantity": 1
+        },
+        "finishTime": 1555511238710,
+        "quantity": "8",
+        "result": 208
+      },
+      "-Lcg44NM2xVAnTBsAL1-": {
+        "startDate": 1555517051230,
+        "direction": "Long",
+        "enterPrice": "26411",
+        "onExitPosition": {
+          "exitPrice": 26422,
+          "quantity": 1
+        },
+        "finishTime": 1555517691481,
+        "quantity": 1,
+        "result": 11
+      },
+      "-LcgC6dhvMFttl8DfWrH": {
+        "startDate": 1555519789172,
+        "direction": "Short",
+        "enterPrice": "26460",
+        "onExitPosition": {
+          "exitPrice": 26449,
+          "quantity": 1
+        },
+        "finishTime": 1555519797937,
+        "quantity": "10",
+        "result": 110
+      },
+      "-LcgTIEXG73bHXIi59j4": {
+        "startDate": 1555523849658,
+        "direction": "Long",
+        "enterPrice": "26461",
+        "onExitPosition": {
+          "exitPrice": 26467,
+          "quantity": 1
+        },
+        "finishTime": 1555524301883,
+        "quantity": "100",
+        "result": 600
+      }
+    }
+  },
+  "DAX": {
+    "trades": {
+      "-LcTl0ZNl2owYR3eob7V": {
+        "startDate": 1555294313160,
+        "direction": "Short",
+        "enterPrice": "26437",
+        "onExitPosition": {
+          "exitPrice": 26420,
+          "quantity": 1
+        },
+        "finishTime": 1555294329267,
+        "quantity": 1,
+        "result": 17
+      },
+      "-LcTnW-90NThlO8N9Z-4": {
+        "startDate": 1555294974921,
+        "direction": "Short",
+        "enterPrice": "26422.5",
+        "onExitPosition": {
+          "exitPrice": 26429.5,
+          "quantity": 1
+        },
+        "finishTime": 1555294982215,
+        "quantity": 1,
+        "result": -7
+      },
+      "-LcX5CLJkgRnxj9pqv0W": {
+        "startDate": 1555349970480,
+        "direction": "Long",
+        "enterPrice": 26348.5,
+        "onExitPosition": {
+          "exitPrice": 26372.5,
+          "quantity": 1
+        },
+        "finishTime": 1555350214167,
+        "quantity": 1,
+        "result": 24
+      },
+      "-LcXnLhhf709TxuHPl9j": {
+        "startDate": 1555362040090,
+        "direction": "Short",
+        "enterPrice": "26398",
+        "onExitPosition": {
+          "exitPrice": 26389,
+          "quantity": 1
+        },
+        "finishTime": 1555362049019,
+        "quantity": "4",
+        "result": 36
+      },
+      "-LcXrb3NIvJppjtXk2A1": {
+        "startDate": 1555363158856,
+        "direction": "Long",
+        "enterPrice": "26385",
+        "onExitPosition": {
+          "exitPrice": 26387,
+          "quantity": 1
+        },
+        "finishTime": 1555363164580,
+        "quantity": 1,
+        "result": 2
+      },
+      "-LcXrhoRooFdIVB8k8Fv": {
+        "startDate": 1555363185596,
+        "direction": "Short",
+        "enterPrice": "26388",
+        "onExitPosition": {
+          "exitPrice": 26385,
+          "quantity": 1
+        },
+        "finishTime": 1555363192231,
+        "quantity": 1,
+        "result": 3
+      },
+      "-Lc_xNnSHwFnPUvq_eQE": {
+        "startDate": 1555414843306,
+        "direction": "Long",
+        "enterPrice": "26523.5",
+        "onExitPosition": {
+          "exitPrice": 26525,
+          "quantity": 1
+        },
+        "finishTime": 1555415010760,
+        "quantity": 1,
+        "result": 2
+      },
+      "-LcaHd1CzBYxMRqKZCky": {
+        "startDate": 1555419689473,
+        "direction": "Short",
+        "enterPrice": "26541",
+        "onExitPosition": {
+          "exitPrice": 26537,
+          "quantity": 1
+        },
+        "finishTime": 1555420582099,
+        "quantity": 1,
+        "result": 4
+      },
+      "-LcaTScoOj_zPzpkolKB": {
+        "startDate": 1555423667495,
+        "direction": "Short",
+        "enterPrice": "26451",
+        "onExitPosition": {
+          "exitPrice": 26443,
+          "quantity": 1
+        },
+        "finishTime": 1555423681282,
+        "quantity": 1,
+        "result": 8
+      },
+      "-LcaZsaBqVYsNZnOag2f": {
+        "startDate": 1555424113125,
+        "direction": "Short",
+        "enterPrice": "26446",
+        "onExitPosition": {
+          "exitPrice": 26434,
+          "quantity": 1
+        },
+        "finishTime": 1555425364458,
+        "quantity": 1,
+        "result": 12
+      },
+      "-Lcai9ql2luqWvCL789g": {
+        "startDate": 1555425520754,
+        "direction": "Long",
+        "enterPrice": "26437",
+        "onExitPosition": {
+          "exitPrice": 26457,
+          "quantity": 1
+        },
+        "finishTime": 1555427798518,
+        "quantity": 1,
+        "result": 20
+      },
+      "-LcapXuEgVu_IZeco4hd": {
+        "startDate": 1555429723230,
+        "direction": "Long",
+        "enterPrice": "26432",
+        "onExitPosition": {
+          "exitPrice": 26453,
+          "quantity": 1
+        },
+        "finishTime": 1555429732048,
+        "quantity": 1,
+        "result": 21
+      },
+      "-LcbLZ8sQr60Jf3vA4Gn": {
+        "startDate": 1555431059397,
+        "direction": "Long",
+        "enterPrice": "26447",
+        "onExitPosition": {
+          "exitPrice": 26617,
+          "quantity": 1
+        },
+        "finishTime": 1555438387923,
+        "quantity": 1,
+        "result": 170
+      },
+      "-Lce_8mBCc5k_n9BENI9": {
+        "startDate": 1555492535652,
+        "direction": "Short",
+        "enterPrice": "26480",
+        "onExitPosition": {
+          "exitPrice": 26473,
+          "quantity": 1
+        },
+        "finishTime": 1555492543695,
+        "quantity": 1,
+        "result": 7
+      },
+      "-LcepnXsGnhcach6zto_": {
+        "startDate": 1555496886422,
+        "direction": "Long",
+        "enterPrice": "26471",
+        "onExitPosition": {
+          "exitPrice": 26478,
+          "quantity": 1
+        },
+        "finishTime": 1555496909051,
+        "quantity": 1,
+        "result": 7
+      },
+      "-LcfJArSNxEZwXIq1mRN": {
+        "startDate": 1555504859567,
+        "direction": "Long",
+        "enterPrice": "26480",
+        "onExitPosition": {
+          "exitPrice": 26492,
+          "quantity": 1
+        },
+        "finishTime": 1555504873061,
+        "quantity": 1,
+        "result": 12
+      },
+      "-LcfgSzXcu6nBgKKrmF2": {
+        "startDate": 1555511229722,
+        "direction": "Long",
+        "enterPrice": "26413",
+        "onExitPosition": {
+          "exitPrice": 26439,
+          "quantity": 1
+        },
+        "finishTime": 1555511238710,
+        "quantity": "8",
+        "result": 208
+      },
+      "-Lcg44NM2xVAnTBsAL1-": {
+        "startDate": 1555517051230,
+        "direction": "Long",
+        "enterPrice": "26411",
+        "onExitPosition": {
+          "exitPrice": 26422,
+          "quantity": 1
+        },
+        "finishTime": 1555517691481,
+        "quantity": 1,
+        "result": 11
+      },
+      "-LcgC6dhvMFttl8DfWrH": {
+        "startDate": 1555519789172,
+        "direction": "Short",
+        "enterPrice": "26460",
+        "onExitPosition": {
+          "exitPrice": 26449,
+          "quantity": 1
+        },
+        "finishTime": 1555519797937,
+        "quantity": "10",
+        "result": 110
+      },
+      "-LcgTIEXG73bHXIi59j4": {
+        "startDate": 1555523849658,
+        "direction": "Long",
+        "enterPrice": "26461",
+        "onExitPosition": {
+          "exitPrice": 26467,
+          "quantity": 1
+        },
+        "finishTime": 1555524301883,
+        "quantity": "100",
+        "result": 600
+      }
+    }
+  }
+}

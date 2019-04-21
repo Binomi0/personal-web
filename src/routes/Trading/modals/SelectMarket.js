@@ -9,7 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
 import blue from '@material-ui/core/colors/blue';
 
 const products = ['DAX', 'DOW', 'ETH'];
@@ -21,22 +20,26 @@ const styles = {
 };
 
 class SelectMarket extends React.Component {
-  handleClose = () => {
-    this.props.onClose(this.props.selectedMarket);
+  handleSelectMarketClick = (value) => {
+    this.handleClose();
+    this.props.onSelectMarket(value);
+    this.props.openModal('NEW_TRADE');
   };
 
-  handleListItemClick = (value) => {
-    this.props.onClose(value);
+  handleClose = () => {
+    this.props.closeModal();
   };
 
   render() {
-    const { classes, selectedMarket, ...other } = this.props;
+    const { classes, closeModal, open } = this.props;
+
+    console.log(this.constructor.name, this.props);
 
     return (
       <Dialog
-        onClose={this.handleClose}
+        onClose={closeModal}
         aria-labelledby="select-market-dialog"
-        {...other}
+        open={open}
       >
         <DialogTitle id="select-market-dialog">Selecciona activo</DialogTitle>
         <div>
@@ -44,7 +47,7 @@ class SelectMarket extends React.Component {
             {products.map((product) => (
               <ListItem
                 button
-                onClick={() => this.handleListItemClick(product)}
+                onClick={() => this.handleSelectMarketClick(product)}
                 key={product}
               >
                 <ListItemAvatar>
@@ -55,17 +58,6 @@ class SelectMarket extends React.Component {
                 <ListItemText primary={product} />
               </ListItem>
             ))}
-            <ListItem
-              button
-              onClick={() => this.handleListItemClick('addAccount')}
-            >
-              <ListItemAvatar>
-                <Avatar>
-                  <AddIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="add account" />
-            </ListItem>
           </List>
         </div>
       </Dialog>
@@ -75,8 +67,9 @@ class SelectMarket extends React.Component {
 
 SelectMarket.propTypes = {
   classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
-  selectedMarket: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
+  onSelectMarket: PropTypes.func.isRequired,
 };
 
 const SelectMarketWrapped = withStyles(styles)(SelectMarket);

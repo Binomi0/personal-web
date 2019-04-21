@@ -230,7 +230,7 @@ export default createMuiTheme({
   typography: {
     useNextVariants: true,
     fontFamily: [
-      'Rubik-Light',
+      'Rubik',
       'sans-serif',
       '-apple-system',
       'BlinkMacSystemFont',
@@ -279,6 +279,9 @@ export default createMuiTheme({
       '&span': {
         fontFamily: 'Rubik-Light ',
       },
+    },
+    textSecondary: {
+      color: '#fff',
     },
   },
   palette: {

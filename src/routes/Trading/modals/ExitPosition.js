@@ -11,42 +11,61 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 import styles from '../styles/trading';
 
+const defaultState = {
+  exitPrice: 11234,
+  quantity: 1,
+};
+
 class ExitPosition extends React.Component {
-  state = {
-    exitPrice: 11234,
-    quantity: 1,
-  };
+  state = defaultState;
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: parseFloat(value) });
   };
 
+  handleOnExitPosition = () => {
+    this.props.onExitPosition(this.props.selectedMarket, this.state);
+    this.handleClose();
+  };
+
   handleClose = () => {
-    this.props.onClose(this.state);
+    this.props.closeModal();
   };
 
   render() {
-    const { classes, onClose, ...other } = this.props;
+    const { classes, closeModal, open } = this.props;
+    console.log(this.constructor.name, this.props);
 
     return (
       <Dialog
-        onClose={this.handleClose}
+        onClose={closeModal}
         aria-labelledby="exit-position-dialog"
-        {...other}
+        open={open}
       >
         <DialogTitle id="exit-position-dialog">Cerrando posición</DialogTitle>
         <div className={classes.container}>
           <FormControl className={classes.formControl} variant="filled">
             <InputLabel htmlFor="exitPrice">Precio Salida</InputLabel>
             <Input
+              type="number"
               id="exitPrice"
               name="exitPrice"
               value={this.state.exitPrice}
               onChange={this.handleChange}
             />
           </FormControl>
+          <FormControl className={classes.formControl} variant="filled">
+            <InputLabel htmlFor="quantity">Contratos</InputLabel>
+            <Input
+              type="number"
+              id="quantity"
+              name="quantity"
+              value={this.state.quantity}
+              onChange={this.handleChange}
+            />
+          </FormControl>
           <Button
-            onClick={this.handleClose}
+            onClick={this.handleOnExitPosition}
             variant="contained"
             color="primary"
           >
@@ -60,7 +79,9 @@ class ExitPosition extends React.Component {
 
 ExitPosition.propTypes = {
   classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  onExitPosition: PropTypes.func.isRequired,
+  selectedMarket: PropTypes.string.isRequired,
 };
 
 const ExitPositionWrapped = withStyles(styles)(ExitPosition);
