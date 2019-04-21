@@ -11,7 +11,6 @@ function BalanceCards({ equity, ...rest }) {
     }
     return {};
   };
-  // console.log(this.constructor.name, this.props);
   return (
     <CardsContainer>
       <BalanceCard

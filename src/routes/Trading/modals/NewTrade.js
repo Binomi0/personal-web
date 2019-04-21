@@ -25,18 +25,25 @@ class NewTrade extends React.Component {
     this.setState({ [name]: value });
   };
 
+  handleOpenNewPosition = () => {
+    this.handleClose();
+    this.props.onOpenPosition(this.props.selectedMarket, this.state);
+  };
+
   handleClose = () => {
-    this.props.onClose(this.state);
+    this.props.closeModal();
   };
 
   render() {
-    const { classes, selectedMarket, ...other } = this.props;
+    const { classes, selectedMarket, open, ...other } = this.props;
+
+    console.log('other =>', other);
 
     return (
       <Dialog
         onClose={this.handleClose}
         aria-labelledby="new-trade-dialog"
-        {...other}
+        open={open}
       >
         <DialogTitle id="new-trade-dialog">
           Abriendo posición en {this.props.selectedMarket}
@@ -77,7 +84,7 @@ class NewTrade extends React.Component {
           </FormControl>
           <Button
             color="primary"
-            onClick={this.handleClose}
+            onClick={this.handleOpenNewPosition}
             variant="contained"
           >
             Enviar
@@ -90,7 +97,8 @@ class NewTrade extends React.Component {
 
 NewTrade.propTypes = {
   classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  onOpenPosition: PropTypes.func.isRequired,
   selectedMarket: PropTypes.string.isRequired,
 };
 

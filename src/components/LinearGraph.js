@@ -45,13 +45,13 @@ class LinearGraph extends React.Component {
             label="€"
           />
           <V.VictoryLine
-            style={{ data: { stroke: '#8ee7ff' } }}
+            style={{ data: { stroke: '#8ee7ff', strokeWidth: 1 } }}
             interpolation="linear"
             data={this.props.data || []}
           />
           <V.VictoryScatter
             data={this.props.data || []}
-            size={this.props.data.length ? 4 : 1}
+            size={this.props.data.length ? 2 : 1}
             style={{ data: { fill: '#8ee7ff' } }}
           />
         </V.VictoryChart>

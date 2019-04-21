@@ -51,6 +51,7 @@ export const TradingContent = styled.div`
 `;
 
 export const TradingContainer = styled.div`
+  min-height: 100px;
   background: #282c33;
 `;
 

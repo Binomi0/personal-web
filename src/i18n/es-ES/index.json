@@ -1,6 +1,7 @@
 {
   "TRADING": {
-    "title": "Operaciones en bolsa"
+    "title": "Operaciones en bolsa",
+    "subtitle": "Posiciones abiertas en el mercado"
   },
   "POSITIONS": {},
   "TRADES": {},
