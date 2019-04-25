@@ -13,7 +13,7 @@ import LogoAppBar from '../../../components/LogoAppBar';
 import LinearGraph from '../../../components/LinearGraph';
 
 import literals from '../../../i18n/es-ES';
-import { CRYPTOS } from '../modules/constants';
+import { CRYPTOS, MARKETS } from '../modules/constants';
 
 import styles, {
   TradingContainer,
@@ -33,6 +33,10 @@ class TradingView extends Component {
     this.props.getIGMarketPrice('DOW');
     this.props.getIGMarketPrice('DAX');
     this.props.getTrades();
+    this.props.getIGAuthentication(() => {
+      this.props.getIGLightStreamer(MARKETS.DOW);
+      this.props.getIGLightStreamer(MARKETS.DAX);
+    });
     // this.props.getChartData('DOW', 100);
     // this.props.getChartData('DAX', 100);
     // const auth = prompt('Introduce la clave de acceso', '');
@@ -115,6 +119,8 @@ TradingView.propTypes = {
   equity: PropTypes.oneOfType([PropTypes.number, PropTypes.array]),
   getIGMarketPrice: PropTypes.func.isRequired,
   getCoinbasePrice: PropTypes.func.isRequired,
+  getIGAuthentication: PropTypes.func.isRequired,
+  getIGLightStreamer: PropTypes.func.isRequired,
   selectedMarket: PropTypes.string.isRequired,
   newPosition: PropTypes.object.isRequired,
 };

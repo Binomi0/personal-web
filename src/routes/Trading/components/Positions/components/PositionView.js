@@ -16,6 +16,11 @@ class PositionsView extends Component {
   };
   componentDidMount() {
     this.getPositions();
+    // this.lsClient = this.props.lightStreamer;
+    // console.log('this.client =>', this.lsClient);
+
+    // this.lsClient.createConnection();
+    // this.lsClient.addSubscription(MARKETS.DOW);
   }
 
   handleClickOpen = () => {
@@ -33,6 +38,8 @@ class PositionsView extends Component {
   render() {
     const { positions } = this.props;
     const isAdmin = Boolean(localStorage.getItem('isAdmin'));
+
+    // console.log(this.constructor.name, this.props);
 
     return (
       <TradingContainer>

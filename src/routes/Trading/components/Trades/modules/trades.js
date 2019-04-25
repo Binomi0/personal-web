@@ -44,7 +44,7 @@ export const getTrades = () => async (dispatch) => {
       DOW: dowTrades,
     };
 
-    console.log(trades);
+    // console.log(trades);
     dispatch({ type: GET_TRADES.SUCCESS });
     dispatch({ type: GET_TRADES.SET, payload: trades });
     dispatch({ type: CALCULATE_EQUITY.SET, payload: operations });

@@ -13,29 +13,32 @@ import formatter from '../../../../../utils/formatAmount';
 // import CandleStickChart from '../../../../../components/CandleStickChart';
 // import { data } from '../modules/constants';
 
+import { MARKETS } from '../../../modules/constants';
+
 class BalanceCard extends React.Component {
   handleClosePosition = (market) => {
-    console.log('Market =>', market);
-
     this.props.openModal('EXIT_POSITION');
     this.props.onSelectMarket(market);
     // this.props.onExitPosition(market);
   };
+
   render() {
     const {
       classes,
       title,
       market,
-      balance,
+      equity,
       prices,
+      liveStream,
       // onExitPosition,
     } = this.props;
 
-    const crypto = prices.coinbase[market] && prices.coinbase[market].amount;
-    const index = prices.ig[market] && prices.ig[market].bid;
+    const cryptoPrice =
+      prices.coinbase[market] && prices.coinbase[market].amount;
+    const indexPrice =
+      liveStream[MARKETS[market]] && liveStream[MARKETS[market]].OFFER;
     const bull = <span className={classes.bullet}>•</span>;
 
-    // console.log('data =>', this.props.prices.charts[market]);
     return (
       <Card className={classes.card}>
         <CardContent>
@@ -44,27 +47,27 @@ class BalanceCard extends React.Component {
             color="textSecondary"
             gutterBottom
           >
-            {title} {bull} {market} {bull} <b>{crypto || index}</b>
+            {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>
           </Typography>
           <Typography
             variant="h5"
             component="h2"
-            color={balance.amount > 0 ? 'textSecondary' : 'error'}
+            color={equity.amount > 0 ? 'textSecondary' : 'error'}
           >
-            {balance.amount > 0 && '+ '}
-            {balance.amount && formatter.format(balance.amount)}
+            {equity.amount > 0 && '+ '}
+            {equity.amount && formatter.format(equity.amount)}
           </Typography>
           <Typography color="textSecondary">
-            {balance.mediumPrice ? 'Posición: ' : 'Cerrada'}
-            {balance.mediumPrice && balance.mediumPrice}{' '}
-            {balance.openContracts &&
-              `(${balance.openContracts} contrato${
-                balance.openContracts === 1 ? '' : 's'
+            {equity.mediumPrice ? 'Posición: ' : 'Cerrada'}
+            {equity.mediumPrice && equity.mediumPrice}{' '}
+            {equity.openContracts &&
+              `(${equity.openContracts} contrato${
+                equity.openContracts === 1 ? '' : 's'
               })`}
           </Typography>
           <Typography className={classes.pos} variant="caption" paragraph>
-            {balance.startTrade &&
-              moment(balance.startTrade).format(
+            {equity.startTrade &&
+              moment(equity.startTrade).format(
                 'D [de] MMMM [de] YYYY [a las] HH:MM',
               )}
           </Typography>
@@ -94,7 +97,7 @@ BalanceCard.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   market: PropTypes.string.isRequired,
-  balance: PropTypes.shape({
+  equity: PropTypes.shape({
     mediumPrice: PropTypes.number,
     amount: PropTypes.number,
     quantity: PropTypes.number,

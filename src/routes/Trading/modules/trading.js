@@ -5,13 +5,16 @@ import {
   GET_COINBASE_PRICE,
   GET_IG_PRICES,
   GET_CHART_DATA,
+  SET_NEW_PRICE,
 } from '../../../action-types';
 import { MARKETS } from './constants';
 import {
-  calculateEquity,
-  calculateCryptosEquity,
-} from '../components/Positions/modules/positions';
+  getIndexBalance,
+  getCryptoBalance,
+} from '../components/BalanceCards/modules/balanceCards';
+import LightStreamer from '../../../utils/lightStreamClient';
 
+const lightStreamer = new LightStreamer();
 const version = '/v1';
 
 /**
@@ -36,7 +39,7 @@ const getCoinbasePrice = (crypto) => async (dispatch) => {
       type: GET_COINBASE_PRICE.SET,
       payload: response.data,
     });
-    dispatch(calculateCryptosEquity(MARKETS[crypto], response.data));
+    dispatch(getCryptoBalance(MARKETS[crypto], response.data));
   } catch (err) {
     dispatch({ type: GET_COINBASE_PRICE.FAILURE });
     console.error(err);
@@ -58,11 +61,26 @@ const getIGMarketPrice = (market) => async (dispatch) => {
       type: GET_IG_PRICES.SET,
       payload: { [market]: response.data },
     });
-    dispatch(calculateEquity(market, response.data));
+    dispatch(getIndexBalance(market, response.data));
   } catch (error) {
     console.error(error);
     dispatch({ type: GET_IG_PRICES.FAILURE });
   }
+};
+
+const getIGAuthentication = (callback) => () => {
+  lightStreamer.authenticate().then(() => {
+    lightStreamer.createConnection();
+    callback();
+  });
+};
+
+const getIGLightStreamer = (market) => (dispatch) => {
+  console.log('market', market);
+  lightStreamer.addSubscription(market, (data) => {
+    dispatch({ type: SET_NEW_PRICE.SET, payload: data });
+    dispatch(getIndexBalance(market, data));
+  });
 };
 
 const getChartData = (market, bars) => async (dispatch) => {
@@ -102,6 +120,8 @@ export const actions = {
   getCoinbasePrice,
   getIGMarketPrice,
   getChartData,
+  getIGLightStreamer,
+  getIGAuthentication,
 };
 
 const defaultState = {
@@ -113,20 +133,19 @@ const defaultState = {
     DOW: {},
   },
   charts: {},
+  liveStream: {},
 };
 
 const INITIAL_STATE = { ...defaultState };
 
 const ACTION_HANDLERS = {
-  [GET_IG_PRICES.SET]: (state, { payload }) => {
-    return {
-      ...state,
-      ig: {
-        ...state.ig,
-        ...payload,
-      },
-    };
-  },
+  [GET_IG_PRICES.SET]: (state, { payload }) => ({
+    ...state,
+    ig: {
+      ...state.ig,
+      ...payload,
+    },
+  }),
   [GET_COINBASE_PRICE.SET]: (state, { payload }) => ({
     ...state,
     coinbase: {
@@ -138,6 +157,13 @@ const ACTION_HANDLERS = {
     ...state,
     charts: {
       ...state.charts,
+      ...payload,
+    },
+  }),
+  [SET_NEW_PRICE.SET]: (state, { payload }) => ({
+    ...state,
+    liveStream: {
+      ...state.liveStream,
       ...payload,
     },
   }),

@@ -20,6 +20,11 @@ export default (theme) => ({
   },
   title: {
     fontSize: 14,
+    '&span': {
+      '.change': {
+        color: 'white',
+      },
+    },
   },
   pos: {
     marginBottom: 0,

@@ -1,6 +1,8 @@
 module.exports = (positions) =>
   positions.length > 1
     ? positions.reduce((total, current) => {
-        return (total + current.enterPrice) / 2;
+        const currentTotal =
+          (current.enterPrice * current.quantity) / current.quantity;
+        return (total + currentTotal) / 2;
       }, positions[0].enterPrice)
     : positions[0].enterPrice;
