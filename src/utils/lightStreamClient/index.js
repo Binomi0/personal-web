@@ -18,8 +18,8 @@ class LightStreamService {
     );
 
     this.credentials = {
-      identifier: process.env.IG_USERNAME,
-      password: process.env.IG_PASSWORD,
+      identifier: process.env.REACT_APP_IG_USERNAME,
+      password: process.env.REACT_APP_IG_PASSWORD,
     };
     this.config = {
       headers: {

@@ -26,7 +26,7 @@ const Modals = ({
 }) => {
   const [modalType, useModalType] = useState('');
 
-  console.log('other', other);
+  // console.log('other', other);
 
   if (type !== modalType) {
     useModalType(type);
