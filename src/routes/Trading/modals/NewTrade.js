@@ -37,7 +37,7 @@ class NewTrade extends React.Component {
   render() {
     const { classes, selectedMarket, open, ...other } = this.props;
 
-    console.log('other =>', other);
+    // console.log('other =>', other);
 
     return (
       <Dialog

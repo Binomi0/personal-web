@@ -3,8 +3,7 @@ import axios from '../../../../../config/axios';
 import createReducer from '../../../../../redux/create-reducer';
 import {
   GET_POSITIONS,
-  GET_TRADES,
-  CALCULATE_EQUITY,
+  // GET_TRADES,
   ADD_POSITION,
   EXIT_POSITION,
   GET_POSITION_EQUITY,
@@ -18,7 +17,7 @@ import { MARKETS } from '../../../modules/constants';
 import { getTrades } from '../../Trades/modules/trades';
 
 const onOpenPosition = (market, position) => async (dispatch) => {
-  console.log('openPsitiosn');
+  console.log('openPosition');
   dispatch({ type: ADD_POSITION.REQUEST });
 
   try {
@@ -122,60 +121,6 @@ const finishTrade = (onExitPosition, market) => async (dispatch) => {
   }
 };
 
-// const getTrades = () => async (dispatch) => {
-//   dispatch({ type: GET_TRADES.REQUEST });
-
-//   try {
-//     const URL = 'v1/trading/trades';
-//     const response = await axios(URL);
-
-//     console.log('response.data =>', response.data);
-
-//     dispatch({ type: GET_TRADES.SUCCESS });
-
-//     const DAX = response.data.filter((pos) => pos.market === MARKETS.DAX);
-//     const DOW = response.data.filter((pos) => pos.market === MARKETS.DOW);
-
-//     const daxTrades = [];
-//     const dowTrades = [];
-//     const operations = [];
-//     let result = 0;
-
-//     function parseTrades(trade) {
-//       return [
-//         moment(trade.finishTime).format('DD/MM/YY HH:MM'),
-//         trade.enterPrice,
-//         trade.onExitPosition.exitPrice,
-//         trade.direction,
-//         trade.result,
-//       ];
-//     }
-
-//     DAX.forEach((market) => {
-//       result += market.result;
-//       operations.push(result);
-//       daxTrades.push(parseTrades(market));
-//     });
-
-//     DOW.forEach((market) => {
-//       result += market.result;
-//       operations.push(result);
-//       dowTrades.push(parseTrades(market));
-//     });
-
-//     dispatch({
-//       type: GET_TRADES.SET,
-//       payload: { DAX: daxTrades, DOW: dowTrades },
-//     });
-//     dispatch({
-//       type: CALCULATE_EQUITY.SET,
-//       payload: operations,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 /**
  * @name calculateResult
  * @description Gives the result of the operation in points
@@ -213,31 +158,7 @@ function calculateResult(currentPosition, onExitPosition) {
   return result;
 }
 
-export const calculateEquity = (market, price) => (dispatch, getState) => {
-  const positions = getState().trading.positions.open;
-  const marketPositions = positions.filter((pos) => pos.market === market);
-
-  if (marketPositions.length) {
-    let equity = {};
-    const direction = marketPositions[0].direction === 'Long' ? 'bid' : 'offer';
-    equity.mediumPrice = calculateMediumPrice(marketPositions);
-    equity.openContracts = calculateContracts(marketPositions);
-    equity.amount =
-      (price[direction] - calculateMediumPrice(marketPositions)) *
-      equity.openContracts;
-    equity.startTrade = marketPositions[0].startDate;
-
-    dispatch({
-      type: GET_POSITION_EQUITY.SET,
-      payload: { [market]: equity },
-    });
-  }
-};
-
-export const calculateCryptosEquity = (crypto, price) => (
-  dispatch,
-  getState,
-) => {
+export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
   const positions = getState().trading.positions.open;
   const marketPositions = positions.filter((pos) => pos.market === crypto);
 
@@ -287,17 +208,9 @@ const ACTION_HANDLERS = {
     ...state,
     open: { ...state.open, ...payload },
   }),
-  [GET_TRADES.SET]: (state, { payload }) => ({
-    ...state,
-    trades: { ...state.trades, ...payload },
-  }),
   [GET_POSITIONS.SET]: (state, { payload }) => ({
     ...state,
     open: payload,
-  }),
-  [CALCULATE_EQUITY.SET]: (state, { payload }) => ({
-    ...state,
-    equity: [...payload],
   }),
   [GET_POSITION_EQUITY.SET]: (state, { payload }) => ({
     ...state,
