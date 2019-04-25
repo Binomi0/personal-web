@@ -3,12 +3,12 @@ import 'firebase/database';
 
 // Initialize Firebase
 const config = {
-  apiKey: 'AIzaSyDy7YR4x5P99TmzflWTaAbcSwSVrMcz97A',
-  authDomain: 'react-mongo-test.firebaseapp.com',
-  databaseURL: 'https://react-mongo-test.firebaseio.com',
-  projectId: 'react-mongo-test',
-  storageBucket: 'react-mongo-test.appspot.com',
-  messagingSenderId: '355923043574',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MSGSID,
 };
 
 const fire = firebase.initializeApp(config);
