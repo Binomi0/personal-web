@@ -76,6 +76,7 @@ const getIGAuthentication = (callback) => () => {
 };
 
 const getIGLightStreamer = (market) => (dispatch) => {
+  console.log('market', market);
   lightStreamer.addSubscription(market, (data) => {
     dispatch({ type: SET_NEW_PRICE.SET, payload: data });
     dispatch(getIndexBalance(market, data));

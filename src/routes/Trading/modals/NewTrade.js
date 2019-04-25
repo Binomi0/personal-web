@@ -35,7 +35,7 @@ class NewTrade extends React.Component {
   };
 
   render() {
-    const { classes, selectedMarket, open, ...other } = this.props;
+    const { classes, open } = this.props;
 
     // console.log('other =>', other);
 

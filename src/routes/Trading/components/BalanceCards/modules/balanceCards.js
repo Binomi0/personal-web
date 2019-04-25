@@ -5,6 +5,11 @@ import { GET_INDEX_BALANCE } from '../../../../../action-types';
 import calculateContracts from '../../../../../utils/trading/calculateContracts';
 import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
 
+const MARKETS = {
+  'IX.D.DOW.IFS.IP': 'DOW',
+  'IX.D.DAX.IFS.IP': 'DAX',
+};
+
 /**
  * @name calculateResult
  * @description Gives the result of the operation in points
@@ -46,8 +51,8 @@ export const getIndexBalance = (market, price) => async (
   dispatch,
   getState,
 ) => {
-  const currentPositions = getState().trading.positions.open.filter((pos) =>
-    ['DOW', 'DAX'].includes(pos.market),
+  const currentPositions = getState().trading.positions.open.filter(
+    (pos) => pos.market === MARKETS[market],
   );
 
   if (currentPositions) {
@@ -58,7 +63,7 @@ export const getIndexBalance = (market, price) => async (
 export const getCurrentBalance = (_market, _positions, _livePrice) => (
   dispatch,
 ) => {
-  if (!_livePrice[_market]) {
+  if (!_livePrice[_market] || !_positions.length) {
     return;
   }
 

@@ -19,11 +19,6 @@ const identifier = process.env.IG_USERNAME || IG_USERNAME;
 const password = process.env.IG_PASSWORD || IG_PASSWORD;
 const igAPIKey = process.env.REACT_APP_IG_API_KEY || IG_API_KEY;
 
-const MARKETS = {
-  'IX.D.DOW.IFS.IP': 'DOW',
-  'IX.D.DAX.IFS.IP': 'DAX',
-};
-
 class LightStreamService {
   constructor() {
     this.lsClient = new ls.LightstreamerClient(igEndpoint);
