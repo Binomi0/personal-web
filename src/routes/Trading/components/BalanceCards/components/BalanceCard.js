@@ -36,7 +36,7 @@ class BalanceCard extends React.Component {
     const cryptoPrice =
       prices.coinbase[market] && prices.coinbase[market].amount;
     const indexPrice =
-      liveStream[MARKETS[market]] && liveStream[MARKETS[market]].OFFER;
+      liveStream[MARKETS[market]] && liveStream[MARKETS[market]].CURRENT;
     const bull = <span className={classes.bullet}>•</span>;
 
     return (
@@ -99,7 +99,7 @@ BalanceCard.propTypes = {
   market: PropTypes.string.isRequired,
   equity: PropTypes.shape({
     mediumPrice: PropTypes.number,
-    amount: PropTypes.number,
+    amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     quantity: PropTypes.number,
   }).isRequired,
   prices: PropTypes.object.isRequired,

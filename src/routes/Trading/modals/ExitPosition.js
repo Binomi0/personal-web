@@ -11,13 +11,31 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 import styles from '../styles/trading';
 
-const defaultState = {
-  exitPrice: 11234,
-  quantity: 1,
+const MARKETS = {
+  DOW: 'IX.D.DOW.IFS.IP',
+  DAX: 'IX.D.DAX.IFS.IP',
 };
 
+// const defaultState = {
+//   exitPrice: 11234,
+//   quantity: 1,
+// };
+
 class ExitPosition extends React.Component {
-  state = defaultState;
+  constructor(props) {
+    super(props);
+    this.state = {
+      exitPrice: props.liveStream[MARKETS[props.selectedMarket]].OFFER,
+      quantity: 1,
+    };
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    const { OFFER } = nextProps.liveStream[MARKETS[nextProps.selectedMarket]];
+    if (OFFER !== nextState.exitPrice) {
+      this.setState({ exitPrice: OFFER });
+    }
+  }
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: parseFloat(value) });
@@ -33,7 +51,16 @@ class ExitPosition extends React.Component {
   };
 
   render() {
-    const { classes, closeModal, open } = this.props;
+    const {
+      classes,
+      closeModal,
+      open,
+      // liveStream,
+      // selectedMarket,
+    } = this.props;
+
+    // const exitPrice = liveStream[MARKETS[selectedMarket]].OFFER;
+    // console.log(exitPrice);
     console.log(this.constructor.name, this.props);
 
     return (

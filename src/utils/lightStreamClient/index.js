@@ -100,10 +100,14 @@ class LightStreamService {
         console.log('UNSUBSCRIBED');
       },
       onItemUpdate(obj) {
+        const BID = parseFloat(obj.getValue('BID'));
+        const OFFER = parseFloat(obj.getValue('OFFER'));
+        const CURRENT = parseFloat((BID + OFFER) / 2, 10).toFixed(2);
         const marketPrice = {
           [market]: {
-            BID: obj.getValue('BID'),
-            OFFER: obj.getValue('OFFER'),
+            BID,
+            OFFER,
+            CURRENT,
           },
         };
         // console.log('STREAM OBJ =>', obj);

@@ -52,6 +52,7 @@ export const getIndexBalance = (market, price) => async (
   getState,
 ) => {
   const currentPositions = getState().trading.positions.open.filter(
+    // (pos) => ['DAX', 'DOW', 'ETH'].includes(pos.market),
     (pos) => pos.market === MARKETS[market],
   );
 
@@ -69,14 +70,22 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
 
   const mediumPrice = calculateMediumPrice(_positions);
   const openContracts = calculateContracts(_positions);
+  const isLong = _positions[0].direction === 'Long';
+  let amount = 0;
+  if (isLong) {
+    amount = parseFloat(
+      (_livePrice[_market].BID - mediumPrice) * openContracts,
+    ).toFixed(2);
+  } else {
+    amount = parseFloat(
+      (mediumPrice - _livePrice[_market].OFFER) * openContracts,
+    ).toFixed(2);
+  }
 
   const equity = {
     mediumPrice,
     openContracts,
-    amount: parseInt(
-      (_livePrice[_market].OFFER - mediumPrice) * openContracts,
-      10,
-    ),
+    amount,
     startTrade: _positions[0].startDate,
   };
 
