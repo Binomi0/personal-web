@@ -30,6 +30,7 @@ class BalanceCard extends React.Component {
       equity,
       prices,
       liveStream,
+      spread,
       // onExitPosition,
     } = this.props;
 
@@ -39,6 +40,8 @@ class BalanceCard extends React.Component {
       liveStream[MARKETS[market]] && liveStream[MARKETS[market]].CURRENT;
     const bull = <span className={classes.bullet}>•</span>;
 
+    const indexSpread = (spread && spread[MARKETS[market]]) || 0;
+
     return (
       <Card className={classes.card}>
         <CardContent>
@@ -47,7 +50,8 @@ class BalanceCard extends React.Component {
             color="textSecondary"
             gutterBottom
           >
-            {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>
+            {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>(
+            {indexSpread})
           </Typography>
           <Typography
             variant="h5"
@@ -62,7 +66,7 @@ class BalanceCard extends React.Component {
             {equity.mediumPrice && equity.mediumPrice}{' '}
             {equity.openContracts &&
               `(${equity.openContracts} contrato${
-                equity.openContracts === 1 ? '' : 's'
+                equity.openContracts === '1' ? '' : 's'
               })`}
           </Typography>
           <Typography className={classes.pos} variant="caption" paragraph>
@@ -98,12 +102,13 @@ BalanceCard.propTypes = {
   title: PropTypes.string.isRequired,
   market: PropTypes.string.isRequired,
   equity: PropTypes.shape({
-    mediumPrice: PropTypes.number,
+    mediumPrice: PropTypes.string,
     amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     quantity: PropTypes.number,
   }).isRequired,
   prices: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  spread: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(BalanceCard);

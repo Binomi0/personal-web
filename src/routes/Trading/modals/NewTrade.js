@@ -35,12 +35,12 @@ class NewTrade extends React.Component {
       MARKETS[nextProps.selectedMarket]
     ];
     if (nextState.direction === 'Long') {
-      if (BID !== nextState.enterPrice) {
-        this.setState({ enterPrice: BID });
-      }
-    } else {
       if (OFFER !== nextState.enterPrice) {
         this.setState({ enterPrice: OFFER });
+      }
+    } else {
+      if (BID !== nextState.enterPrice) {
+        this.setState({ enterPrice: BID });
       }
     }
   }

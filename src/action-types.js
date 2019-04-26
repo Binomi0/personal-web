@@ -33,3 +33,4 @@ export const SET_SELECTED_MARKET = requestAction(
   '/trading/SET_SELECTED_MARKET',
 );
 export const SET_NEW_POSITION = requestAction('/trading/SET_NEW_POSITION');
+export const GET_MARKET_SPREAD = requestAction('/trading/GET_MARKET_SPREAD');
