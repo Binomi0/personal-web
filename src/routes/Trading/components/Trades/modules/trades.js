@@ -9,13 +9,14 @@ import { getPositions } from '../../Positions/modules/positions';
 import { MARKETS } from '../../../modules/constants';
 
 export const getTrades = () => async (dispatch) => {
+  console.log('getTrades');
   dispatch({ type: GET_TRADES.REQUEST });
 
   try {
     const URL = '/v1/trading/trades';
     const response = await axios(URL);
 
-    // console.log('response.data', response);
+    // console.log('response.data', response.data);
     const daxTrades = [];
     const dowTrades = [];
     const operations = [];
@@ -25,30 +26,34 @@ export const getTrades = () => async (dispatch) => {
       return [
         moment(trade.finishTime).format('DD/MM/YY HH:MM'),
         trade.enterPrice,
-        trade.onExitPosition.exitPrice,
+        trade.exitPosition.exitPrice,
         trade.direction,
         trade.result,
       ];
     }
 
-    console.log('MARKETS', MARKETS);
     response.data.forEach((trade) => {
       if (trade.market === MARKETS.DAX) {
+        console.log('trade', trade);
         daxTrades.push(parseTrades(trade));
       }
       if (trade.market === MARKETS.DOW) {
+        console.log('trade', trade);
         dowTrades.push(parseTrades(trade));
       }
       result += trade.result;
       operations.push(result);
     });
 
+    console.log('daxTrades', daxTrades);
+    console.log('dowTrades', dowTrades);
+
     const trades = {
       DAX: daxTrades,
       DOW: dowTrades,
     };
 
-    // console.log(trades);
+    console.log(trades);
     dispatch({ type: GET_TRADES.SUCCESS });
     dispatch({ type: GET_TRADES.SET, payload: trades });
     dispatch({ type: CALCULATE_EQUITY.SET, payload: operations });
@@ -94,15 +99,25 @@ export const actions = {
   finishTrade,
   getTrades,
 };
+
 const defaultState = {
-  DOW: [],
-  DAX: [],
-  ETH: [],
-  accountEquity: [],
+  market: {
+    DAX: [],
+    DOW: [],
+  },
+  equity: [],
 };
 
 const INITIAL_STATE = { ...defaultState };
 
-const ACTION_HANDLERS = {};
-
+const ACTION_HANDLERS = {
+  [GET_TRADES.SET]: (state, { payload }) => ({
+    ...state,
+    market: { ...state.market, ...payload },
+  }),
+  [CALCULATE_EQUITY.SET]: (state, { payload }) => ({
+    ...state,
+    equity: [...payload],
+  }),
+};
 export default createReducer(INITIAL_STATE, ACTION_HANDLERS);

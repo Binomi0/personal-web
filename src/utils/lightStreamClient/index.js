@@ -68,6 +68,7 @@ class LightStreamService {
 
     this.lsClient.addListener({
       onListenStart() {
+        console.groupCollapsed('LightStream');
         console.log('Listen start');
       },
       onStatusChange(newStatus) {
@@ -92,6 +93,8 @@ class LightStreamService {
     this.mySubscription.addListener({
       onSubscription() {
         console.log('SUBSCRIBED TO =>', market);
+        console.groupEnd();
+        console.markTimeline('LightStream');
       },
       onSubscriptionError(code, message) {
         console.log('Error code: ', code, ', message: ', message);

@@ -11,8 +11,7 @@ const humanDate = 'DD [de] MMMM [de] YYYY';
 class BalanceView extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    accountEquity: PropTypes.oneOfType([PropTypes.number, PropTypes.array])
-      .isRequired,
+    equity: PropTypes.oneOfType([PropTypes.number, PropTypes.array]).isRequired,
   };
 
   render() {
