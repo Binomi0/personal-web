@@ -19,9 +19,7 @@ class BalanceView extends Component {
     const { classes, equity } = this.props;
     return (
       <div>
-        <h2 className={classes.h2}>
-          Balance Actual {moment().format(humanDate)}
-        </h2>
+        <h2 className={classes.h2}>Balance a {moment().format(humanDate)}</h2>
         <LinearGraph classes={classes} data={equity} />
       </div>
     );

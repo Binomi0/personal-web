@@ -82,42 +82,42 @@ const deletePosition = (market) => async (dispatch, getState) => {
   }
 };
 
-/**
- * @name calculateResult
- * @description Gives the result of the operation in points
- *
- * @param {Object} trade
- * @param {string} trade.enterPrice
- * @param {string} trade.exitPrice
- * @param {string} trade.direction
- *
- * @returns {Number}
- */
-function calculateResult(currentPosition, onExitPosition) {
-  console.log('currentPosition =>', currentPosition);
-  console.log('onExitPosition =>', onExitPosition);
-  if (!currentPosition.mediumPrice) {
-    throw new Error('Missing enterPrice parameter in `calculateResult`');
-  }
-  if (!onExitPosition.exitPrice) {
-    throw new Error('Missing exitPrice parameter in `calculateResult`');
-  }
-  // TODO Agregar direcction a la respuesta del balance
-  if (!currentPosition.direction) {
-    throw new Error('Missing direction parameter in `calculateResult`');
-  }
-  let result;
+// /**
+//  * @name calculateResult
+//  * @description Gives the result of the operation in points
+//  *
+//  * @param {Object} trade
+//  * @param {string} trade.enterPrice
+//  * @param {string} trade.exitPrice
+//  * @param {string} trade.direction
+//  *
+//  * @returns {Number}
+//  */
+// function calculateResult(currentPosition, onExitPosition) {
+//   console.log('currentPosition =>', currentPosition);
+//   console.log('onExitPosition =>', onExitPosition);
+//   if (!currentPosition.mediumPrice) {
+//     throw new Error('Missing enterPrice parameter in `calculateResult`');
+//   }
+//   if (!onExitPosition.exitPrice) {
+//     throw new Error('Missing exitPrice parameter in `calculateResult`');
+//   }
+//   // TODO Agregar direcction a la respuesta del balance
+//   if (!currentPosition.direction) {
+//     throw new Error('Missing direction parameter in `calculateResult`');
+//   }
+//   let result;
 
-  if (currentPosition.direction === 'Long') {
-    result =
-      parseInt(onExitPosition.exitPrice) - parseInt(currentPosition.enterPrice);
-  } else {
-    result =
-      parseInt(currentPosition.enterPrice) - parseInt(onExitPosition.exitPrice);
-  }
+//   if (currentPosition.direction === 'Long') {
+//     result =
+//       parseInt(onExitPosition.exitPrice) - parseInt(currentPosition.enterPrice);
+//   } else {
+//     result =
+//       parseInt(currentPosition.enterPrice) - parseInt(onExitPosition.exitPrice);
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
 const onSelectMarket = (market) => (dispatch) => {
   dispatch({ type: SET_SELECTED_MARKET.SET, payload: market });

@@ -93,8 +93,6 @@ export const finishTrade = (_exitPosition, _market) => async (dispatch) => {
   }
 };
 
-const getAccountEquity = () => (dispatch) => {};
-
 export const actions = {
   finishTrade,
   getTrades,

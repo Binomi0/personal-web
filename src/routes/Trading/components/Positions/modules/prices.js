@@ -8,7 +8,6 @@ import {
 } from '../../../../../action-types';
 // import calculateContracts from '../../../../../utils/trading/calculateContracts';
 // import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
-import { MARKETS } from '../../../modules/constants';
 import LightStreamer from '../../../../../utils/lightStreamClient';
 import { getIndexBalance, getCryptoBalance } from './balance';
 
