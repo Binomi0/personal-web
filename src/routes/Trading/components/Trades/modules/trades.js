@@ -9,7 +9,6 @@ import { getPositions } from '../../Positions/modules/positions';
 import { MARKETS } from '../../../modules/constants';
 
 export const getTrades = () => async (dispatch) => {
-  console.log('getTrades');
   dispatch({ type: GET_TRADES.REQUEST });
 
   try {
@@ -34,26 +33,20 @@ export const getTrades = () => async (dispatch) => {
 
     response.data.forEach((trade) => {
       if (trade.market === MARKETS.DAX) {
-        console.log('trade', trade);
         daxTrades.push(parseTrades(trade));
       }
       if (trade.market === MARKETS.DOW) {
-        console.log('trade', trade);
         dowTrades.push(parseTrades(trade));
       }
       result += trade.result;
       operations.push(result);
     });
 
-    console.log('daxTrades', daxTrades);
-    console.log('dowTrades', dowTrades);
-
     const trades = {
       DAX: daxTrades,
       DOW: dowTrades,
     };
 
-    console.log(trades);
     dispatch({ type: GET_TRADES.SUCCESS });
     dispatch({ type: GET_TRADES.SET, payload: trades });
     dispatch({ type: CALCULATE_EQUITY.SET, payload: operations });

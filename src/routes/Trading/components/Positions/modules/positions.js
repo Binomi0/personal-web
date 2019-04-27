@@ -11,6 +11,7 @@ import {
 } from '../../../../../action-types';
 import { finishTrade } from '../../Trades/modules/trades';
 import { getCurrentBalance } from './balance';
+import { MARKETS } from '../../../modules/constants';
 
 const version = 'v1';
 
@@ -27,10 +28,9 @@ const onOpenPosition = (market, position) => async (dispatch) => {
       market,
     };
 
-    const response = await axios.post(URL, newPosition);
+    await axios.post(URL, newPosition);
 
     dispatch({ type: ADD_POSITION.SUCCESS });
-    dispatch({ type: ADD_POSITION.SET, payload: { [market]: response.data } });
     dispatch(getPositions(market));
   } catch (err) {
     dispatch({ type: ADD_POSITION.FAILURE });
@@ -38,7 +38,7 @@ const onOpenPosition = (market, position) => async (dispatch) => {
   }
 };
 
-export const getPositions = (market) => async (dispatch) => {
+export const getPositions = () => async (dispatch) => {
   dispatch({ type: GET_POSITIONS.REQUEST });
 
   try {
@@ -47,7 +47,19 @@ export const getPositions = (market) => async (dispatch) => {
 
     dispatch({ type: GET_POSITIONS.SUCCESS });
     dispatch({ type: GET_POSITIONS.SET, payload: response.data });
-    dispatch(getCurrentBalance(market, response.data));
+
+    const daxPositions = [];
+    const dowPositions = [];
+    response.data.forEach((position) => {
+      if (position.market === MARKETS.DOW) {
+        dowPositions.push(position);
+      }
+      if (position.market === MARKETS.DAX) {
+        daxPositions.push(position);
+      }
+    });
+    dispatch(getCurrentBalance(MARKETS.IG.DOW, dowPositions));
+    dispatch(getCurrentBalance(MARKETS.IG.DAX, daxPositions));
   } catch (err) {
     console.error(err);
     dispatch({ type: GET_POSITIONS.FAILURE });

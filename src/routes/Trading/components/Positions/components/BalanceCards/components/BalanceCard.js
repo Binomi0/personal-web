@@ -24,7 +24,7 @@ class BalanceCard extends React.Component {
       mediumPrice: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       quantity: PropTypes.number,
-    }).isRequired,
+    }),
     prices: PropTypes.object.isRequired,
     openModal: PropTypes.func.isRequired,
     onSelectMarket: PropTypes.func.isRequired,
@@ -68,28 +68,32 @@ class BalanceCard extends React.Component {
             {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>(
             {indexSpread})
           </Typography>
-          <Typography
-            variant="h5"
-            component="h2"
-            color={equity.amount > 0 ? 'textSecondary' : 'error'}
-          >
-            {equity.amount > 0 && '+ '}
-            {equity.amount && formatter.format(equity.amount)}
-          </Typography>
-          <Typography color="textSecondary">
-            {equity.mediumPrice ? 'Posición: ' : 'Cerrada'}
-            {equity.mediumPrice && equity.mediumPrice}{' '}
-            {equity.openContracts &&
-              `(${equity.openContracts} contrato${
-                equity.openContracts === '1' ? '' : 's'
-              })`}
-          </Typography>
-          <Typography className={classes.pos} variant="caption" paragraph>
-            {equity.startTrade &&
-              moment(equity.startTrade).format(
-                'D [de] MMMM [de] YYYY [a las] HH:MM',
-              )}
-          </Typography>
+          {equity && equity.amount && (
+            <>
+              <Typography
+                variant="h5"
+                component="h2"
+                color={equity.amount > 0 ? 'textSecondary' : 'error'}
+              >
+                {equity.amount > 0 && '+ '}
+                {equity.amount && formatter.format(equity.amount)}
+              </Typography>
+              <Typography color="textSecondary">
+                {equity.mediumPrice ? 'Posición: ' : 'Cerrada'}
+                {equity.mediumPrice && equity.mediumPrice}{' '}
+                {equity.openContracts &&
+                  `(${equity.openContracts} contrato${
+                    equity.openContracts === '1' ? '' : 's'
+                  })`}
+              </Typography>
+              <Typography className={classes.pos} variant="caption" paragraph>
+                {equity.startTrade &&
+                  moment(equity.startTrade).format(
+                    'D [de] MMMM [de] YYYY [a las] HH:MM',
+                  )}
+              </Typography>
+            </>
+          )}
         </CardContent>
         {/* {market === 'DOW' && (
           <CandleStickChart data={this.props.prices.charts.DOW || []} />

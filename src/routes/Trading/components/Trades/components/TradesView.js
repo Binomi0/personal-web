@@ -51,7 +51,7 @@ class Trades extends Component {
     //   DOW: 'Indice Dow Jones DOW',
     // };
 
-    console.log(this.constructor.name, this.props);
+    // console.log(this.constructor.name, this.props);
 
     return (
       <TradesContainer>

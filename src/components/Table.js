@@ -40,7 +40,7 @@ class PositionTable extends Component {
           <TableBody>
             {positions.length &&
               positions.map((position) => (
-                <TableRow key={position.market}>
+                <TableRow key={position._id}>
                   <TableCell>
                     {moment(position.date).format(
                       '[Abierta el] DD/MM/YYYY [a las] HH:MM:SS',

@@ -15,7 +15,7 @@ class BalanceView extends Component {
   };
 
   render() {
-    console.log(this.constructor.name, this.props);
+    // console.log(this.constructor.name, this.props);
     const { classes, equity } = this.props;
     return (
       <div>
