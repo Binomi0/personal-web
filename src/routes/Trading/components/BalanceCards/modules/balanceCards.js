@@ -77,15 +77,15 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
   const isLong = _positions[0].direction === 'Long';
   let amount = 0;
   if (isLong) {
-    amount = parseFloat((BID - mediumPrice) * openContracts).toFixed(2);
+    amount = (BID - mediumPrice) * openContracts;
   } else {
-    amount = parseFloat((mediumPrice - OFFER) * openContracts).toFixed(2);
+    amount = (mediumPrice - OFFER) * openContracts;
   }
 
   const equity = {
-    mediumPrice: mediumPrice.toFixed(2),
+    mediumPrice: parseFloat(mediumPrice).toFixed(2),
     openContracts: openContracts.toFixed(0),
-    amount,
+    amount: parseFloat(amount).toFixed(2),
     startTrade: _positions[0].startDate,
   };
   dispatch({

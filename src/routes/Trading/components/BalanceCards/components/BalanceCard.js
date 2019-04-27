@@ -102,7 +102,7 @@ BalanceCard.propTypes = {
   title: PropTypes.string.isRequired,
   market: PropTypes.string.isRequired,
   equity: PropTypes.shape({
-    mediumPrice: PropTypes.string,
+    mediumPrice: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     quantity: PropTypes.number,
   }).isRequired,
