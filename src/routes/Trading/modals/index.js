@@ -22,11 +22,12 @@ const Modals = ({
   selectedMarket,
   openModal,
   onOpenPosition,
+  liveStream,
   ...other
 }) => {
   const [modalType, useModalType] = useState('');
 
-  console.log('other', other);
+  // console.log('other', other);
 
   if (type !== modalType) {
     useModalType(type);
@@ -47,6 +48,7 @@ const Modals = ({
           closeModal={closeModal}
           onOpenPosition={onOpenPosition}
           selectedMarket={selectedMarket}
+          liveStream={liveStream}
         />
       )}
       {modalType === MODAL_TYPES.EXIT_POSITION && (
@@ -55,16 +57,18 @@ const Modals = ({
           closeModal={closeModal}
           onExitPosition={onExitPosition}
           selectedMarket={selectedMarket}
+          liveStream={liveStream}
         />
       )}
     </>
   );
 };
 
-const mapStateToProps = ({ modal, trading: { positions } }) => ({
+const mapStateToProps = ({ modal, trading }) => ({
   open: modal.open,
   type: modal.type,
-  selectedMarket: positions.selectedMarket,
+  selectedMarket: trading.positions.selectedMarket,
+  liveStream: trading.prices.liveStream,
 });
 
 const mapDispatchToProps = { ...modalActions, ...positionActions };

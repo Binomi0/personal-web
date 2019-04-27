@@ -1,7 +1,10 @@
 // import moment from 'moment';
 // import axios from '../../../../../config/axios';
 import createReducer from '../../../../../redux/create-reducer';
-import { GET_INDEX_BALANCE } from '../../../../../action-types';
+import {
+  GET_INDEX_BALANCE,
+  GET_MARKET_SPREAD,
+} from '../../../../../action-types';
 import calculateContracts from '../../../../../utils/trading/calculateContracts';
 import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
 
@@ -52,6 +55,7 @@ export const getIndexBalance = (market, price) => async (
   getState,
 ) => {
   const currentPositions = getState().trading.positions.open.filter(
+    // (pos) => ['DAX', 'DOW', 'ETH'].includes(pos.market),
     (pos) => pos.market === MARKETS[market],
   );
 
@@ -67,22 +71,32 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
     return;
   }
 
+  const { OFFER, BID } = _livePrice[_market];
   const mediumPrice = calculateMediumPrice(_positions);
   const openContracts = calculateContracts(_positions);
+  const isLong = _positions[0].direction === 'Long';
+  let amount = 0;
+  if (isLong) {
+    amount = (BID - mediumPrice) * openContracts;
+  } else {
+    amount = (mediumPrice - OFFER) * openContracts;
+  }
 
   const equity = {
-    mediumPrice,
-    openContracts,
-    amount: parseInt(
-      (_livePrice[_market].OFFER - mediumPrice) * openContracts,
-      10,
-    ),
+    mediumPrice: parseFloat(mediumPrice).toFixed(2),
+    openContracts: openContracts.toFixed(0),
+    amount: parseFloat(amount).toFixed(2),
     startTrade: _positions[0].startDate,
   };
-
   dispatch({
     type: GET_INDEX_BALANCE.SET,
     payload: { [_market]: equity },
+  });
+
+  const spread = OFFER - BID;
+  dispatch({
+    type: GET_MARKET_SPREAD.SET,
+    payload: { [_market]: parseFloat(spread).toFixed(2) },
   });
 };
 
@@ -110,6 +124,7 @@ export const actions = {};
 
 const defaultState = {
   equity: {},
+  spread: {},
 };
 
 const INITIAL_STATE = { ...defaultState };
@@ -119,6 +134,13 @@ const ACTION_HANDLERS = {
     ...state,
     equity: {
       ...state.equity,
+      ...payload,
+    },
+  }),
+  [GET_MARKET_SPREAD.SET]: (state, { payload }) => ({
+    ...state,
+    spread: {
+      ...state.spread,
       ...payload,
     },
   }),

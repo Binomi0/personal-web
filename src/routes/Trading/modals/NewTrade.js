@@ -14,16 +14,43 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 import styles from '../styles/trading';
 
+const MARKETS = {
+  DOW: 'IX.D.DOW.IFS.IP',
+  DAX: 'IX.D.DAX.IFS.IP',
+};
+
 class NewTrade extends React.Component {
-  state = {
-    enterPrice: 11234,
-    direction: 'Long',
-    quantity: 1,
-  };
+  constructor(props) {
+    super(props);
+    console.log('props', props);
+    this.state = {
+      enterPrice: props.liveStream[MARKETS[props.selectedMarket]].CURRENT,
+      direction: 'Long',
+      quantity: 1,
+    };
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    const { BID, OFFER } = nextProps.liveStream[
+      MARKETS[nextProps.selectedMarket]
+    ];
+    if (nextState.direction === 'Long') {
+      if (OFFER !== nextState.enterPrice) {
+        this.setState({ enterPrice: OFFER });
+      }
+    } else {
+      if (BID !== nextState.enterPrice) {
+        this.setState({ enterPrice: BID });
+      }
+    }
+  }
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
+    this.setCurrentPrice();
   };
+
+  setCurrentPrice = () => {};
 
   handleOpenNewPosition = () => {
     this.handleClose();
@@ -100,6 +127,7 @@ NewTrade.propTypes = {
   closeModal: PropTypes.func.isRequired,
   onOpenPosition: PropTypes.func.isRequired,
   selectedMarket: PropTypes.string.isRequired,
+  liveStream: PropTypes.object.isRequired,
 };
 
 const NewTradeWrapped = withStyles(styles)(NewTrade);

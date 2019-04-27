@@ -9,6 +9,7 @@ const mapStateToProps = ({ trading }) => ({
   prices: trading.prices,
   equity: trading.balance.equity,
   liveStream: trading.prices.liveStream,
+  spread: trading.balance.spread,
 });
 
 const mapDispatchToProps = {

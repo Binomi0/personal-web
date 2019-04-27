@@ -5,28 +5,25 @@
 const axios = require('axios');
 const ls = require('lightstreamer-client');
 
-const igEndpoint = 'https://demo-apd.marketdatasystems.com';
-const IG_API_KEY = 'b33a31199708bd754979bba54c74aaa7f7315431';
 const IGUrls = {
   login: 'https://demo-api.ig.com/gateway/deal/session',
   market: 'https://demo-api.ig.com/gateway/deal/markets',
   prices: 'https://demo-api.ig.com/gateway/deal/prices',
 };
 
-const IG_USERNAME = 'manhattan';
-const IG_PASSWORD = '@Manhattan01';
-const identifier = process.env.IG_USERNAME || IG_USERNAME;
-const password = process.env.IG_PASSWORD || IG_PASSWORD;
-const igAPIKey = process.env.REACT_APP_IG_API_KEY || IG_API_KEY;
-
 class LightStreamService {
   constructor() {
-    this.lsClient = new ls.LightstreamerClient(igEndpoint);
+    this.lsClient = new ls.LightstreamerClient(
+      process.env.REACT_APP_IG_ENDPOINT,
+    );
 
-    this.credentials = { identifier, password };
+    this.credentials = {
+      identifier: process.env.REACT_APP_IG_USERNAME,
+      password: process.env.REACT_APP_IG_PASSWORD,
+    };
     this.config = {
       headers: {
-        'X-IG-API-KEY': igAPIKey,
+        'X-IG-API-KEY': process.env.REACT_APP_IG_API_KEY,
         Version: 2,
         Accept: 'application/json; charset=UTF-8',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -103,10 +100,14 @@ class LightStreamService {
         console.log('UNSUBSCRIBED');
       },
       onItemUpdate(obj) {
+        const BID = parseFloat(obj.getValue('BID'));
+        const OFFER = parseFloat(obj.getValue('OFFER'));
+        const CURRENT = parseFloat((BID + OFFER) / 2, 10).toFixed(2);
         const marketPrice = {
           [market]: {
-            BID: obj.getValue('BID'),
-            OFFER: obj.getValue('OFFER'),
+            BID,
+            OFFER,
+            CURRENT,
           },
         };
         // console.log('STREAM OBJ =>', obj);

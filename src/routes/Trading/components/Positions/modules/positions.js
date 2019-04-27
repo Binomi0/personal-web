@@ -74,7 +74,7 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
   // console.log('currentPosition', currentPosition);
 };
 
-const deletePosition = (market) => async (dispatch) => {
+const deletePosition = (market) => async (dispatch, getState) => {
   try {
     const URL = `v1/trading/position/${market}`;
     await axios.delete(URL);
@@ -135,7 +135,7 @@ const finishTrade = (onExitPosition, market) => async (dispatch) => {
 function calculateResult(currentPosition, onExitPosition) {
   console.log('currentPosition =>', currentPosition);
   console.log('onExitPosition =>', onExitPosition);
-  if (!currentPosition.enterPrice) {
+  if (!currentPosition.mediumPrice) {
     throw new Error('Missing enterPrice parameter in `calculateResult`');
   }
   if (!onExitPosition.exitPrice) {
