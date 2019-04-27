@@ -44,6 +44,7 @@ const mapStateToProps = ({ modal, trading }) => ({
   open: modal.open,
   type: modal.type,
   selectedMarket: trading.positions.selectedMarket,
+  positions: trading.positions.open,
   ig: trading.prices.ig,
 });
 

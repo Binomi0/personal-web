@@ -90,7 +90,6 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
     startTrade: _positions[0].startDate,
   };
 
-  console.log('equity', equity);
   dispatch({
     type: GET_INDEX_BALANCE.SET,
     payload: { [_market]: equity },
