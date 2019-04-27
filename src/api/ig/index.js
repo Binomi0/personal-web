@@ -8,8 +8,8 @@ export default {
     const auth = await axios.post(
       'https://demo-api.ig.com/gateway/deal/session',
       {
-        identifier: 'onrubia',
-        password: 'ar12003',
+        identifier: process.env.REACT_APP_IG_USERNAME,
+        password: process.env.REACT_APP_IG_PASSWORD,
       },
     );
 
