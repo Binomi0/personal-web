@@ -25,13 +25,14 @@ class ExitPosition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      exitPrice: props.liveStream[MARKETS[props.selectedMarket]].OFFER,
+      exitPrice: props.prices.ig[MARKETS[props.selectedMarket]].OFFER,
       quantity: 1,
     };
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    const { OFFER } = nextProps.liveStream[MARKETS[nextProps.selectedMarket]];
+    console.log('nextProps', nextProps);
+    const { OFFER } = nextProps.prices.ig[MARKETS[nextProps.selectedMarket]];
     if (OFFER !== nextState.exitPrice) {
       this.setState({ exitPrice: OFFER });
     }
@@ -55,11 +56,11 @@ class ExitPosition extends React.Component {
       classes,
       closeModal,
       open,
-      // liveStream,
+      // ig,
       // selectedMarket,
     } = this.props;
 
-    // const exitPrice = liveStream[MARKETS[selectedMarket]].OFFER;
+    // const exitPrice = ig[MARKETS[selectedMarket]].OFFER;
     // console.log(exitPrice);
     console.log(this.constructor.name, this.props);
 

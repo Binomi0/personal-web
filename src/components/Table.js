@@ -20,62 +20,59 @@ class PositionTable extends Component {
 
   render() {
     const isAdmin = Boolean(localStorage.getItem('isAdmin'));
-    const { classes, position, market } = this.props;
-    if (position) {
-      return (
-        <Paper className={classes.table.root}>
-          <div style={{ margin: '1.5rem 1rem' }}>
-            <Typography variant="h2">{market}</Typography>
-          </div>
-          <Table className={classes.table.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Fecha</TableCell>
-                <TableCell align="right">Precio Entrada</TableCell>
-                <TableCell align="right">Estado</TableCell>
-                <TableCell align="right">Dirección</TableCell>
-                <TableCell align="right">Cantidad</TableCell>
-                {isAdmin && <TableCell align="right">Cerrar</TableCell>}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {moment(position.date).format(
-                    '[Abierta el] DD/MM/YYYY [a las] HH:MM:SS',
-                  )}
-                </TableCell>
-                <TableCell align="right">{position.enterPrice}</TableCell>
-                <TableCell align="right">
-                  {position.status || 'Abierta'}
-                </TableCell>
-                <TableCell align="right">{position.direction}</TableCell>
-                <TableCell align="right">{position.quantity}</TableCell>
-                {isAdmin && (
-                  <TableCell align="right">
-                    <Button
-                      onClick={this.handleClose}
-                      variant="contained"
-                      color="secondary"
-                    >
-                      <Typography variant="body1">x</Typography>
-                    </Button>
+    const { classes, positions, market } = this.props;
+    return (
+      <Paper className={classes.table.root}>
+        <div style={{ margin: '1.5rem 1rem' }}>
+          <Typography variant="h2">{market}</Typography>
+        </div>
+        <Table className={classes.table.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Fecha</TableCell>
+              <TableCell align="right">Mercado</TableCell>
+              <TableCell align="right">Precio Entrada</TableCell>
+              <TableCell align="right">Dirección</TableCell>
+              <TableCell align="right">Cantidad</TableCell>
+              {isAdmin && <TableCell align="right">Cerrar</TableCell>}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {positions.length &&
+              positions.map((position) => (
+                <TableRow key={position.market}>
+                  <TableCell>
+                    {moment(position.date).format(
+                      '[Abierta el] DD/MM/YYYY [a las] HH:MM:SS',
+                    )}
                   </TableCell>
-                )}
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-      );
-    } else {
-      return 'Cargando Datos...';
-    }
+                  <TableCell align="right">{position.market}</TableCell>
+                  <TableCell align="right">{position.enterPrice}</TableCell>
+                  <TableCell align="right">{position.direction}</TableCell>
+                  <TableCell align="right">{position.quantity}</TableCell>
+                  {isAdmin && (
+                    <TableCell align="right">
+                      <Button
+                        onClick={this.handleClose}
+                        variant="contained"
+                        color="secondary"
+                      >
+                        <Typography variant="body1">x</Typography>
+                      </Button>
+                    </TableCell>
+                  )}
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    );
   }
 }
 
 PositionTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  position: PropTypes.object.isRequired,
+  positions: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(PositionTable);

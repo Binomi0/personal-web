@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from '../../../../../config/moment';
+import moment from '../../../../../../../config/moment';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -9,13 +9,27 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import styles from '../styles/balanceCards'; // GraphContent,
-import formatter from '../../../../../utils/formatAmount';
+import formatter from '../../../../../../../utils/formatAmount';
 // import CandleStickChart from '../../../../../components/CandleStickChart';
 // import { data } from '../modules/constants';
 
-import { MARKETS } from '../../../modules/constants';
+import { MARKETS } from '../../../../../modules/constants';
 
 class BalanceCard extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
+    market: PropTypes.string.isRequired,
+    equity: PropTypes.shape({
+      mediumPrice: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      quantity: PropTypes.number,
+    }).isRequired,
+    prices: PropTypes.object.isRequired,
+    openModal: PropTypes.func.isRequired,
+    onSelectMarket: PropTypes.func.isRequired,
+  };
+
   handleClosePosition = (market) => {
     this.props.openModal('EXIT_POSITION');
     this.props.onSelectMarket(market);
@@ -29,19 +43,20 @@ class BalanceCard extends React.Component {
       market,
       equity,
       prices,
-      liveStream,
-      spread,
       // onExitPosition,
     } = this.props;
 
+    // console.log('market', market);
     const cryptoPrice =
       prices.coinbase[market] && prices.coinbase[market].amount;
     const indexPrice =
-      liveStream[MARKETS[market]] && liveStream[MARKETS[market]].CURRENT;
+      prices.ig[MARKETS.IG[market]] && prices.ig[MARKETS.IG[market]].CURRENT;
     const bull = <span className={classes.bullet}>•</span>;
 
-    const indexSpread = (spread && spread[MARKETS[market]]) || 0;
+    const indexSpread =
+      (prices.spread && prices.spread[MARKETS.IG[market]]) || 0;
 
+    // console.log(this.constructor.name, this.props);
     return (
       <Card className={classes.card}>
         <CardContent>
@@ -96,19 +111,5 @@ class BalanceCard extends React.Component {
     );
   }
 }
-
-BalanceCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
-  market: PropTypes.string.isRequired,
-  equity: PropTypes.shape({
-    mediumPrice: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    quantity: PropTypes.number,
-  }).isRequired,
-  prices: PropTypes.object.isRequired,
-  openModal: PropTypes.func.isRequired,
-  spread: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(BalanceCard);

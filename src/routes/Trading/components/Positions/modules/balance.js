@@ -1,10 +1,7 @@
 // import moment from 'moment';
 // import axios from '../../../../../config/axios';
 import createReducer from '../../../../../redux/create-reducer';
-import {
-  GET_INDEX_BALANCE,
-  GET_MARKET_SPREAD,
-} from '../../../../../action-types';
+import { GET_INDEX_BALANCE } from '../../../../../action-types';
 import calculateContracts from '../../../../../utils/trading/calculateContracts';
 import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
 
@@ -66,7 +63,11 @@ export const getIndexBalance = (market, price) => async (
 
 export const getCurrentBalance = (_market, _positions, _livePrice) => (
   dispatch,
+  getState,
 ) => {
+  if (!_livePrice) {
+    _livePrice = getState().trading.prices.ig;
+  }
   if (!_livePrice[_market] || !_positions.length) {
     return;
   }
@@ -88,16 +89,23 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
     amount: parseFloat(amount).toFixed(2),
     startTrade: _positions[0].startDate,
   };
+
   dispatch({
     type: GET_INDEX_BALANCE.SET,
     payload: { [_market]: equity },
   });
+};
 
-  const spread = OFFER - BID;
-  dispatch({
-    type: GET_MARKET_SPREAD.SET,
-    payload: { [_market]: parseFloat(spread).toFixed(2) },
-  });
+export const updateBalance = (market) => (dispatch, getState) => {
+  const { selectedMarket } = getState().trading.positions;
+  const { equity } = getState().trading.balance;
+
+  const itemName = Object.keys(equity).filter((pos) =>
+    pos.includes(selectedMarket),
+  );
+  delete equity[itemName];
+
+  dispatch({ type: GET_INDEX_BALANCE.SET, payload: equity });
 };
 
 export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
@@ -120,7 +128,11 @@ export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
   }
 };
 
-export const actions = {};
+export const actions = {
+  getCryptoBalance,
+  getCurrentBalance,
+  getIndexBalance,
+};
 
 const defaultState = {
   equity: {},
@@ -134,13 +146,6 @@ const ACTION_HANDLERS = {
     ...state,
     equity: {
       ...state.equity,
-      ...payload,
-    },
-  }),
-  [GET_MARKET_SPREAD.SET]: (state, { payload }) => ({
-    ...state,
-    spread: {
-      ...state.spread,
       ...payload,
     },
   }),

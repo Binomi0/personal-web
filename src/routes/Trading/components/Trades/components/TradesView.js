@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import MUIDataTable from 'mui-datatables';
 import { Typography } from '@material-ui/core';
 
-import { PositionContainer, TradingContainer } from '../styles/trades';
+import { TradesContainer, TradeContainer } from '../styles/trades';
 import { myMarkets, columns } from '../../../modules/constants';
+import Balance from './BalanceView';
 
 class Trades extends Component {
   state = {
@@ -30,7 +31,7 @@ class Trades extends Component {
   }
 
   render() {
-    const { classes, trades } = this.props;
+    const { classes, trades, accountEquity } = this.props;
     const options = {
       filterType: 'checkbox',
       serverSide: true,
@@ -50,26 +51,32 @@ class Trades extends Component {
       DOW: 'Indice Dow Jones DOW',
     };
 
+    console.log(this.constructor.name, this.props);
+
     return (
-      <TradingContainer>
+      <TradesContainer>
         <h2 className={classes.h2}>Histórico de operaciones en el mercado</h2>
 
         {myMarkets.map((market) => {
           return (
-            <PositionContainer key={market}>
-              <Typography color="secondary" variant="h2">
-                {market}
-              </Typography>
-              <MUIDataTable
-                title={title[market]}
-                data={this.state[market]}
-                columns={columns}
-                options={options}
-              />
-            </PositionContainer>
+            <div>
+              {/* <Balance classes={classes} accountEquity={accountEquity} /> */}
+
+              <TradeContainer key={market}>
+                {/* <Typography color="secondary" variant="h2">
+                  {market}
+                </Typography> */}
+                {/* <MUIDataTable
+                  title={title[market]}
+                  data={this.state[market]}
+                  columns={columns}
+                  options={options}
+                /> */}
+              </TradeContainer>
+            </div>
           );
         })}
-      </TradingContainer>
+      </TradesContainer>
     );
   }
 }

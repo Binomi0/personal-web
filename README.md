@@ -6,7 +6,7 @@ Personal web
 
 ## Sections
 * Trading
-* Fronten
+* Frontend
 * Backend
 * Tools
 * Hobbies

@@ -1,8 +1,11 @@
-import createReducer from '../../../../../redux/create-reducer';
-import axios from '../../../../../config/axios';
 import moment from 'moment';
-
+import axios from '../../../../../config/axios';
+import createReducer from '../../../../../redux/create-reducer';
 import { GET_TRADES, CALCULATE_EQUITY } from '../../../../../action-types';
+// import calculateContracts from '../../../../../utils/trading/calculateContracts';
+// import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
+// import { getCryptoBalance } from './balance';
+import { getPositions } from '../../Positions/modules/positions';
 import { MARKETS } from '../../../modules/constants';
 
 export const getTrades = () => async (dispatch) => {
@@ -28,6 +31,7 @@ export const getTrades = () => async (dispatch) => {
       ];
     }
 
+    console.log('MARKETS', MARKETS);
     response.data.forEach((trade) => {
       if (trade.market === MARKETS.DAX) {
         daxTrades.push(parseTrades(trade));
@@ -54,77 +58,51 @@ export const getTrades = () => async (dispatch) => {
   }
 };
 
-// const getTrades = () => (dispatch) => {
-//   const DAX = firebase.database().ref('/market/DAX/trades');
-//   const DOW = firebase.database().ref('/market/DOW/trades');
+// Transforma la posición en una operación terminada
+export const finishTrade = (_exitPosition, _market) => async (dispatch) => {
+  try {
+    const currentURL = `v1/trading/position/finish/${_market}`;
+    const response = await axios(currentURL, _market);
 
-//   const daxTrades = [];
-//   const dowTrades = [];
-//   const operations = [];
-//   let result = 0;
+    console.log('finishTrade balance result =>', response.data);
 
-//   function parseTrades(trade) {
-//     return [
-//       moment(trade.finishTime).format('DD/MM/YY HH:MM'),
-//       trade.enterPrice,
-//       trade.onExitPosition.exitPrice,
-//       trade.direction,
-//       trade.result,
-//     ];
-//   }
+    if (!response.data[0].mediumPrice) {
+      return;
+    }
+    // const result = calculateResult(response.data[0], _exitPosition);
 
-//   DAX.on('child_added', (snapshot) => {
-//     result += snapshot.val().result;
-//     operations.push(result);
-//     daxTrades.push(parseTrades(snapshot.val()));
-//     dispatch({
-//       type: 'TRADING_GET_TRADES_SUCCESS',
-//       payload: { DAX: daxTrades },
-//     });
-//     dispatch({
-//       type: 'TRADING_CALCULATE_EQUITY_SUCCESS',
-//       payload: operations,
-//     });
-//   });
+    const newTrade = {
+      // ...response.data[0],
+      // onExitPosition,
+      // finishTime: Date.now(),
+      // result,
+    };
 
-//   DOW.on('child_added', (snapshot) => {
-//     result += snapshot.val().result;
-//     operations.push(result);
-//     dowTrades.push(parseTrades(snapshot.val()));
-//     dispatch({
-//       type: 'TRADING_GET_TRADES_SUCCESS',
-//       payload: { DOW: dowTrades },
-//     });
-//     dispatch({
-//       type: 'TRADING_CALCULATE_EQUITY_SUCCESS',
-//       payload: operations,
-//     });
-//   });
-// };
+    const tradeURL = 'v1/trading/trade';
+    await axios.post(tradeURL, newTrade);
 
-export const actions = {
-  getTrades,
+    dispatch(getTrades());
+    dispatch(getPositions());
+  } catch (err) {
+    console.error(err);
+  }
 };
 
+const getAccountEquity = () => (dispatch) => {};
+
+export const actions = {
+  finishTrade,
+  getTrades,
+};
 const defaultState = {
-  market: {
-    DAX: [],
-    DOW: [],
-  },
-  equity: [],
+  DOW: [],
+  DAX: [],
+  ETH: [],
+  accountEquity: [],
 };
 
 const INITIAL_STATE = { ...defaultState };
 
-const ACTION_HANDLERS = {
-  [GET_TRADES.SET]: (state, { payload }) => ({
-    ...state,
-    market: { ...state.market, ...payload },
-  }),
-  [CALCULATE_EQUITY.SET]: (state, { payload }) => ({
-    ...state,
-    equity: [...payload],
-  }),
-};
+const ACTION_HANDLERS = {};
 
 export default createReducer(INITIAL_STATE, ACTION_HANDLERS);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SelectMarket from '../modals/SelectMarket';
 import NewTrade from '../modals/NewTrade';
@@ -13,62 +14,37 @@ const MODAL_TYPES = {
   EXIT_POSITION: 'EXIT_POSITION',
 };
 
-const Modals = ({
-  type,
-  open,
-  closeModal,
-  onExitPosition,
-  onSelectMarket,
-  selectedMarket,
-  openModal,
-  onOpenPosition,
-  liveStream,
-  ...other
-}) => {
+const Modals = ({ type, onExitPosition, onOpenPosition, ...other }) => {
   const [modalType, useModalType] = useState('');
-
-  // console.log('other', other);
 
   if (type !== modalType) {
     useModalType(type);
   }
+
   return (
     <>
-      {modalType === MODAL_TYPES.SELECT_MARKET && (
-        <SelectMarket
-          open={open}
-          openModal={openModal}
-          closeModal={closeModal}
-          onSelectMarket={onSelectMarket}
-        />
-      )}
+      {modalType === MODAL_TYPES.SELECT_MARKET && <SelectMarket {...other} />}
       {modalType === MODAL_TYPES.NEW_TRADE && (
-        <NewTrade
-          open={open}
-          closeModal={closeModal}
-          onOpenPosition={onOpenPosition}
-          selectedMarket={selectedMarket}
-          liveStream={liveStream}
-        />
+        <NewTrade {...other} onOpenPosition={onOpenPosition} />
       )}
       {modalType === MODAL_TYPES.EXIT_POSITION && (
-        <ExitPosition
-          open={open}
-          closeModal={closeModal}
-          onExitPosition={onExitPosition}
-          selectedMarket={selectedMarket}
-          liveStream={liveStream}
-        />
+        <ExitPosition {...other} onExitPosition={onExitPosition} />
       )}
     </>
   );
+};
+
+Modals.propTypes = {
+  type: PropTypes.string.isRequired,
+  onExitPosition: PropTypes.func.isRequired,
+  onOpenPosition: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ modal, trading }) => ({
   open: modal.open,
   type: modal.type,
   selectedMarket: trading.positions.selectedMarket,
-  liveStream: trading.prices.liveStream,
+  ig: trading.prices.ig,
 });
 
 const mapDispatchToProps = { ...modalActions, ...positionActions };
