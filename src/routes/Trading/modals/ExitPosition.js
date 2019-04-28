@@ -47,7 +47,6 @@ class ExitPosition extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    console.log('nextProps', nextProps);
     const { BID, OFFER } = nextProps.ig[MARKETS[nextProps.selectedMarket]];
 
     if (nextState.direction === 'Long') {
@@ -85,7 +84,7 @@ class ExitPosition extends React.Component {
 
     // const exitPrice = ig[MARKETS[selectedMarket]].OFFER;
     // console.log(exitPrice);
-    console.log(this.constructor.name, this.props);
+    // console.log(this.constructor.name, this.props);
 
     return (
       <Dialog

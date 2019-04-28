@@ -46,7 +46,7 @@ export const getPositions = () => async (dispatch) => {
     const URL = 'v1/trading/positions';
     const response = await axios(URL);
 
-    console.log('getPositions => response.data', response.data);
+    // console.log('getPositions => response.data', response.data);
     dispatch({ type: GET_POSITIONS.SUCCESS });
     dispatch({ type: GET_POSITIONS.SET, payload: response.data });
 
@@ -73,17 +73,12 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
 
   const currentPosition = getState().trading.balance.equity[MARKETS.IG[market]];
 
-  console.log('currentPosition', currentPosition);
-  console.log('position', position);
-
   if (position.quantity !== currentPosition.quantity) {
-    console.log('Cerrando posición parcial');
     const currentTotal =
       position.direction === 'Long'
         ? position.exitPrice - currentPosition.mediumPrice
         : currentPosition.mediumPrice - position.exitPrice;
 
-    console.log('currentTotal', currentTotal);
     try {
       const URL = `${version}/trading/position/exit/${market}`;
       await axios.post(URL, position);

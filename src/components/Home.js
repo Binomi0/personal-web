@@ -12,7 +12,7 @@ import '../containers/App.scss';
 
 class Home extends Component {
   render() {
-    console.log('this.props', this.props);
+    // console.log('this.props', this.props);
     return (
       <div className="App-Home">
         <div className="App-logo logo1" />
