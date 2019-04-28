@@ -105,25 +105,22 @@ class BalanceCard extends React.Component {
           )}
         </CardContent>
         <CardActions>
-          {equity && equity.amount ? (
-            <Button
-              onClick={() => this.handleClosePosition(market)}
-              variant="contained"
-              color="primary"
-              size="small"
-            >
-              Cerrar Posición
-            </Button>
-          ) : (
-            <Button
-              onClick={() => this.handleOpenPosition(market)}
-              variant="contained"
-              color="secondary"
-              size="small"
-            >
-              Abrir Posición
-            </Button>
-          )}
+          <Button
+            onClick={() => this.handleClosePosition(market)}
+            variant="contained"
+            color="primary"
+            size="small"
+          >
+            Cerrar Posición
+          </Button>
+          <Button
+            onClick={() => this.handleOpenPosition(market)}
+            variant="contained"
+            color="secondary"
+            size="small"
+          >
+            Abrir Posición
+          </Button>
         </CardActions>
         {/* {market === 'DOW' && (
           <CandleStickChart data={this.props.prices.charts.DOW || []} />
