@@ -104,6 +104,12 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
   } else {
     dispatch(deletePosition(market));
     dispatch(finishTrade(position, market));
+    ReactGA.event({
+      category: 'Trading',
+      action: `Close a position on ${market}`,
+      value: 1,
+      label: `Closed ${position.quantity} contracts at ${position.exitPrice}`,
+    });
   }
   // const currentPosition = await getState().trading.positions.open.filter(
   //   (pos) => pos.market === market,
