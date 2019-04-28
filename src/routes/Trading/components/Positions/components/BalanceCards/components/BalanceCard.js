@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import ReactGA from 'react-ga';
 
 import styles from '../styles/balanceCards'; // GraphContent,
 import formatter from '../../../../../../../utils/formatAmount';
@@ -73,7 +74,7 @@ class BalanceCard extends React.Component {
             {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>(
             {indexSpread})
           </Typography>
-          {equity && equity.amount ? (
+          {equity ? (
             <>
               <Typography
                 variant="h5"
@@ -105,7 +106,7 @@ class BalanceCard extends React.Component {
           )}
         </CardContent>
         <CardActions>
-          {equity && equity.amount ? (
+          {equity && equity.amount && (
             <Button
               onClick={() => this.handleClosePosition(market)}
               variant="contained"
@@ -114,16 +115,15 @@ class BalanceCard extends React.Component {
             >
               Cerrar Posición
             </Button>
-          ) : (
-            <Button
-              onClick={() => this.handleOpenPosition(market)}
-              variant="contained"
-              color="secondary"
-              size="small"
-            >
-              Abrir Posición
-            </Button>
           )}
+          <Button
+            onClick={() => this.handleOpenPosition(market)}
+            variant="contained"
+            color="secondary"
+            size="small"
+          >
+            Abrir Posición
+          </Button>
         </CardActions>
         {/* {market === 'DOW' && (
           <CandleStickChart data={this.props.prices.charts.DOW || []} />

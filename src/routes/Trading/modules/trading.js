@@ -33,7 +33,7 @@ const getChartData = (market, bars) => async (dispatch) => {
       chartData.push(chartItems);
     });
 
-    console.log('chartData =>', chartData);
+    // console.log('chartData =>', chartData);
 
     dispatch({ type: GET_CHART_DATA.SUCCESS });
     dispatch({

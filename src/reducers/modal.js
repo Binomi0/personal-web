@@ -3,7 +3,7 @@ import createReducer from '../redux/create-reducer';
 import { OPEN_MODAL, CLOSE_MODAL } from '../action-types';
 
 const openModal = (modalType) => (dispatch) => {
-  console.log('modalType =>', modalType);
+  // console.log('modalType =>', modalType);
   dispatch({ type: OPEN_MODAL.SET, payload: modalType });
 };
 const closeModal = () => (dispatch) => {

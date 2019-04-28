@@ -71,9 +71,7 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
   if (!_livePrice[_market]) {
     return;
   }
-  console.log('_positions', _positions);
   if (!_positions.length) {
-    console.log('VACIO', _positions);
     dispatch({ type: GET_INDEX_BALANCE.SET, payload: { [_market]: {} } });
     return;
   }

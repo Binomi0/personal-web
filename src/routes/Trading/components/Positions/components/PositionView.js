@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Fab, withWidth } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { withWidth } from '@material-ui/core';
+import ReactGA from 'react-ga';
 
 import Table from '../../../../../components/Table';
 import { PositionsContainer, PositionContainer } from '../styles/positions';
@@ -29,26 +29,19 @@ class PositionsView extends Component {
     getCoinbasePrice: PropTypes.func.isRequired,
   };
 
-  state = {
-    product: '',
-  };
-
   componentDidMount() {
     this.getPositions();
     this.getPrices();
-    // this.lsClient = this.props.lightStreamer;
-    // console.log('this.client =>', this.lsClient);
-
-    // this.lsClient.createConnection();
-    // this.lsClient.addSubscription(MARKETS.DOW);
   }
-
-  handleClickOpen = () => {
-    this.props.openModal('SELECT_MARKET');
-  };
 
   onExitPosition = (market) => {
     this.props.onExitPosition(market);
+    ReactGA.event({
+      category: 'Trading',
+      action: 'Close a position',
+      value: 1,
+      label: `Closed position on ${market}`,
+    });
   };
 
   getPrices = () => {
@@ -65,14 +58,12 @@ class PositionsView extends Component {
 
   render() {
     const { positions } = this.props;
-    const isAdmin = Boolean(localStorage.getItem('isAdmin'));
     const mobile = ['xl', 'lg', 'md'].includes(this.props.width);
 
     // console.log(this.constructor.name, this.props);
     return (
       <PositionsContainer>
         <BalanceCards positions={positions} />
-        <Typography variant="h5">{this.state.selectedMarket}</Typography>
         {mobile && (
           <PositionContainer>
             {positions && positions.open.length && (
@@ -82,11 +73,6 @@ class PositionsView extends Component {
               />
             )}
           </PositionContainer>
-        )}
-        {isAdmin && (
-          <Fab onClick={this.handleClickOpen} color="secondary">
-            <AddIcon />
-          </Fab>
         )}
       </PositionsContainer>
     );

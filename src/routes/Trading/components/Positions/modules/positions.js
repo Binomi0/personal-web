@@ -1,4 +1,6 @@
 // import moment from 'moment';
+import ReactGA from 'react-ga';
+
 import axios from '../../../../../config/axios';
 import createReducer from '../../../../../redux/create-reducer';
 import {
@@ -33,6 +35,14 @@ const onOpenPosition = (market, position) => async (dispatch) => {
 
     dispatch({ type: ADD_POSITION.SUCCESS });
     dispatch(getPositions(market));
+    ReactGA.event({
+      category: 'Trading',
+      action: `Open a new position ${market}`,
+      value: 1,
+      label: `${position.direction === 'Long' ? 'Buy' : 'Sell'} ${
+        position.quantity
+      } contracts at ${position.enterPrice}`,
+    });
   } catch (err) {
     dispatch({ type: ADD_POSITION.FAILURE });
     console.error(err);
@@ -46,7 +56,7 @@ export const getPositions = () => async (dispatch) => {
     const URL = 'v1/trading/positions';
     const response = await axios(URL);
 
-    console.log('getPositions => response.data', response.data);
+    // console.log('getPositions => response.data', response.data);
     dispatch({ type: GET_POSITIONS.SUCCESS });
     dispatch({ type: GET_POSITIONS.SET, payload: response.data });
 
@@ -73,23 +83,20 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
 
   const currentPosition = getState().trading.balance.equity[MARKETS.IG[market]];
 
-  console.log('currentPosition', currentPosition);
-  console.log('position', position);
-
   if (position.quantity !== currentPosition.quantity) {
-    console.log('Cerrando posición parcial');
-    const currentTotal =
-      position.direction === 'Long'
-        ? position.exitPrice - currentPosition.mediumPrice
-        : currentPosition.mediumPrice - position.exitPrice;
-
-    console.log('currentTotal', currentTotal);
     try {
       const URL = `${version}/trading/position/exit/${market}`;
       await axios.post(URL, position);
 
       dispatch({ type: EXIT_POSITION.SUCCESS });
       dispatch(getPositions());
+
+      ReactGA.event({
+        category: 'Trading',
+        action: `Close a position on ${market}`,
+        value: 1,
+        label: `Closed ${position.quantity} contracts at ${position.exitPrice}`,
+      });
     } catch (err) {
       console.error('err', err);
       dispatch({ type: EXIT_POSITION.FAILURE });
@@ -97,6 +104,12 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
   } else {
     dispatch(deletePosition(market));
     dispatch(finishTrade(position, market));
+    ReactGA.event({
+      category: 'Trading',
+      action: `Close a position on ${market}`,
+      value: 1,
+      label: `Closed ${position.quantity} contracts at ${position.exitPrice}`,
+    });
   }
   // const currentPosition = await getState().trading.positions.open.filter(
   //   (pos) => pos.market === market,

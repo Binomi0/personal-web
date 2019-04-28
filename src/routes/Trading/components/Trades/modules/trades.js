@@ -62,8 +62,6 @@ export const finishTrade = (_exitPosition, _market) => async (dispatch) => {
     const currentURL = `v1/trading/position/finish/${_market}`;
     const response = await axios(currentURL, _market);
 
-    console.log('finishTrade balance result =>', response.data);
-
     if (!response.data[0].mediumPrice) {
       console.log('Saliendo de finishTrade');
 

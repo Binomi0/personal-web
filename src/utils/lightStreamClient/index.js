@@ -49,7 +49,7 @@ class LightStreamService {
       }`;
       this.identifier = response.data.clientId;
 
-      console.log('Autenticación con la API de IG realizada correctamente');
+      // console.log('Autenticación con la API de IG realizada correctamente');
       // this.getMarketPrice('IX.D.DOW.IFS.IP');
     } catch (err) {
       console.error('IGService authenticate() =>', err);
@@ -60,7 +60,8 @@ class LightStreamService {
   createConnection() {
     // console.log('this', this);
     if (!this.identifier || !this.password) {
-      console.log('No tengo autenticación');
+      return;
+      // console.log('No tengo autenticación');
     }
     this.lsClient.connectionDetails.setUser(this.identifier);
     this.lsClient.connectionDetails.setPassword(this.password);
@@ -68,11 +69,11 @@ class LightStreamService {
 
     this.lsClient.addListener({
       onListenStart() {
-        console.groupCollapsed('LightStream');
-        console.log('Listen start');
+        // console.groupCollapsed('LightStream');
+        // console.log('Listen start');
       },
       onStatusChange(newStatus) {
-        console.log('newStatus', newStatus);
+        // console.log('newStatus', newStatus);
       },
       onServerError(errCode, errMessage) {
         console.log(errCode);
@@ -92,15 +93,14 @@ class LightStreamService {
 
     this.mySubscription.addListener({
       onSubscription() {
-        console.log('SUBSCRIBED TO =>', market);
-        console.groupEnd();
-        console.markTimeline('LightStream');
+        // console.log('SUBSCRIBED TO =>', market);
+        // console.groupEnd();
       },
       onSubscriptionError(code, message) {
         console.log('Error code: ', code, ', message: ', message);
       },
       onUnsubscription() {
-        console.log('UNSUBSCRIBED');
+        // console.log('UNSUBSCRIBED');
       },
       onItemUpdate(obj) {
         const BID = parseFloat(obj.getValue('BID'));

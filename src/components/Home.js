@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import FrontEnd from './FrontEnd';
 import BackEnd from './Backend';
@@ -11,8 +12,21 @@ import { StyledContent } from './styles';
 import '../containers/App.scss';
 
 class Home extends Component {
+  componentDidMount() {
+    console.log('enviando vista y eveny');
+
+    ReactGA.pageview('/home', [], 'Home');
+    ReactGA.event({
+      category: 'User',
+      action: 'Navigates to home',
+      value: 1,
+      label: 'Visited HomePage',
+      nonInteraction: true,
+    });
+  }
+
   render() {
-    console.log('this.props', this.props);
+    // console.log('this.props', this.props);
     return (
       <div className="App-Home">
         <div className="App-logo logo1" />
