@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, withWidth } from '@material-ui/core';
+import { withWidth } from '@material-ui/core';
+import ReactGA from 'react-ga';
 
 import Table from '../../../../../components/Table';
 import { PositionsContainer, PositionContainer } from '../styles/positions';
@@ -33,12 +34,14 @@ class PositionsView extends Component {
     this.getPrices();
   }
 
-  handleClickOpen = () => {
-    this.props.openModal('SELECT_MARKET');
-  };
-
   onExitPosition = (market) => {
     this.props.onExitPosition(market);
+    ReactGA.event({
+      category: 'Trading',
+      action: 'Close a position',
+      value: 1,
+      label: `Closed position on ${market}`,
+    });
   };
 
   getPrices = () => {

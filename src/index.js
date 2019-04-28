@@ -10,8 +10,9 @@ import createStore from './redux/create-store';
 import './index.scss';
 import theme from './styles/theme';
 
-if (!process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   console.log('process.env =>', process.env);
+  ReactGA.initialize(process.env.REACT_APP_GA_ID);
 } else {
   // Analytics
   ReactGA.initialize(process.env.REACT_APP_GA_ID);

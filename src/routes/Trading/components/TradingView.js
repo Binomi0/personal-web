@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactGA from 'react-ga';
 import { LoadingBar } from 'react-redux-loading-bar';
 import { withStyles, AppBar, Toolbar, Typography } from '@material-ui/core';
 
@@ -23,6 +24,14 @@ class TradingView extends Component {
     auth: true,
   };
   componentDidMount() {
+    ReactGA.pageview('/trading');
+    ReactGA.event({
+      category: 'User',
+      action: 'Navigates to trading',
+      value: 1,
+      label: 'Visited Trading Page',
+      nonInteraction: true,
+    });
     // this.props.getTrades();
     // this.props.getChartData('DOW', 100);
     // this.props.getChartData('DAX', 100);
@@ -36,6 +45,12 @@ class TradingView extends Component {
   handleOpenPosition = () => {
     const { selectedMarket, newPosition } = this.props;
     this.props.onOpenPosition(selectedMarket, newPosition);
+    ReactGA.event({
+      category: 'Trading',
+      action: 'Open a new position',
+      value: 1,
+      label: 'Open Position',
+    });
   };
 
   render() {
