@@ -73,7 +73,7 @@ class BalanceCard extends React.Component {
             {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>(
             {indexSpread})
           </Typography>
-          {equity && equity.amount ? (
+          {equity ? (
             <>
               <Typography
                 variant="h5"
@@ -105,14 +105,16 @@ class BalanceCard extends React.Component {
           )}
         </CardContent>
         <CardActions>
-          <Button
-            onClick={() => this.handleClosePosition(market)}
-            variant="contained"
-            color="primary"
-            size="small"
-          >
-            Cerrar Posición
-          </Button>
+          {equity && equity.amount && (
+            <Button
+              onClick={() => this.handleClosePosition(market)}
+              variant="contained"
+              color="primary"
+              size="small"
+            >
+              Cerrar Posición
+            </Button>
+          )}
           <Button
             onClick={() => this.handleOpenPosition(market)}
             variant="contained"

@@ -42,6 +42,7 @@ export default (theme) => ({
     textShadow: `0.05rem 0.05rem ${theme.palette.primary.light}`,
     '@media (max-width: 768px)': {
       margin: 0,
+      fontSize: '1rem',
     },
   },
 });

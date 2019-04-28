@@ -19,7 +19,7 @@ class Trades extends Component {
     // console.log(this.constructor.name, this.props);
     return (
       <TradesContainer>
-        <h2 className={classes.h2}>Histórico de operaciones en el mercado</h2>
+        <h1 className={classes.h1}>Histórico de operaciones</h1>
         <Balance classes={classes} equity={equity} />
         <TradeContainer />
       </TradesContainer>
