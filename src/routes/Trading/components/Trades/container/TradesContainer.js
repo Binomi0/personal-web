@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core';
 import styles from '../styles/trades';
 
 const mapStateToProps = ({ trading }) => ({
-  trades: trading.trades.market,
   equity: trading.trades.equity,
 });
 
