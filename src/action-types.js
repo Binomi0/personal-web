@@ -33,4 +33,5 @@ export const SET_SELECTED_MARKET = requestAction(
   '/trading/SET_SELECTED_MARKET',
 );
 export const SET_NEW_POSITION = requestAction('/trading/SET_NEW_POSITION');
+export const DELETE_POSITION = requestAction('/trading/DELETE_POSITION');
 export const SET_SPREAD = requestAction('/trading/SET_SPREAD');

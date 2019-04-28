@@ -65,6 +65,8 @@ export const finishTrade = (_exitPosition, _market) => async (dispatch) => {
     console.log('finishTrade balance result =>', response.data);
 
     if (!response.data[0].mediumPrice) {
+      console.log('Saliendo de finishTrade');
+
       return;
     }
     // const result = calculateResult(response.data[0], _exitPosition);
@@ -72,7 +74,7 @@ export const finishTrade = (_exitPosition, _market) => async (dispatch) => {
     const newTrade = {
       // ...response.data[0],
       // onExitPosition,
-      // finishTime: Date.now(),
+      finishTime: Date.now(),
       // result,
     };
 

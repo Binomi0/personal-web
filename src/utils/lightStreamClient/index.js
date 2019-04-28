@@ -72,7 +72,7 @@ class LightStreamService {
         console.log('Listen start');
       },
       onStatusChange(newStatus) {
-        console.log(newStatus);
+        console.log('newStatus', newStatus);
       },
       onServerError(errCode, errMessage) {
         console.log(errCode);

@@ -10,6 +10,6 @@ module.exports = (positions) => {
   const currentTotal = totalPrice / contracts;
 
   return positions.length > 1
-    ? currentTotal.toFixed(2)
-    : positions[0].enterPrice.toFixed(2);
+    ? Number(currentTotal.toFixed(2))
+    : Number(positions[0].enterPrice.toFixed(2));
 };

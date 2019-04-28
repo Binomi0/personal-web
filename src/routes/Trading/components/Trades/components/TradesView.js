@@ -51,12 +51,12 @@ class Trades extends Component {
     //   DOW: 'Indice Dow Jones DOW',
     // };
 
-    // console.log(this.constructor.name, this.props);
+    console.log(this.constructor.name, this.props);
 
     return (
       <TradesContainer>
         <h2 className={classes.h2}>Histórico de operaciones en el mercado</h2>
-        <Balance classes={classes} equity={equity} />
+        {/* <Balance classes={classes} equity={equity} /> */}
         <TradeContainer>
           {/* <MUIDataTable
             title={title[market]}

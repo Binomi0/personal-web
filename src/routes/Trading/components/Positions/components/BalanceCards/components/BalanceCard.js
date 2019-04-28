@@ -31,9 +31,14 @@ class BalanceCard extends React.Component {
   };
 
   handleClosePosition = (market) => {
-    this.props.openModal('EXIT_POSITION');
     this.props.onSelectMarket(market);
+    this.props.openModal('EXIT_POSITION');
     // this.props.onExitPosition(market);
+  };
+
+  handleOpenPosition = (market) => {
+    this.props.onSelectMarket(market);
+    this.props.openModal('NEW_TRADE');
   };
 
   render() {
@@ -68,7 +73,7 @@ class BalanceCard extends React.Component {
             {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>(
             {indexSpread})
           </Typography>
-          {equity && equity.amount && (
+          {equity && equity.amount ? (
             <>
               <Typography
                 variant="h5"
@@ -81,9 +86,9 @@ class BalanceCard extends React.Component {
               <Typography color="textSecondary">
                 {equity.mediumPrice ? 'Posición: ' : 'Cerrada'}
                 {equity.mediumPrice && equity.mediumPrice}{' '}
-                {equity.openContracts &&
-                  `(${equity.openContracts} contrato${
-                    equity.openContracts === '1' ? '' : 's'
+                {equity.quantity &&
+                  `(${equity.quantity} contrato${
+                    equity.quantity === '1' ? '' : 's'
                   })`}
               </Typography>
               <Typography className={classes.pos} variant="caption" paragraph>
@@ -93,24 +98,39 @@ class BalanceCard extends React.Component {
                   )}
               </Typography>
             </>
+          ) : (
+            <Typography component="h5" variant="h5">
+              Cerrada
+            </Typography>
           )}
         </CardContent>
+        <CardActions>
+          {equity && equity.amount ? (
+            <Button
+              onClick={() => this.handleClosePosition(market)}
+              variant="contained"
+              color="primary"
+              size="small"
+            >
+              Cerrar Posición
+            </Button>
+          ) : (
+            <Button
+              onClick={() => this.handleOpenPosition(market)}
+              variant="contained"
+              color="secondary"
+              size="small"
+            >
+              Abrir Posición
+            </Button>
+          )}
+        </CardActions>
         {/* {market === 'DOW' && (
           <CandleStickChart data={this.props.prices.charts.DOW || []} />
         )}
         {market === 'DAX' && (
           <CandleStickChart data={this.props.prices.charts.DAX || []} />
         )} */}
-        <CardActions>
-          <Button
-            onClick={() => this.handleClosePosition(market)}
-            variant="contained"
-            color="primary"
-            size="small"
-          >
-            Cerrar Posición
-          </Button>
-        </CardActions>
       </Card>
     );
   }

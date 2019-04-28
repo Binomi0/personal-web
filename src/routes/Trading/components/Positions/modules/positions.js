@@ -8,6 +8,7 @@ import {
   GET_POSITION_EQUITY,
   SET_NEW_POSITION,
   SET_SELECTED_MARKET,
+  DELETE_POSITION,
 } from '../../../../../action-types';
 import { finishTrade } from '../../Trades/modules/trades';
 import { getCurrentBalance } from './balance';
@@ -45,6 +46,7 @@ export const getPositions = () => async (dispatch) => {
     const URL = 'v1/trading/positions';
     const response = await axios(URL);
 
+    console.log('getPositions => response.data', response.data);
     dispatch({ type: GET_POSITIONS.SUCCESS });
     dispatch({ type: GET_POSITIONS.SET, payload: response.data });
 
@@ -69,8 +71,33 @@ export const getPositions = () => async (dispatch) => {
 const onExitPosition = (market, position) => async (dispatch, getState) => {
   dispatch({ type: EXIT_POSITION.REQUEST });
 
-  dispatch(deletePosition(market));
-  dispatch(finishTrade(position, market));
+  const currentPosition = getState().trading.balance.equity[MARKETS.IG[market]];
+
+  console.log('currentPosition', currentPosition);
+  console.log('position', position);
+
+  if (position.quantity !== currentPosition.quantity) {
+    console.log('Cerrando posición parcial');
+    const currentTotal =
+      position.direction === 'Long'
+        ? position.exitPrice - currentPosition.mediumPrice
+        : currentPosition.mediumPrice - position.exitPrice;
+
+    console.log('currentTotal', currentTotal);
+    try {
+      const URL = `${version}/trading/position/exit/${market}`;
+      await axios.post(URL, position);
+
+      dispatch({ type: EXIT_POSITION.SUCCESS });
+      dispatch(getPositions());
+    } catch (err) {
+      console.error('err', err);
+      dispatch({ type: EXIT_POSITION.FAILURE });
+    }
+  } else {
+    dispatch(deletePosition(market));
+    dispatch(finishTrade(position, market));
+  }
   // const currentPosition = await getState().trading.positions.open.filter(
   //   (pos) => pos.market === market,
   // );
@@ -79,6 +106,7 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
 };
 
 const deletePosition = (market) => async (dispatch, getState) => {
+  dispatch({ type: DELETE_POSITION.REQUEST });
   try {
     const URL = `v1/trading/position/${market}`;
     await axios.delete(URL);
@@ -87,10 +115,11 @@ const deletePosition = (market) => async (dispatch, getState) => {
       (pos) => pos.market !== market,
     );
 
-    dispatch({ type: EXIT_POSITION.SUCCESS });
+    dispatch({ type: DELETE_POSITION.SUCCESS });
     dispatch({ type: EXIT_POSITION.SET, payload: positions });
+    dispatch(getPositions());
   } catch (err) {
-    dispatch({ type: EXIT_POSITION.FAILURE });
+    dispatch({ type: DELETE_POSITION.FAILURE });
   }
 };
 
@@ -152,6 +181,7 @@ const INITIAL_STATE = {
   equity: {},
   selectedMarket: '',
   newPosition: {},
+  livePosition: {},
 };
 
 const ACTION_HANDLERS = {

@@ -68,25 +68,31 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
   if (!_livePrice) {
     _livePrice = getState().trading.prices.ig;
   }
-  if (!_livePrice[_market] || !_positions.length) {
+  if (!_livePrice[_market]) {
+    return;
+  }
+  console.log('_positions', _positions);
+  if (!_positions.length) {
+    console.log('VACIO', _positions);
+    dispatch({ type: GET_INDEX_BALANCE.SET, payload: { [_market]: {} } });
     return;
   }
 
   const { OFFER, BID } = _livePrice[_market];
   const mediumPrice = calculateMediumPrice(_positions);
-  const openContracts = calculateContracts(_positions);
+  const quantity = calculateContracts(_positions);
   const isLong = _positions[0].direction === 'Long';
   let amount = 0;
   if (isLong) {
-    amount = (BID - mediumPrice) * openContracts;
+    amount = (BID - mediumPrice) * quantity;
   } else {
-    amount = (mediumPrice - OFFER) * openContracts;
+    amount = (mediumPrice - OFFER) * quantity;
   }
 
   const equity = {
-    mediumPrice: parseFloat(mediumPrice).toFixed(2),
-    openContracts: openContracts.toFixed(0),
-    amount: parseFloat(amount).toFixed(2),
+    mediumPrice: Number(mediumPrice.toFixed(2)),
+    quantity: Number(quantity.toFixed(0)),
+    amount: Number(amount.toFixed(2)),
     startTrade: _positions[0].startDate,
   };
 
@@ -115,10 +121,9 @@ export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
   if (marketPositions.length) {
     let equity = {};
     equity.mediumPrice = calculateMediumPrice(marketPositions);
-    equity.openContracts = calculateContracts(marketPositions);
+    equity.quantity = calculateContracts(marketPositions);
     equity.amount =
-      (price.amount - calculateMediumPrice(marketPositions)) *
-      equity.openContracts;
+      (price.amount - calculateMediumPrice(marketPositions)) * equity.quantity;
     equity.startTrade = marketPositions[0].startDate;
 
     dispatch({
