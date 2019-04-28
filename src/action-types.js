@@ -8,7 +8,7 @@ function requestAction(action) {
 }
 
 export const GET_IG_PRICES = requestAction('/trading/GET_IG_PRICE');
-export const GET_COINBASE_PRICE = requestAction('/trading/GET_COINBASE_PRICE');
+export const COINBASE_PRICE = requestAction('/trading/COINBASE_PRICE');
 export const GET_POSITIONS = requestAction('/trading/GET_POSITIONS');
 export const GET_TRADES = requestAction('/trading/GET_TRADES');
 export const CALCULATE_EQUITY = requestAction('/trading/CALCULATE_EQUITY');
@@ -28,9 +28,10 @@ export const OPEN_MODAL = requestAction('/modals/OPEN_MODAL');
 export const CLOSE_MODAL = requestAction('/modals/CLOSE_MODAL');
 
 // TRADING
-export const SET_NEW_PRICE = requestAction('/trading/SET_NEW_PRICE');
+export const IG_LIVESTREAM = requestAction('/trading/IG_LIVESTREAM');
 export const SET_SELECTED_MARKET = requestAction(
   '/trading/SET_SELECTED_MARKET',
 );
 export const SET_NEW_POSITION = requestAction('/trading/SET_NEW_POSITION');
-export const GET_MARKET_SPREAD = requestAction('/trading/GET_MARKET_SPREAD');
+export const DELETE_POSITION = requestAction('/trading/DELETE_POSITION');
+export const SET_SPREAD = requestAction('/trading/SET_SPREAD');

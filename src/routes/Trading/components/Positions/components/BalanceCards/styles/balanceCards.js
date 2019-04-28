@@ -12,6 +12,9 @@ export default (theme) => ({
       marginRight: 0,
     },
     marginRight: '1rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   bullet: {
     display: 'inline-block',

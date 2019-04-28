@@ -50,4 +50,10 @@ export default (theme) => ({
 
 export const PositionContainer = styled.div`
   margin: 1rem 0;
+
+  @media (max-width: 960px) {
+    display: none;
+  }
 `;
+
+export const PositionsContainer = styled.div``;

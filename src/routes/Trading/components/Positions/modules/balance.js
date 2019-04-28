@@ -1,10 +1,7 @@
 // import moment from 'moment';
 // import axios from '../../../../../config/axios';
 import createReducer from '../../../../../redux/create-reducer';
-import {
-  GET_INDEX_BALANCE,
-  GET_MARKET_SPREAD,
-} from '../../../../../action-types';
+import { GET_INDEX_BALANCE } from '../../../../../action-types';
 import calculateContracts from '../../../../../utils/trading/calculateContracts';
 import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
 
@@ -66,38 +63,55 @@ export const getIndexBalance = (market, price) => async (
 
 export const getCurrentBalance = (_market, _positions, _livePrice) => (
   dispatch,
+  getState,
 ) => {
-  if (!_livePrice[_market] || !_positions.length) {
+  if (!_livePrice) {
+    _livePrice = getState().trading.prices.ig;
+  }
+  if (!_livePrice[_market]) {
+    return;
+  }
+  console.log('_positions', _positions);
+  if (!_positions.length) {
+    console.log('VACIO', _positions);
+    dispatch({ type: GET_INDEX_BALANCE.SET, payload: { [_market]: {} } });
     return;
   }
 
   const { OFFER, BID } = _livePrice[_market];
   const mediumPrice = calculateMediumPrice(_positions);
-  const openContracts = calculateContracts(_positions);
+  const quantity = calculateContracts(_positions);
   const isLong = _positions[0].direction === 'Long';
   let amount = 0;
   if (isLong) {
-    amount = (BID - mediumPrice) * openContracts;
+    amount = (BID - mediumPrice) * quantity;
   } else {
-    amount = (mediumPrice - OFFER) * openContracts;
+    amount = (mediumPrice - OFFER) * quantity;
   }
 
   const equity = {
-    mediumPrice: parseFloat(mediumPrice).toFixed(2),
-    openContracts: openContracts.toFixed(0),
-    amount: parseFloat(amount).toFixed(2),
+    mediumPrice: Number(mediumPrice.toFixed(2)),
+    quantity: Number(quantity.toFixed(0)),
+    amount: Number(amount.toFixed(2)),
     startTrade: _positions[0].startDate,
   };
+
   dispatch({
     type: GET_INDEX_BALANCE.SET,
     payload: { [_market]: equity },
   });
+};
 
-  const spread = OFFER - BID;
-  dispatch({
-    type: GET_MARKET_SPREAD.SET,
-    payload: { [_market]: parseFloat(spread).toFixed(2) },
-  });
+export const updateBalance = (market) => (dispatch, getState) => {
+  const { selectedMarket } = getState().trading.positions;
+  const { equity } = getState().trading.balance;
+
+  const itemName = Object.keys(equity).filter((pos) =>
+    pos.includes(selectedMarket),
+  );
+  delete equity[itemName];
+
+  dispatch({ type: GET_INDEX_BALANCE.SET, payload: equity });
 };
 
 export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
@@ -107,10 +121,9 @@ export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
   if (marketPositions.length) {
     let equity = {};
     equity.mediumPrice = calculateMediumPrice(marketPositions);
-    equity.openContracts = calculateContracts(marketPositions);
+    equity.quantity = calculateContracts(marketPositions);
     equity.amount =
-      (price.amount - calculateMediumPrice(marketPositions)) *
-      equity.openContracts;
+      (price.amount - calculateMediumPrice(marketPositions)) * equity.quantity;
     equity.startTrade = marketPositions[0].startDate;
 
     dispatch({
@@ -120,11 +133,14 @@ export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
   }
 };
 
-export const actions = {};
+export const actions = {
+  getCryptoBalance,
+  getCurrentBalance,
+  getIndexBalance,
+};
 
 const defaultState = {
   equity: {},
-  spread: {},
 };
 
 const INITIAL_STATE = { ...defaultState };
@@ -134,13 +150,6 @@ const ACTION_HANDLERS = {
     ...state,
     equity: {
       ...state.equity,
-      ...payload,
-    },
-  }),
-  [GET_MARKET_SPREAD.SET]: (state, { payload }) => ({
-    ...state,
-    spread: {
-      ...state.spread,
       ...payload,
     },
   }),

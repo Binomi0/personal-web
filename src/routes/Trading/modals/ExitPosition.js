@@ -25,15 +25,39 @@ class ExitPosition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      exitPrice: props.liveStream[MARKETS[props.selectedMarket]].OFFER,
+      exitPrice: props.ig[MARKETS[props.selectedMarket]].BID,
       quantity: 1,
+      direction: 'Long',
     };
   }
 
+  componentDidMount() {
+    const positions = this.props.positions.filter(
+      (pos) => pos.market === this.props.selectedMarket,
+    );
+
+    const quantity = positions.reduce((total, pos) => total + pos.quantity, 0);
+    if (positions[0].direction !== 'Long') {
+      this.setState({
+        exitPrice: this.props.ig[MARKETS[this.props.selectedMarket]].OFFER,
+      });
+    }
+
+    this.setState({ direction: positions[0].direction, quantity });
+  }
+
   componentWillReceiveProps(nextProps, nextState) {
-    const { OFFER } = nextProps.liveStream[MARKETS[nextProps.selectedMarket]];
-    if (OFFER !== nextState.exitPrice) {
-      this.setState({ exitPrice: OFFER });
+    console.log('nextProps', nextProps);
+    const { BID, OFFER } = nextProps.ig[MARKETS[nextProps.selectedMarket]];
+
+    if (nextState.direction === 'Long') {
+      if (BID !== nextState.exitPrice) {
+        this.setState({ exitPrice: BID });
+      }
+    } else {
+      if (OFFER !== nextState.exitPrice) {
+        this.setState({ exitPrice: OFFER });
+      }
     }
   }
 
@@ -55,11 +79,11 @@ class ExitPosition extends React.Component {
       classes,
       closeModal,
       open,
-      // liveStream,
+      // ig,
       // selectedMarket,
     } = this.props;
 
-    // const exitPrice = liveStream[MARKETS[selectedMarket]].OFFER;
+    // const exitPrice = ig[MARKETS[selectedMarket]].OFFER;
     // console.log(exitPrice);
     console.log(this.constructor.name, this.props);
 

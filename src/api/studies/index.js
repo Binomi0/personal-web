@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import Promise from 'bluebird';
 
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = process.env.REACT_APP_API_HOST;
 
 const mockedStudies = ['Javascript', 'NodeJS', 'ReactJS'];
 

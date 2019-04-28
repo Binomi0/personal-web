@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MUIDataTable from 'mui-datatables';
-import { Typography } from '@material-ui/core';
+// import MUIDataTable from 'mui-datatables';
+// import { Typography } from '@material-ui/core';
 
-import { PositionContainer, TradingContainer } from '../styles/trades';
-import { myMarkets, columns } from '../../../modules/constants';
+import { TradesContainer, TradeContainer } from '../styles/trades';
+// import { myMarkets, columns } from '../../../modules/constants';
+import Balance from './BalanceView';
 
 class Trades extends Component {
   state = {
@@ -30,46 +31,41 @@ class Trades extends Component {
   }
 
   render() {
-    const { classes, trades } = this.props;
-    const options = {
-      filterType: 'checkbox',
-      serverSide: true,
-      onTableChange: (action, tableState) => {},
-      customBodyRender: (cellValue, rowIndex, columnIndex) => {
-        console.log(cellValue);
-        return cellValue;
-      },
-    };
+    const { classes, trades, equity } = this.props;
+    // const options = {
+    //   filterType: 'checkbox',
+    //   serverSide: true,
+    //   onTableChange: (action, tableState) => {},
+    //   customBodyRender: (cellValue, rowIndex, columnIndex) => {
+    //     console.log(cellValue);
+    //     return cellValue;
+    //   },
+    // };
 
     if (!trades) {
       return 'Cargando';
     }
 
-    const title = {
-      DAX: 'Indice Alemania 30',
-      DOW: 'Indice Dow Jones DOW',
-    };
+    // const title = {
+    //   DAX: 'Indice Alemania 30',
+    //   DOW: 'Indice Dow Jones DOW',
+    // };
+
+    console.log(this.constructor.name, this.props);
 
     return (
-      <TradingContainer>
+      <TradesContainer>
         <h2 className={classes.h2}>Histórico de operaciones en el mercado</h2>
-
-        {myMarkets.map((market) => {
-          return (
-            <PositionContainer key={market}>
-              <Typography color="secondary" variant="h2">
-                {market}
-              </Typography>
-              <MUIDataTable
-                title={title[market]}
-                data={this.state[market]}
-                columns={columns}
-                options={options}
-              />
-            </PositionContainer>
-          );
-        })}
-      </TradingContainer>
+        {/* <Balance classes={classes} equity={equity} /> */}
+        <TradeContainer>
+          {/* <MUIDataTable
+            title={title[market]}
+            data={this.state[market]}
+            columns={columns}
+            options={options}
+          /> */}
+        </TradeContainer>
+      </TradesContainer>
     );
   }
 }

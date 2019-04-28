@@ -22,18 +22,16 @@ const MARKETS = {
 class NewTrade extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props', props);
     this.state = {
-      enterPrice: props.liveStream[MARKETS[props.selectedMarket]].CURRENT,
+      enterPrice: props.ig[MARKETS[props.selectedMarket]].OFFER,
       direction: 'Long',
       quantity: 1,
     };
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    const { BID, OFFER } = nextProps.liveStream[
-      MARKETS[nextProps.selectedMarket]
-    ];
+    const { BID, OFFER } = nextProps.ig[MARKETS[nextProps.selectedMarket]];
+
     if (nextState.direction === 'Long') {
       if (OFFER !== nextState.enterPrice) {
         this.setState({ enterPrice: OFFER });
@@ -45,7 +43,25 @@ class NewTrade extends React.Component {
     }
   }
 
+  handleChangeDirection = ({ target: { value: direction } }) => {
+    this.setState({ direction }, this.updateEnterPrice);
+  };
+
+  updateEnterPrice = () => {
+    const { direction } = this.state;
+    const { BID, OFFER } = this.props.ig[MARKETS[this.props.selectedMarket]];
+
+    if (direction === 'Long') {
+      this.setState({ enterPrice: OFFER });
+    } else {
+      this.setState({ enterPrice: BID });
+    }
+  };
+
   handleChange = ({ target: { name, value } }) => {
+    if (name === 'direction' && this.state.direction !== value) {
+      this.setState({});
+    }
     this.setState({ [name]: value });
     this.setCurrentPrice();
   };
@@ -89,7 +105,7 @@ class NewTrade extends React.Component {
             <InputLabel htmlFor="direction">Dirección</InputLabel>
             <Select
               value={this.state.direction}
-              onChange={this.handleChange}
+              onChange={this.handleChangeDirection}
               inputProps={{
                 name: 'direction',
                 id: 'direction',
@@ -127,7 +143,7 @@ NewTrade.propTypes = {
   closeModal: PropTypes.func.isRequired,
   onOpenPosition: PropTypes.func.isRequired,
   selectedMarket: PropTypes.string.isRequired,
-  liveStream: PropTypes.object.isRequired,
+  ig: PropTypes.object.isRequired,
 };
 
 const NewTradeWrapped = withStyles(styles)(NewTrade);

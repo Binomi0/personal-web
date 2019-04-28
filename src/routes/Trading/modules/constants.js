@@ -20,8 +20,15 @@ export const Ethereum = {
 };
 
 export const MARKETS = {
-  DOW: 'IX.D.DOW.IFS.IP',
-  DAX: 'IX.D.DAX.IFS.IP',
+  IG: {
+    DOW: 'IX.D.DOW.IFS.IP',
+    DAX: 'IX.D.DAX.IFS.IP',
+  },
+  DOW: 'DOW',
+  DAX: 'DAX',
+  IG_EPIC_DOW: 'IX.D.DOW.IFS.IP',
+  IG_EPIC_DAX: 'IX.D.DAX.IFS.IP',
+  ETH: 'ETH-EUR',
   'ETH-EUR': 'ETH',
   INDICES: ['DOW', 'DAX'],
   CRYPTOS: ['ETH'],

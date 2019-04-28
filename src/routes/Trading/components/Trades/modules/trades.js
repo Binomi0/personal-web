@@ -1,8 +1,11 @@
-import createReducer from '../../../../../redux/create-reducer';
-import axios from '../../../../../config/axios';
 import moment from 'moment';
-
+import axios from '../../../../../config/axios';
+import createReducer from '../../../../../redux/create-reducer';
 import { GET_TRADES, CALCULATE_EQUITY } from '../../../../../action-types';
+// import calculateContracts from '../../../../../utils/trading/calculateContracts';
+// import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
+// import { getCryptoBalance } from './balance';
+import { getPositions } from '../../Positions/modules/positions';
 import { MARKETS } from '../../../modules/constants';
 
 export const getTrades = () => async (dispatch) => {
@@ -12,7 +15,7 @@ export const getTrades = () => async (dispatch) => {
     const URL = '/v1/trading/trades';
     const response = await axios(URL);
 
-    // console.log('response.data', response);
+    // console.log('response.data', response.data);
     const daxTrades = [];
     const dowTrades = [];
     const operations = [];
@@ -22,7 +25,7 @@ export const getTrades = () => async (dispatch) => {
       return [
         moment(trade.finishTime).format('DD/MM/YY HH:MM'),
         trade.enterPrice,
-        trade.onExitPosition.exitPrice,
+        trade.exitPosition.exitPrice,
         trade.direction,
         trade.result,
       ];
@@ -44,7 +47,6 @@ export const getTrades = () => async (dispatch) => {
       DOW: dowTrades,
     };
 
-    // console.log(trades);
     dispatch({ type: GET_TRADES.SUCCESS });
     dispatch({ type: GET_TRADES.SET, payload: trades });
     dispatch({ type: CALCULATE_EQUITY.SET, payload: operations });
@@ -54,55 +56,40 @@ export const getTrades = () => async (dispatch) => {
   }
 };
 
-// const getTrades = () => (dispatch) => {
-//   const DAX = firebase.database().ref('/market/DAX/trades');
-//   const DOW = firebase.database().ref('/market/DOW/trades');
+// Transforma la posición en una operación terminada
+export const finishTrade = (_exitPosition, _market) => async (dispatch) => {
+  try {
+    const currentURL = `v1/trading/position/finish/${_market}`;
+    const response = await axios(currentURL, _market);
 
-//   const daxTrades = [];
-//   const dowTrades = [];
-//   const operations = [];
-//   let result = 0;
+    console.log('finishTrade balance result =>', response.data);
 
-//   function parseTrades(trade) {
-//     return [
-//       moment(trade.finishTime).format('DD/MM/YY HH:MM'),
-//       trade.enterPrice,
-//       trade.onExitPosition.exitPrice,
-//       trade.direction,
-//       trade.result,
-//     ];
-//   }
+    if (!response.data[0].mediumPrice) {
+      console.log('Saliendo de finishTrade');
 
-//   DAX.on('child_added', (snapshot) => {
-//     result += snapshot.val().result;
-//     operations.push(result);
-//     daxTrades.push(parseTrades(snapshot.val()));
-//     dispatch({
-//       type: 'TRADING_GET_TRADES_SUCCESS',
-//       payload: { DAX: daxTrades },
-//     });
-//     dispatch({
-//       type: 'TRADING_CALCULATE_EQUITY_SUCCESS',
-//       payload: operations,
-//     });
-//   });
+      return;
+    }
+    // const result = calculateResult(response.data[0], _exitPosition);
 
-//   DOW.on('child_added', (snapshot) => {
-//     result += snapshot.val().result;
-//     operations.push(result);
-//     dowTrades.push(parseTrades(snapshot.val()));
-//     dispatch({
-//       type: 'TRADING_GET_TRADES_SUCCESS',
-//       payload: { DOW: dowTrades },
-//     });
-//     dispatch({
-//       type: 'TRADING_CALCULATE_EQUITY_SUCCESS',
-//       payload: operations,
-//     });
-//   });
-// };
+    const newTrade = {
+      // ...response.data[0],
+      // onExitPosition,
+      finishTime: Date.now(),
+      // result,
+    };
+
+    const tradeURL = 'v1/trading/trade';
+    await axios.post(tradeURL, newTrade);
+
+    dispatch(getTrades());
+    dispatch(getPositions());
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 export const actions = {
+  finishTrade,
   getTrades,
 };
 
@@ -126,5 +113,4 @@ const ACTION_HANDLERS = {
     equity: [...payload],
   }),
 };
-
 export default createReducer(INITIAL_STATE, ACTION_HANDLERS);
