@@ -2,9 +2,6 @@ import moment from 'moment';
 import axios from '../../../../../config/axios';
 import createReducer from '../../../../../redux/create-reducer';
 import { GET_TRADES, CALCULATE_EQUITY } from '../../../../../action-types';
-// import calculateContracts from '../../../../../utils/trading/calculateContracts';
-// import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
-// import { getCryptoBalance } from './balance';
 import { getPositions } from '../../Positions/modules/positions';
 import { MARKETS } from '../../../modules/constants';
 
@@ -56,50 +53,11 @@ export const getTrades = () => async (dispatch) => {
   }
 };
 
-/**
- * @name calculateResult
- * @description Gives the result of the operation in points
- *
- * @param {Object} trade
- * @param {string} trade.enterPrice
- * @param {string} trade.exitPrice
- * @param {string} trade.direction
- *
- * @returns {Number}
- */
-function calculateResult(currentPosition, exitPosition) {
-  console.log('currentPosition =>', currentPosition);
-  console.log('exitPosition =>', exitPosition);
-  if (!currentPosition.mediumPrice) {
-    throw new Error('Missing enterPrice parameter in `calculateResult`');
-  }
-  if (!exitPosition.exitPrice) {
-    throw new Error('Missing exitPrice parameter in `calculateResult`');
-  }
-  // TODO Agregar direcction a la respuesta del balance
-  if (!exitPosition.direction) {
-    throw new Error('Missing direction parameter in `calculateResult`');
-  }
-  let result;
-
-  if (exitPosition.direction === 'Long') {
-    result =
-      parseInt(exitPosition.exitPrice) - parseInt(currentPosition.enterPrice);
-  } else {
-    result =
-      parseInt(currentPosition.enterPrice) - parseInt(exitPosition.exitPrice);
-  }
-
-  return result;
-}
-
 // Transforma la posición en una operación terminada
 export const finishTrade = (_currentPosition, _exitPosition, _market) => async (
   dispatch,
   getState,
 ) => {
-  // const result = calculateResult(_currentPosition, _exitPosition);
-
   const newTrade = {
     enterPrice: _currentPosition.mediumPrice,
     quantity: _currentPosition.quantity,
