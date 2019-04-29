@@ -86,7 +86,7 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
   if (position.quantity !== currentPosition.quantity) {
     try {
       const URL = `${version}/trading/position/exit/${market}`;
-      await axios.post(URL, position);
+      const response = await axios.post(URL, position);
 
       dispatch({ type: EXIT_POSITION.SUCCESS });
       dispatch(getPositions());
@@ -103,7 +103,7 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
     }
   } else {
     dispatch(deletePosition(market));
-    dispatch(finishTrade(position, market));
+    dispatch(finishTrade(currentPosition, position, market));
     ReactGA.event({
       category: 'Trading',
       action: `Close a position on ${market}`,
@@ -135,43 +135,6 @@ const deletePosition = (market) => async (dispatch, getState) => {
     dispatch({ type: DELETE_POSITION.FAILURE });
   }
 };
-
-// /**
-//  * @name calculateResult
-//  * @description Gives the result of the operation in points
-//  *
-//  * @param {Object} trade
-//  * @param {string} trade.enterPrice
-//  * @param {string} trade.exitPrice
-//  * @param {string} trade.direction
-//  *
-//  * @returns {Number}
-//  */
-// function calculateResult(currentPosition, onExitPosition) {
-//   console.log('currentPosition =>', currentPosition);
-//   console.log('onExitPosition =>', onExitPosition);
-//   if (!currentPosition.mediumPrice) {
-//     throw new Error('Missing enterPrice parameter in `calculateResult`');
-//   }
-//   if (!onExitPosition.exitPrice) {
-//     throw new Error('Missing exitPrice parameter in `calculateResult`');
-//   }
-//   // TODO Agregar direcction a la respuesta del balance
-//   if (!currentPosition.direction) {
-//     throw new Error('Missing direction parameter in `calculateResult`');
-//   }
-//   let result;
-
-//   if (currentPosition.direction === 'Long') {
-//     result =
-//       parseInt(onExitPosition.exitPrice) - parseInt(currentPosition.enterPrice);
-//   } else {
-//     result =
-//       parseInt(currentPosition.enterPrice) - parseInt(onExitPosition.exitPrice);
-//   }
-
-//   return result;
-// }
 
 const onSelectMarket = (market) => (dispatch) => {
   dispatch({ type: SET_SELECTED_MARKET.SET, payload: market });

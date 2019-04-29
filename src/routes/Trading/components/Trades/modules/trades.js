@@ -56,34 +56,68 @@ export const getTrades = () => async (dispatch) => {
   }
 };
 
-// Transforma la posición en una operación terminada
-export const finishTrade = (_exitPosition, _market) => async (dispatch) => {
-  try {
-    const currentURL = `v1/trading/position/finish/${_market}`;
-    const response = await axios(currentURL, _market);
-
-    if (!response.data[0].mediumPrice) {
-      console.log('Saliendo de finishTrade');
-
-      return;
-    }
-    // const result = calculateResult(response.data[0], _exitPosition);
-
-    const newTrade = {
-      // ...response.data[0],
-      // onExitPosition,
-      finishTime: Date.now(),
-      // result,
-    };
-
-    const tradeURL = 'v1/trading/trade';
-    await axios.post(tradeURL, newTrade);
-
-    dispatch(getTrades());
-    dispatch(getPositions());
-  } catch (err) {
-    console.error(err);
+/**
+ * @name calculateResult
+ * @description Gives the result of the operation in points
+ *
+ * @param {Object} trade
+ * @param {string} trade.enterPrice
+ * @param {string} trade.exitPrice
+ * @param {string} trade.direction
+ *
+ * @returns {Number}
+ */
+function calculateResult(currentPosition, exitPosition) {
+  console.log('currentPosition =>', currentPosition);
+  console.log('exitPosition =>', exitPosition);
+  if (!currentPosition.mediumPrice) {
+    throw new Error('Missing enterPrice parameter in `calculateResult`');
   }
+  if (!exitPosition.exitPrice) {
+    throw new Error('Missing exitPrice parameter in `calculateResult`');
+  }
+  // TODO Agregar direcction a la respuesta del balance
+  if (!exitPosition.direction) {
+    throw new Error('Missing direction parameter in `calculateResult`');
+  }
+  let result;
+
+  if (exitPosition.direction === 'Long') {
+    result =
+      parseInt(exitPosition.exitPrice) - parseInt(currentPosition.enterPrice);
+  } else {
+    result =
+      parseInt(currentPosition.enterPrice) - parseInt(exitPosition.exitPrice);
+  }
+
+  return result;
+}
+
+// Transforma la posición en una operación terminada
+export const finishTrade = (_currentPosition, _exitPosition, _market) => async (
+  dispatch,
+  getState,
+) => {
+  // const result = calculateResult(_currentPosition, _exitPosition);
+
+  const newTrade = {
+    enterPrice: _currentPosition.mediumPrice,
+    quantity: _currentPosition.quantity,
+    startTrade: _currentPosition.startTrade,
+    exitPosition: _exitPosition,
+    finishTime: Date.now(),
+    result: _currentPosition.amount,
+    direction: _exitPosition.direction,
+    market: _market,
+  };
+
+  // console.log('newTrade', newTrade);
+
+  const tradeURL = 'v1/trading/trade';
+  await axios.post(tradeURL, newTrade);
+
+  dispatch(getTrades());
+  dispatch(getPositions());
 };
 
 export const actions = {
