@@ -85,7 +85,7 @@ class BalanceCard extends React.Component {
                 {equity.amount && formatter.format(equity.amount)}
               </Typography>
               <Typography color="textSecondary">
-                {equity.mediumPrice ? 'Posición: ' : 'Cerrada'}
+                {equity.direction === 'Long' ? 'Largo: ' : 'Corto: '}
                 {equity.mediumPrice && equity.mediumPrice}{' '}
                 {equity.quantity &&
                   `(${equity.quantity} contrato${

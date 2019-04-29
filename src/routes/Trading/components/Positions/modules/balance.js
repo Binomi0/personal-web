@@ -92,6 +92,7 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
     quantity: Number(quantity.toFixed(0)),
     amount: Number(amount.toFixed(2)),
     startTrade: _positions[0].startDate,
+    direction: _positions[0].direction,
   };
 
   dispatch({
@@ -123,7 +124,9 @@ export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
     equity.amount =
       (price.amount - calculateMediumPrice(marketPositions)) * equity.quantity;
     equity.startTrade = marketPositions[0].startDate;
+    equity.direction = marketPositions[0].direction;
 
+    console.log('marketPositions', marketPositions);
     dispatch({
       type: GET_INDEX_BALANCE.SET,
       payload: { [crypto]: equity },
