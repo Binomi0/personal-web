@@ -9,9 +9,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Typography, Button } from '@material-ui/core';
 
 import styles from '../routes/Trading/styles/trading';
-import { Typography, Button } from '@material-ui/core';
 
 class PositionTable extends Component {
   handleClose = () => {
@@ -41,23 +41,33 @@ class PositionTable extends Component {
             {positions.length &&
               positions.map((position) => (
                 <TableRow key={position._id}>
-                  <TableCell>
+                  <TableCell className={classes.cell}>
                     {moment(position.date).format(
                       '[Abierta el] DD/MM/YYYY [a las] HH:MM:SS',
                     )}
                   </TableCell>
-                  <TableCell align="right">{position.market}</TableCell>
-                  <TableCell align="right">{position.enterPrice}</TableCell>
-                  <TableCell align="right">{position.direction}</TableCell>
-                  <TableCell align="right">{position.quantity}</TableCell>
+                  <TableCell className={classes.cell} align="right">
+                    {position.market}
+                  </TableCell>
+                  <TableCell className={classes.cell} align="right">
+                    {position.enterPrice}
+                  </TableCell>
+                  <TableCell className={classes.cell} align="right">
+                    {position.direction}
+                  </TableCell>
+                  <TableCell className={classes.cell} align="right">
+                    {position.quantity}
+                  </TableCell>
                   {isAdmin && (
                     <TableCell align="right">
                       <Button
                         onClick={this.handleClose}
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                       >
-                        <Typography variant="body1">x</Typography>
+                        <Typography color="secondary" variant="body1">
+                          x
+                        </Typography>
                       </Button>
                     </TableCell>
                   )}

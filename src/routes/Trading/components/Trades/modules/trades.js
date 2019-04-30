@@ -5,6 +5,8 @@ import { GET_TRADES, CALCULATE_EQUITY } from '../../../../../action-types';
 import { getPositions } from '../../Positions/modules/positions';
 import { MARKETS } from '../../../modules/constants';
 
+const MAX_GRAPH_OPERATIONS = 21;
+
 export const getTrades = () => async (dispatch) => {
   dispatch({ type: GET_TRADES.REQUEST });
 
@@ -48,7 +50,10 @@ export const getTrades = () => async (dispatch) => {
     dispatch({ type: GET_TRADES.SET, payload: trades });
     dispatch({
       type: CALCULATE_EQUITY.SET,
-      payload: operations.slice(operations.length - 21, operations.length),
+      payload: operations.slice(
+        operations.length - MAX_GRAPH_OPERATIONS,
+        operations.length,
+      ),
     });
   } catch (err) {
     console.error(err);

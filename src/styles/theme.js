@@ -45,14 +45,16 @@ export default createMuiTheme({
     //     },
     //   },
     // },
-    // MuiTableCell: {
-    //   root: {
-    //     fontFamily: 'Rubik-Light, sans-serif',
-    //   },
-    //   body: {
-    //     fontSize: '1rem',
-    //   },
-    // },
+    MuiTableCell: {
+      root: {
+        fontFamily: 'Rubik, sans-serif',
+        background: '#8ee7ff',
+        borderBottomColor: '#282c3366',
+      },
+      body: {
+        fontSize: '1rem',
+      },
+    },
     // MuiSelect: {
     //   root: {
     //     border: 'none',

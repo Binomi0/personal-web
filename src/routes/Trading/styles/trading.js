@@ -23,6 +23,10 @@ export default (theme) => ({
       minWidth: 700,
     },
   },
+  cell: {
+    fontSize: '.8rem',
+    fontWeight: 100,
+  },
   h1: {
     margin: '1rem 0',
     textTransform: 'uppercase',
