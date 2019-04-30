@@ -86,7 +86,7 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
   if (position.quantity !== currentPosition.quantity) {
     try {
       const URL = `${version}/trading/position/exit/${market}`;
-      const response = await axios.post(URL, position);
+      await axios.post(URL, position);
 
       dispatch({ type: EXIT_POSITION.SUCCESS });
       dispatch(getPositions());

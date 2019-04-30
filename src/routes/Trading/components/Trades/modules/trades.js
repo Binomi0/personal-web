@@ -46,7 +46,10 @@ export const getTrades = () => async (dispatch) => {
 
     dispatch({ type: GET_TRADES.SUCCESS });
     dispatch({ type: GET_TRADES.SET, payload: trades });
-    dispatch({ type: CALCULATE_EQUITY.SET, payload: operations });
+    dispatch({
+      type: CALCULATE_EQUITY.SET,
+      payload: operations.slice(operations.length - 21, operations.length),
+    });
   } catch (err) {
     console.error(err);
     dispatch({ type: GET_TRADES.FAILURE });

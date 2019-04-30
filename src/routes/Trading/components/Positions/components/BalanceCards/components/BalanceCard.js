@@ -7,7 +7,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import ReactGA from 'react-ga';
 
 import styles from '../styles/balanceCards'; // GraphContent,
 import formatter from '../../../../../../../utils/formatAmount';
