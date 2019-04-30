@@ -70,7 +70,7 @@ class TradingView extends Component {
               <span
                 style={{
                   textTransform: 'uppercase',
-                  fontFamily: 'Rubik-Light',
+                  fontWeight: 100,
                   fontSize: '.9rem',
                 }}
               >
