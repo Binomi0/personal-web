@@ -2,11 +2,10 @@ import moment from 'moment';
 import axios from '../../../../../config/axios';
 import createReducer from '../../../../../redux/create-reducer';
 import { GET_TRADES, CALCULATE_EQUITY } from '../../../../../action-types';
-// import calculateContracts from '../../../../../utils/trading/calculateContracts';
-// import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
-// import { getCryptoBalance } from './balance';
 import { getPositions } from '../../Positions/modules/positions';
 import { MARKETS } from '../../../modules/constants';
+
+const MAX_GRAPH_OPERATIONS = 21;
 
 export const getTrades = () => async (dispatch) => {
   dispatch({ type: GET_TRADES.REQUEST });
@@ -49,7 +48,13 @@ export const getTrades = () => async (dispatch) => {
 
     dispatch({ type: GET_TRADES.SUCCESS });
     dispatch({ type: GET_TRADES.SET, payload: trades });
-    dispatch({ type: CALCULATE_EQUITY.SET, payload: operations });
+    dispatch({
+      type: CALCULATE_EQUITY.SET,
+      payload: operations.slice(
+        operations.length - MAX_GRAPH_OPERATIONS,
+        operations.length,
+      ),
+    });
   } catch (err) {
     console.error(err);
     dispatch({ type: GET_TRADES.FAILURE });
@@ -57,33 +62,28 @@ export const getTrades = () => async (dispatch) => {
 };
 
 // Transforma la posición en una operación terminada
-export const finishTrade = (_exitPosition, _market) => async (dispatch) => {
-  try {
-    const currentURL = `v1/trading/position/finish/${_market}`;
-    const response = await axios(currentURL, _market);
+export const finishTrade = (_currentPosition, _exitPosition, _market) => async (
+  dispatch,
+  getState,
+) => {
+  const newTrade = {
+    enterPrice: _currentPosition.mediumPrice,
+    quantity: _currentPosition.quantity,
+    startTrade: _currentPosition.startTrade,
+    exitPosition: _exitPosition,
+    finishTime: Date.now(),
+    result: _currentPosition.amount,
+    direction: _exitPosition.direction,
+    market: _market,
+  };
 
-    if (!response.data[0].mediumPrice) {
-      console.log('Saliendo de finishTrade');
+  // console.log('newTrade', newTrade);
 
-      return;
-    }
-    // const result = calculateResult(response.data[0], _exitPosition);
+  const tradeURL = 'v1/trading/trade';
+  await axios.post(tradeURL, newTrade);
 
-    const newTrade = {
-      // ...response.data[0],
-      // onExitPosition,
-      finishTime: Date.now(),
-      // result,
-    };
-
-    const tradeURL = 'v1/trading/trade';
-    await axios.post(tradeURL, newTrade);
-
-    dispatch(getTrades());
-    dispatch(getPositions());
-  } catch (err) {
-    console.error(err);
-  }
+  dispatch(getTrades());
+  dispatch(getPositions());
 };
 
 export const actions = {

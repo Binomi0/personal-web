@@ -4,15 +4,15 @@ import { withStyles } from '@material-ui/core/styles';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
 
 import styles from '../styles/trading';
+import { DialogContent, DialogActions } from '@material-ui/core';
 
 const MARKETS = {
   DOW: 'IX.D.DOW.IFS.IP',
@@ -29,44 +29,13 @@ class NewTrade extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-    const { BID, OFFER } = nextProps.ig[MARKETS[nextProps.selectedMarket]];
-
-    if (nextState.direction === 'Long') {
-      if (OFFER !== nextState.enterPrice) {
-        this.setState({ enterPrice: OFFER });
-      }
-    } else {
-      if (BID !== nextState.enterPrice) {
-        this.setState({ enterPrice: BID });
-      }
-    }
-  }
-
   handleChangeDirection = ({ target: { value: direction } }) => {
-    this.setState({ direction }, this.updateEnterPrice);
-  };
-
-  updateEnterPrice = () => {
-    const { direction } = this.state;
-    const { BID, OFFER } = this.props.ig[MARKETS[this.props.selectedMarket]];
-
-    if (direction === 'Long') {
-      this.setState({ enterPrice: OFFER });
-    } else {
-      this.setState({ enterPrice: BID });
-    }
+    this.setState({ direction });
   };
 
   handleChange = ({ target: { name, value } }) => {
-    if (name === 'direction' && this.state.direction !== value) {
-      this.setState({});
-    }
     this.setState({ [name]: value });
-    this.setCurrentPrice();
   };
-
-  setCurrentPrice = () => {};
 
   handleOpenNewPosition = () => {
     this.handleClose();
@@ -91,17 +60,18 @@ class NewTrade extends React.Component {
         <DialogTitle id="new-trade-dialog">
           Abriendo posición en {this.props.selectedMarket}
         </DialogTitle>
-        <div className={classes.container}>
+        <DialogContent>
           <FormControl className={classes.formControl} variant="filled">
-            <InputLabel htmlFor="enterPrice">Precio Entrada</InputLabel>
-            <Input
+            <TextField
+              autoFocus
+              label="Precio Entrada"
               id="enterPrice"
               name="enterPrice"
               value={this.state.enterPrice}
               onChange={this.handleChange}
             />
           </FormControl>
-          <FormControl className={classes.formControl} variant="filled">
+          <FormControl className={classes.formControl}>
             <InputLabel htmlFor="direction">Dirección</InputLabel>
             <Select
               value={this.state.direction}
@@ -116,8 +86,8 @@ class NewTrade extends React.Component {
             </Select>
           </FormControl>
           <FormControl className={classes.formControl} variant="filled">
-            <InputLabel htmlFor="quantity">Cantidad</InputLabel>
-            <Input
+            <TextField
+              label="Cantidad"
               type="number"
               id="quantity"
               name="quantity"
@@ -125,6 +95,8 @@ class NewTrade extends React.Component {
               onChange={this.handleChange}
             />
           </FormControl>
+        </DialogContent>
+        <DialogActions>
           <Button
             color="primary"
             onClick={this.handleOpenNewPosition}
@@ -132,7 +104,7 @@ class NewTrade extends React.Component {
           >
             Enviar
           </Button>
-        </div>
+        </DialogActions>
       </Dialog>
     );
   }

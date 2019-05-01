@@ -45,14 +45,16 @@ export default createMuiTheme({
     //     },
     //   },
     // },
-    // MuiTableCell: {
-    //   root: {
-    //     fontFamily: 'Rubik-Light, sans-serif',
-    //   },
-    //   body: {
-    //     fontSize: '1rem',
-    //   },
-    // },
+    MuiTableCell: {
+      root: {
+        fontFamily: 'Rubik, sans-serif',
+        background: '#8ee7ff',
+        borderBottomColor: '#282c3366',
+      },
+      body: {
+        fontSize: '1rem',
+      },
+    },
     // MuiSelect: {
     //   root: {
     //     border: 'none',
@@ -257,16 +259,16 @@ export default createMuiTheme({
       '-webkit-font-smoothing': 'antialiased',
     },
     body2: {
-      fontFamily: 'Rubik-Regular, sans-serif',
+      fontFamily: 'Rubik, sans-serif',
       fontSize: '16px',
     },
     h1: {},
     h2: {
-      fontFamily: 'Rubik-Medium, sans-serif',
+      fontFamily: 'Rubik, sans-serif',
       fontSize: '1.5rem',
     },
     h3: {
-      fontFamily: 'Rubik-Medium, sans-serif',
+      fontFamily: 'Rubik, sans-serif',
       fontSize: '16px',
     },
     h4: {},
@@ -275,9 +277,9 @@ export default createMuiTheme({
       fontWeight: 300,
     },
     h6: {
-      fontFamily: 'Rubik-Medium',
+      fontFamily: 'Rubik',
       '&span': {
-        fontFamily: 'Rubik-Light ',
+        fontFamily: 'Rubik ',
       },
     },
     textSecondary: {
