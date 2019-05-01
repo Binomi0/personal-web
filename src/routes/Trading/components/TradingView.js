@@ -11,7 +11,6 @@ import Trades from './Trades';
 import Modals from '../modals';
 import LogoAppBar from '../../../components/LogoAppBar';
 import literals from '../../../i18n/es-ES';
-import {} from '../modules/constants';
 
 import styles, {
   TradingContainer,

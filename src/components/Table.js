@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Typography, Button } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 import styles from '../routes/Trading/styles/trading';
 
@@ -65,9 +66,7 @@ class PositionTable extends Component {
                         variant="contained"
                         color="primary"
                       >
-                        <Typography color="secondary" variant="body1">
-                          x
-                        </Typography>
+                        <CloseIcon />
                       </Button>
                     </TableCell>
                   )}
