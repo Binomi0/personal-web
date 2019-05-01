@@ -89,12 +89,19 @@ $sizes: $small, $medium, $large, $x-large, $xx-large;
     h4 {
         color: #61dafb;
         text-shadow: 1px 1px #2b6474;
+        font-weight: 100;
+        font-size: 1.7rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.6rem;
+        }
     }
 
     p {
-        font-size: 1rem;
+        font-size: .7rem;
         text-transform: uppercase;
-        letter-spacing: .2rem;
+        letter-spacing: .45rem;
+        font-weight: 600;
     }
 
     footer {

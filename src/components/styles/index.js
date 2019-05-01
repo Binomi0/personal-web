@@ -5,6 +5,10 @@ export const StyledContent = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 
   font-size: 0.9rem;
 
