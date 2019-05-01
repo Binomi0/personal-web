@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
-import { LoadingBar } from 'react-redux-loading-bar';
-import { withStyles, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 
 import Positions from './Positions';
 import Trades from './Trades';
 
-import Modals from '../modals';
-import LogoAppBar from '../../../components/LogoAppBar';
 import literals from '../../../i18n/es-ES';
 
 import styles, {
@@ -58,27 +55,6 @@ class TradingView extends Component {
     // console.log(this.constructor.name, '=>', this.props);
     return (
       <TradingContainer>
-        <LoadingBar showFastActions />
-        <Modals />
-
-        <AppBar position="sticky" color="secondary">
-          <Toolbar>
-            <LogoAppBar />
-            <Typography variant="h6" color="inherit">
-              Adolfo Onrubia |{' '}
-              <span
-                style={{
-                  textTransform: 'uppercase',
-                  fontWeight: 100,
-                  fontSize: '.9rem',
-                }}
-              >
-                Trading
-              </span>
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
         {this.state.auth ? (
           <TradingContent>
             <h1 className={classes.h1}>{literals.TRADING.title}</h1>
