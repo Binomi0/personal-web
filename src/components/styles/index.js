@@ -34,7 +34,7 @@ export const Box = styled.div`
     align-items: center;
     box-sizing: border-box;
     border: 0.1rem solid #282c33;
-    box-shadow: 0px 0px 10px 0.1px #282c33;
+    box-shadow: 0px 0px 5px 0.1px #282c33;
   }
 `;
 

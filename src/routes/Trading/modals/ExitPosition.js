@@ -3,29 +3,22 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
 import Dialog from '@material-ui/core/Dialog';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import { DialogActions } from '@material-ui/core';
 
 import styles from '../styles/trading';
-
-const MARKETS = {
-  DOW: 'IX.D.DOW.IFS.IP',
-  DAX: 'IX.D.DAX.IFS.IP',
-};
-
-// const defaultState = {
-//   exitPrice: 11234,
-//   quantity: 1,
-// };
+import { MARKETS } from '../modules/constants';
 
 class ExitPosition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      exitPrice: props.ig[MARKETS[props.selectedMarket]].BID,
+      exitPrice: props.ig[MARKETS.IG[props.selectedMarket]].BID,
       quantity: 1,
       direction: 'Long',
     };
@@ -39,25 +32,11 @@ class ExitPosition extends React.Component {
     const quantity = positions.reduce((total, pos) => total + pos.quantity, 0);
     if (positions[0].direction !== 'Long') {
       this.setState({
-        exitPrice: this.props.ig[MARKETS[this.props.selectedMarket]].OFFER,
+        exitPrice: this.props.ig[MARKETS.IG[this.props.selectedMarket]].OFFER,
       });
     }
 
     this.setState({ direction: positions[0].direction, quantity });
-  }
-
-  componentWillReceiveProps(nextProps, nextState) {
-    const { BID, OFFER } = nextProps.ig[MARKETS[nextProps.selectedMarket]];
-
-    if (nextState.direction === 'Long') {
-      if (BID !== nextState.exitPrice) {
-        this.setState({ exitPrice: BID });
-      }
-    } else {
-      if (OFFER !== nextState.exitPrice) {
-        this.setState({ exitPrice: OFFER });
-      }
-    }
   }
 
   handleChange = ({ target: { name, value } }) => {
@@ -74,16 +53,8 @@ class ExitPosition extends React.Component {
   };
 
   render() {
-    const {
-      classes,
-      closeModal,
-      open,
-      // ig,
-      // selectedMarket,
-    } = this.props;
+    const { classes, closeModal, open } = this.props;
 
-    // const exitPrice = ig[MARKETS[selectedMarket]].OFFER;
-    // console.log(exitPrice);
     // console.log(this.constructor.name, this.props);
 
     return (
@@ -93,7 +64,7 @@ class ExitPosition extends React.Component {
         open={open}
       >
         <DialogTitle id="exit-position-dialog">Cerrando posición</DialogTitle>
-        <div className={classes.container}>
+        <DialogContent>
           <FormControl className={classes.formControl} variant="filled">
             <InputLabel htmlFor="exitPrice">Precio Salida</InputLabel>
             <Input
@@ -114,14 +85,16 @@ class ExitPosition extends React.Component {
               onChange={this.handleChange}
             />
           </FormControl>
+        </DialogContent>
+        <DialogActions>
           <Button
             onClick={this.handleOnExitPosition}
             variant="contained"
             color="primary"
           >
-            Enviar
+            cerrar posición
           </Button>
-        </div>
+        </DialogActions>
       </Dialog>
     );
   }

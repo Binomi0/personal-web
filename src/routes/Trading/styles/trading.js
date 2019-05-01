@@ -1,17 +1,38 @@
 import styled from 'styled-components';
 import blue from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
 
 export default (theme) => ({
   avatar: {
     backgroundColor: blue[100],
     color: blue[600],
   },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
   },
+  long: {
+    colorPrimary: {
+      color: green[500],
+    },
+  },
+  short: {
+    colorSecondary: {
+      color: red[500],
+    },
+  },
+  checked: {},
   formControl: {
-    margin: theme.spacing.unit,
+    marginBottom: '.5rem',
+  },
+  colorSwitchBase: {
+    color: 'green',
+  },
+  colorChecked: {
+    color: 'red',
+  },
+  colorBar: {
+    color: 'green',
   },
   table: {
     root: {

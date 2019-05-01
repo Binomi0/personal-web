@@ -2,7 +2,6 @@ import moment from 'moment';
 
 moment.locale('es-ES', {
   months: [
-    'Diciembre',
     'Enero',
     'Febrero',
     'Marzo',
@@ -14,6 +13,7 @@ moment.locale('es-ES', {
     'Septiembre',
     'Octubre',
     'Noviembre',
+    'Diciembre',
   ],
 });
 
