@@ -1,7 +1,8 @@
-// import moment from 'moment';
-// import axios from '../../../../../config/axios';
 import createReducer from '../../../../../redux/create-reducer';
-import { GET_INDEX_BALANCE } from '../../../../../action-types';
+import {
+  GET_INDEX_BALANCE,
+  GET_CRYPTO_BALANCE,
+} from '../../../../../action-types';
 import calculateContracts from '../../../../../utils/trading/calculateContracts';
 import calculateMediumPrice from '../../../../../utils/trading/calculateMediumPrice';
 
@@ -10,49 +11,11 @@ const MARKETS = {
   'IX.D.DAX.IFS.IP': 'DAX',
 };
 
-/**
- * @name calculateResult
- * @description Gives the result of the operation in points
- *
- * @param {Object} trade
- * @param {string} trade.enterPrice
- * @param {string} trade.exitPrice
- * @param {string} trade.direction
- *
- * @returns {Number}
- */
-// function calculateResult(currentPosition, onExitPosition) {
-//   console.log('currentPosition =>', currentPosition);
-//   console.log('onExitPosition =>', onExitPosition);
-//   if (!currentPosition.enterPrice) {
-//     throw new Error('Missing enterPrice parameter in `calculateResult`');
-//   }
-//   if (!onExitPosition.exitPrice) {
-//     throw new Error('Missing exitPrice parameter in `calculateResult`');
-//   }
-//   // TODO Agregar direcction a la respuesta del balance
-//   if (!currentPosition.direction) {
-//     throw new Error('Missing direction parameter in `calculateResult`');
-//   }
-//   let result;
-
-//   if (currentPosition.direction === 'Long') {
-//     result =
-//       parseInt(onExitPosition.exitPrice) - parseInt(currentPosition.enterPrice);
-//   } else {
-//     result =
-//       parseInt(currentPosition.enterPrice) - parseInt(onExitPosition.exitPrice);
-//   }
-
-//   return result;
-// }
-
 export const getIndexBalance = (market, price) => async (
   dispatch,
   getState,
 ) => {
   const currentPositions = getState().trading.positions.open.filter(
-    // (pos) => ['DAX', 'DOW', 'ETH'].includes(pos.market),
     (pos) => pos.market === MARKETS[market],
   );
 
@@ -92,6 +55,7 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
     quantity: Number(quantity.toFixed(0)),
     amount: Number(amount.toFixed(2)),
     startTrade: _positions[0].startDate,
+    direction: _positions[0].direction,
   };
 
   dispatch({
@@ -123,9 +87,10 @@ export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
     equity.amount =
       (price.amount - calculateMediumPrice(marketPositions)) * equity.quantity;
     equity.startTrade = marketPositions[0].startDate;
+    equity.direction = marketPositions[0].direction;
 
     dispatch({
-      type: GET_INDEX_BALANCE.SET,
+      type: GET_CRYPTO_BALANCE.SET,
       payload: { [crypto]: equity },
     });
   }
@@ -145,6 +110,13 @@ const INITIAL_STATE = { ...defaultState };
 
 const ACTION_HANDLERS = {
   [GET_INDEX_BALANCE.SET]: (state, { payload }) => ({
+    ...state,
+    equity: {
+      ...state.equity,
+      ...payload,
+    },
+  }),
+  [GET_CRYPTO_BALANCE.SET]: (state, { payload }) => ({
     ...state,
     equity: {
       ...state.equity,

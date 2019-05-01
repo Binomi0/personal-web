@@ -7,7 +7,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import ReactGA from 'react-ga';
 
 import styles from '../styles/balanceCards'; // GraphContent,
 import formatter from '../../../../../../../utils/formatAmount';
@@ -85,11 +84,13 @@ class BalanceCard extends React.Component {
                 {equity.amount && formatter.format(equity.amount)}
               </Typography>
               <Typography color="textSecondary">
-                {equity.mediumPrice ? 'Posición: ' : 'Cerrada'}
+                {equity.direction === 'Long' && 'Largo: '}
+                {equity.direction === 'Short' && 'Corto: '}
+                {!equity.direction && 'Cerrada'}
                 {equity.mediumPrice && equity.mediumPrice}{' '}
                 {equity.quantity &&
                   `(${equity.quantity} contrato${
-                    equity.quantity === '1' ? '' : 's'
+                    equity.quantity === 1 ? '' : 's'
                   })`}
               </Typography>
               <Typography className={classes.pos} variant="caption" paragraph>

@@ -18,6 +18,12 @@ if (process.env.NODE_ENV === 'development') {
   ReactGA.initialize(process.env.REACT_APP_GA_ID);
 }
 
+let userId = localStorage.getItem('userId');
+if (!userId) {
+  userId = 'Invitado';
+}
+ReactGA.ga('set', 'userId', userId);
+
 const store = createStore();
 
 const Root = () => (

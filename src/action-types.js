@@ -13,6 +13,7 @@ export const GET_POSITIONS = requestAction('/trading/GET_POSITIONS');
 export const GET_TRADES = requestAction('/trading/GET_TRADES');
 export const CALCULATE_EQUITY = requestAction('/trading/CALCULATE_EQUITY');
 export const GET_INDEX_BALANCE = requestAction('/trading/GET_INDEX_BALANCE');
+export const GET_CRYPTO_BALANCE = requestAction('/trading/GET_CRYPTO_BALANCE');
 export const GET_CURRENT_BALANCE = requestAction(
   '/trading/GET_CURRENT_BALANCE',
 );
