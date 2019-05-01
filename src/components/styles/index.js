@@ -25,7 +25,6 @@ export const StyledContent = styled.div`
 
     &:hover {
       color: #61dafb;
-      text-decoration: underline;
     }
   }
 `;

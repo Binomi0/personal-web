@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
-
+import { connect } from 'react-redux';
 // import FrontEnd from './FrontEnd';
 // import BackEnd from './Backend';
 // import Tools from './Tools';
@@ -27,16 +27,18 @@ class Home extends Component {
   render() {
     // console.log('this.props', this.props);
     return (
-      <div className="App-Home">
+      <div className="App">
         <Menu />
-        <div className="App-logo logo1" />
-        <div className="App-logo logo2" />
-        <div className="App-logo logo3" />
-        <div className="App-logo logo4" />
-        <h4>Adolfo J. Onrubia Albalá</h4>
-        <p>Full Stack Developer</p>
-        <p>Entrepreneur</p>
-        <p>Trader</p>
+        <div className="App-Home">
+          <div className="App-logo logo1" />
+          <div className="App-logo logo2" />
+          <div className="App-logo logo3" />
+          <div className="App-logo logo4" />
+          <h4>Adolfo J. Onrubia Albalá</h4>
+          <p>Full Stack Developer</p>
+          <p>Entrepreneur</p>
+          <p>Trader</p>
+        </div>
         <Contacto />
 
         <Footer />
@@ -45,4 +47,11 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home);

@@ -50,6 +50,7 @@ class BalanceCard extends React.Component {
       prices,
       // onExitPosition,
     } = this.props;
+    const isAdmin = Boolean(localStorage.getItem('isAdmin'));
 
     // console.log('market', market);
     const cryptoPrice =
@@ -106,26 +107,28 @@ class BalanceCard extends React.Component {
             </Typography>
           )}
         </CardContent>
-        <CardActions>
-          {equity && equity.amount && (
+        {isAdmin && (
+          <CardActions>
+            {equity && equity.amount && (
+              <Button
+                onClick={() => this.handleClosePosition(market)}
+                variant="contained"
+                color="primary"
+                size="small"
+              >
+                Cerrar Posición
+              </Button>
+            )}
             <Button
-              onClick={() => this.handleClosePosition(market)}
+              onClick={() => this.handleOpenPosition(market)}
               variant="contained"
-              color="primary"
+              color="secondary"
               size="small"
             >
-              Cerrar Posición
+              Abrir Posición
             </Button>
-          )}
-          <Button
-            onClick={() => this.handleOpenPosition(market)}
-            variant="contained"
-            color="secondary"
-            size="small"
-          >
-            Abrir Posición
-          </Button>
-        </CardActions>
+          </CardActions>
+        )}
         {/* {market === 'DOW' && (
           <CandleStickChart data={this.props.prices.charts.DOW || []} />
         )}
