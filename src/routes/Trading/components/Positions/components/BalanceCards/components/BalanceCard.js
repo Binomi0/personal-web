@@ -7,13 +7,12 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 
 import styles from '../styles/balanceCards'; // GraphContent,
 import formatter from '../../../../../../../utils/formatAmount';
-// import CandleStickChart from '../../../../../components/CandleStickChart';
-// import { data } from '../modules/constants';
-
 import { MARKETS } from '../../../../../modules/constants';
+import { TitleContent } from '../styles/balanceCards';
 
 class BalanceCard extends React.Component {
   static propTypes = {
@@ -33,7 +32,6 @@ class BalanceCard extends React.Component {
   handleClosePosition = (market) => {
     this.props.onSelectMarket(market);
     this.props.openModal('EXIT_POSITION');
-    // this.props.onExitPosition(market);
   };
 
   handleOpenPosition = (market) => {
@@ -59,14 +57,17 @@ class BalanceCard extends React.Component {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
-            {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>(
-            {indexSpread})
-          </Typography>
+          <TitleContent>
+            <Typography
+              className={classes.title}
+              color="textSecondary"
+              gutterBottom
+            >
+              {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>(
+              {indexSpread})
+            </Typography>
+            <TrendingDownIcon fontSize="small" color="error" />
+          </TitleContent>
           {equity ? (
             <>
               <Typography
@@ -133,4 +134,4 @@ class BalanceCard extends React.Component {
   }
 }
 
-export default withStyles(styles)(BalanceCard);
+export default withStyles(styles, { withTheme: true })(BalanceCard);

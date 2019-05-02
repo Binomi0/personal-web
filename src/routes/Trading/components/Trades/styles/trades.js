@@ -53,5 +53,7 @@ export const TradesContainer = styled.div`
 
 export const TradeContainer = styled.div`
   min-height: 100px;
-  background: #282c33;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

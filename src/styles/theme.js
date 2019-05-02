@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 //MuiTableRow - root - 138 MuiTableRow - head - 141 MUIDataTableHeadRow - root - 137
 
 export default createMuiTheme({
@@ -294,6 +295,10 @@ export default createMuiTheme({
   },
   palette: {
     // type: 'dark',
+    action: {
+      main: green[600],
+      light: green[200],
+    },
     primary: {
       main: '#282c33',
       light: '#3f5782',
@@ -319,6 +324,7 @@ export default createMuiTheme({
     common: {
       black: '#282c33',
       gray: '#8ee7ff',
+      white: '#8ee7ff',
     },
   },
 });

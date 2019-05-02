@@ -45,3 +45,8 @@ export const CardsContainer = styled.div`
 export const GraphContent = styled.div`
   padding: 1rem 0;
 `;
+
+export const TitleContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
