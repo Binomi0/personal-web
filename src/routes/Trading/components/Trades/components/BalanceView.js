@@ -12,14 +12,19 @@ class BalanceView extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     equity: PropTypes.oneOfType([PropTypes.number, PropTypes.array]).isRequired,
+    title: PropTypes.string,
   };
 
   render() {
     // console.log(this.constructor.name, this.props);
-    const { classes, equity } = this.props;
+    const { classes, equity, title } = this.props;
     return (
       <div>
-        <h2 className={classes.h2}>Balance a {moment().format(humanDate)}</h2>
+        {title ? (
+          <h2 className={classes.h2}>{title}</h2>
+        ) : (
+          <h2 className={classes.h2}>Balance a {moment().format(humanDate)}</h2>
+        )}
         <LinearGraph classes={classes} data={equity} />
       </div>
     );

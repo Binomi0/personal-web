@@ -5,7 +5,7 @@ import { GET_TRADES, CALCULATE_EQUITY } from '../../../../../action-types';
 import { getPositions } from '../../Positions/modules/positions';
 import { MARKETS } from '../../../modules/constants';
 
-const MAX_GRAPH_OPERATIONS = 21;
+const MAX_GRAPH_OPERATIONS = 240;
 
 export const getTrades = () => async (dispatch) => {
   dispatch({ type: GET_TRADES.REQUEST });
@@ -21,6 +21,7 @@ export const getTrades = () => async (dispatch) => {
     let result = 0;
 
     function parseTrades(trade) {
+      console.log('trades', trades);
       return [
         moment(trade.finishTime).format('DD/MM/YY HH:MM'),
         trade.enterPrice,
@@ -45,6 +46,9 @@ export const getTrades = () => async (dispatch) => {
       DAX: daxTrades,
       DOW: dowTrades,
     };
+
+    console.log('daxTrades', daxTrades);
+    console.log('dowTrades', dowTrades);
 
     dispatch({ type: GET_TRADES.SUCCESS });
     dispatch({ type: GET_TRADES.SET, payload: trades });

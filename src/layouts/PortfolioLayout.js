@@ -10,7 +10,7 @@ const PortfolioLayout = ({ children }) => {
       <LoadingBar showFastActions />
       <Modals />
 
-      <AppBar title="Adolfo Onrubia" subtitle="Portfolio" />
+      <AppBar color="primary" title="Adolfo Onrubia" subtitle="Portfolio" />
 
       {children}
     </div>

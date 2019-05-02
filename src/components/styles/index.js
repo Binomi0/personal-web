@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+export default () => ({
+  grow: {
+    flexGrow: 1,
+  },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+});
+
 export const StyledContent = styled.div`
   margin: 1rem;
   position: absolute;

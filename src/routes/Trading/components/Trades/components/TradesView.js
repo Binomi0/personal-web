@@ -14,13 +14,18 @@ class Trades extends Component {
   };
 
   render() {
-    const { classes, equity } = this.props;
+    const { classes, equity, tournament } = this.props;
 
     // console.log(this.constructor.name, this.props);
     return (
       <TradesContainer>
         <h1 className={classes.h1}>Histórico de operaciones</h1>
         <Balance classes={classes} equity={equity} />
+        <Balance
+          title="Reto De 100 a 100.000"
+          classes={classes}
+          equity={tournament}
+        />
         <TradeContainer />
       </TradesContainer>
     );
@@ -30,6 +35,7 @@ class Trades extends Component {
 Trades.propTypes = {
   classes: PropTypes.object.isRequired,
   equity: PropTypes.array.isRequired,
+  tournament: PropTypes.array.isRequired,
 };
 
 export default Trades;

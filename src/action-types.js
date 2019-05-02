@@ -27,6 +27,8 @@ export const GET_POSITION_EQUITY = requestAction(
 // MODALS
 export const OPEN_MODAL = requestAction('/modals/OPEN_MODAL');
 export const CLOSE_MODAL = requestAction('/modals/CLOSE_MODAL');
+export const OPEN_DRAWER = requestAction('/modals/OPEN_DRAWER');
+export const CLOSE_DRAWER = requestAction('/modals/CLOSE_DRAWER');
 
 // TRADING
 export const IG_LIVESTREAM = requestAction('/trading/IG_LIVESTREAM');

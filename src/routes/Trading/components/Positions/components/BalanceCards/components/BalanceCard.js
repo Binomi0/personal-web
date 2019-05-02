@@ -42,14 +42,7 @@ class BalanceCard extends React.Component {
   };
 
   render() {
-    const {
-      classes,
-      title,
-      market,
-      equity,
-      prices,
-      // onExitPosition,
-    } = this.props;
+    const { classes, title, market, equity, prices } = this.props;
     const isAdmin = Boolean(localStorage.getItem('isAdmin'));
 
     // console.log('market', market);

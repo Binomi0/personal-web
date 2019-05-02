@@ -51,7 +51,7 @@ class LinearGraph extends React.Component {
           />
           <V.VictoryScatter
             data={this.props.data || []}
-            size={this.props.data.length ? 2 : 1}
+            size={this.props.data.length ? 1 : 1}
             style={{ data: { fill: '#8ee7ff' } }}
           />
         </V.VictoryChart>

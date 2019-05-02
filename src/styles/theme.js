@@ -15,6 +15,12 @@ export default createMuiTheme({
       },
     },
 
+    MuiDrawer: {
+      paperAnchorRight: {
+        background: '#8ee7ff',
+      },
+    },
+
     // MuiExpansionPanel: {
     //   root: {
     //     '&:first-child': {

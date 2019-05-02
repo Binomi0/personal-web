@@ -7,6 +7,7 @@ import styles from '../styles/trades';
 
 const mapStateToProps = ({ trading }) => ({
   equity: trading.trades.equity,
+  tournament: trading.trades.equity,
 });
 
 const mapDispatchToProps = { ...actions };
