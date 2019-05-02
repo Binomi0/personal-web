@@ -37,19 +37,26 @@ export const Box = styled.div`
     align-items: center;
     box-sizing: border-box;
     border: 0.1rem solid #282c33;
-    box-shadow: 0px 0px 5px 0.1px #282c33;
+    box-shadow: 0px 0px 5px 0.1px #8ee7ff;
   }
 `;
 
+const sizes = {
+  xl: '45px',
+  lg: '30px',
+  md: '20px',
+  sm: '10px',
+};
+
 export const Box1 = styled.div`
-  width: 45px;
-  height: 45px;
+  /* width: ${sizes.xl};
+  height: ${sizes.xl}; */
   border-radius: 50%;
   border: 0.03rem solid #282c33;
 `;
 export const Box2 = styled.div`
-  width: 30px;
-  height: 30px;
+  /* width: ${sizes.lg};
+  height: ${sizes.lg}; */
   transform: rotate(45deg);
   border: 0.03rem solid #282c33;
 `;
@@ -64,4 +71,12 @@ export const Box4 = styled.div`
   width: 10px;
   height: 10px;
   border: 0.03rem solid #282c33;
+`;
+
+export const SubtitleStyled = styled.span`
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 0.8rem;
+  display: block;
+  line-height: 0.4rem;
 `;

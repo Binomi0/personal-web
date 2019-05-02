@@ -12,8 +12,6 @@ import '../containers/App.scss';
 
 class Home extends Component {
   componentDidMount() {
-    console.log('enviando vista y eveny');
-
     ReactGA.pageview('/home', [], 'Home');
     ReactGA.event({
       category: 'User',
