@@ -23,7 +23,6 @@ export const getTrades = () => async (dispatch) => {
     let result = 0;
 
     function parseTrades(trade) {
-      console.log('trades', trades);
       return [
         moment(trade.finishTime).format('DD/MM/YY HH:MM'),
         trade.enterPrice,

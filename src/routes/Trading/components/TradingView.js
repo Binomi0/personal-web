@@ -13,7 +13,12 @@ import styles, {
   TradingContainer,
   ErrorContainer,
   TradingContent,
+  TradingBanner,
+  Banner,
+  TradingSection,
+  TradingViewContainer,
 } from '../styles/trading';
+import bannerImg from '../../../assets/img/banner-trading.png';
 
 class TradingView extends Component {
   state = {
@@ -54,15 +59,30 @@ class TradingView extends Component {
 
     // console.log(this.constructor.name, '=>', this.props);
     return (
-      <TradingContainer>
+      <TradingViewContainer>
+        <TradingBanner>
+          <Banner src={bannerImg} alt="banner" />
+        </TradingBanner>
         {this.state.auth ? (
           <TradingContent>
-            <h1 className={classes.h1}>{literals.TRADING.title}</h1>
-            <h2 className={classes.h2}>{literals.TRADING.subtitle}</h2>
-            <Positions />
+            <TradingSection>
+              <h1 className={classes.h1}>Reto Real Trading 2019</h1>
+
+              <h2 className={classes.h2}>
+                La meta es conseguir 99.000€ en un año con una cuenta real de
+                1.000€
+              </h2>
+            </TradingSection>
+            <TradingSection>
+              <h1 className={classes.h1}>{literals.TRADING.title}</h1>
+              <h2 className={classes.h2}>{literals.TRADING.subtitle}</h2>
+              <Positions />
+            </TradingSection>
+            <TradingSection>
+              <Trades />
+            </TradingSection>
 
             {/* {this.props.match.url === '/trading/trades' && <Trades />} */}
-            <Trades />
           </TradingContent>
         ) : (
           <ErrorContainer>
@@ -74,7 +94,7 @@ class TradingView extends Component {
             </Link>
           </ErrorContainer>
         )}
-      </TradingContainer>
+      </TradingViewContainer>
     );
   }
 }

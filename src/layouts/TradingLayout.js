@@ -13,7 +13,7 @@ const TradingLayout = ({ children }) => {
       <Drawers />
       <AppBar color="primary" title="Adolfo Onrubia" subtitle="Trading" />
 
-      {children}
+      <div className="App">{children}</div>
     </div>
   );
 };

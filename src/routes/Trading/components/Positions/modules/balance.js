@@ -39,8 +39,6 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
     return;
   }
 
-  console.log('_positions', _positions);
-
   const { OFFER, BID } = _livePrice[_market];
   const mediumPrice = calculateMediumPrice(_positions);
   const quantity = calculateContracts(_positions);
@@ -66,7 +64,7 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
   });
 };
 
-export const updateBalance = (market) => (dispatch, getState) => {
+export const updateBalance = () => (dispatch, getState) => {
   const { selectedMarket } = getState().trading.positions;
   const { equity } = getState().trading.balance;
 
