@@ -56,7 +56,6 @@ export const getPositions = () => async (dispatch) => {
     const URL = 'v1/trading/positions';
     const response = await axios(URL);
 
-    // console.log('getPositions => response.data', response.data);
     dispatch({ type: GET_POSITIONS.SUCCESS });
     dispatch({ type: GET_POSITIONS.SET, payload: response.data });
 

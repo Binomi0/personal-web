@@ -64,6 +64,7 @@ class NewTrade extends React.Component {
           <FormControl className={classes.formControl} variant="filled">
             <TextField
               autoFocus
+              type="number"
               label="Precio Entrada"
               id="enterPrice"
               name="enterPrice"

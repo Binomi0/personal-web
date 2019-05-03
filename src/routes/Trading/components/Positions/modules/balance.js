@@ -39,6 +39,8 @@ export const getCurrentBalance = (_market, _positions, _livePrice) => (
     return;
   }
 
+  console.log('_positions', _positions);
+
   const { OFFER, BID } = _livePrice[_market];
   const mediumPrice = calculateMediumPrice(_positions);
   const quantity = calculateContracts(_positions);
