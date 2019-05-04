@@ -26,7 +26,7 @@ class Trades extends Component {
     return (
       <TradesContainer>
         {/* <h1 className={classes.h1}>Histórico de operaciones</h1> */}
-        {/* <Balance classes={classes} equity={equity} /> */}
+        <Balance classes={classes} equity={equity} />
 
         <h1 className={classes.h1}>Inicio el 1 Junio de 2019</h1>
         <Balance

@@ -10,7 +10,6 @@ import Trades from './Trades';
 import literals from '../../../i18n/es-ES';
 
 import styles, {
-  TradingContainer,
   ErrorContainer,
   TradingContent,
   TradingBanner,
@@ -34,7 +33,7 @@ class TradingView extends Component {
       nonInteraction: true,
     });
     // this.props.getTrades();
-    // this.props.getChartData('DOW', 100);
+    this.props.getChartData('DOW', 100);
     // this.props.getChartData('DAX', 100);
     // const auth = prompt('Introduce la clave de acceso', '');
     // if (auth) {

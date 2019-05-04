@@ -16,7 +16,6 @@ class LightStreamService {
     this.lsClient = new ls.LightstreamerClient(
       process.env.REACT_APP_IG_ENDPOINT,
     );
-
     this.credentials = {
       identifier: process.env.REACT_APP_IG_USERNAME,
       password: process.env.REACT_APP_IG_PASSWORD,
@@ -31,10 +30,8 @@ class LightStreamService {
     };
     this.identifier = null;
     this.password = '';
-
     this.prices = {};
-
-    // this.authenticate();
+    this.accountIdentifier = 100309794;
   }
 
   async authenticate() {
@@ -83,17 +80,18 @@ class LightStreamService {
   }
 
   addSubscription(market, callback) {
-    this.mySubscription = new ls.Subscription(
+    // this.marketSubscription(market, callback);
+    this.marketSubscription = new ls.Subscription(
       'MERGE',
       [`MARKET:${market}`],
       ['BID', 'OFFER', 'MARKET_STATE', 'MARKET_DELAY'],
     );
-    this.mySubscription.setDataAdapter();
-    this.mySubscription.setRequestedSnapshot('yes');
+    this.marketSubscription.setDataAdapter();
+    this.marketSubscription.setRequestedSnapshot('yes');
 
-    this.mySubscription.addListener({
+    this.marketSubscription.addListener({
       onSubscription() {
-        // console.log('SUBSCRIBED TO =>', market);
+        console.log('SUBSCRIBED TO =>', market);
         // console.groupEnd();
       },
       onSubscriptionError(code, message) {
@@ -122,7 +120,130 @@ class LightStreamService {
       },
     });
 
-    this.lsClient.subscribe(this.mySubscription);
+    /**
+     * ACCOUNT SUBSCRIPTION
+     */
+    this.accountSubscription = new ls.Subscription(
+      'MERGE',
+      [`ACCOUNT:${this.accountIdentifier}`],
+      ['PNL', 'DEPOSIT', 'AVAILABLE_CASH', 'FUNDS', 'EQUITY'],
+    );
+    this.accountSubscription.setDataAdapter();
+    this.accountSubscription.setRequestedSnapshot('yes');
+
+    this.accountSubscription.addListener({
+      onSubscription() {
+        console.log('SUBSCRIBED TO ACCOUNT DATA');
+        // console.groupEnd();
+      },
+      onSubscriptionError(code, message) {
+        console.log('Error code: ', code, ', message: ', message);
+      },
+      onUnsubscription() {
+        // console.log('UNSUBSCRIBED');
+      },
+      onItemUpdate(obj) {
+        const PNL = parseFloat(obj.getValue('PNL'));
+        const DEPOSIT = parseFloat(obj.getValue('DEPOSIT'));
+        const AVAILABLE_CASH = parseFloat(obj.getValue('AVAILABLE_CASH'));
+        const FUNDS = parseFloat(obj.getValue('FUNDS'));
+        const EQUITY = parseFloat(obj.getValue('EQUITY'));
+        const accountData = {
+          PNL,
+          DEPOSIT,
+          AVAILABLE_CASH,
+          FUNDS,
+          EQUITY,
+        };
+
+        // console.log('accountData', accountData);
+        callback(accountData);
+      },
+    });
+    /**
+     * CHART SUBSCRIPTION
+     */
+    this.chartSubscription = new ls.Subscription(
+      'DISTINCT',
+      [`CHART:${market}:TICK`],
+      ['BID', 'OFFER', 'DAY_OPEN_MID', 'DAY_NET_CHG_MID', 'DAY_PERC_CHG_MID'],
+    );
+    this.chartSubscription.setDataAdapter();
+    this.chartSubscription.setRequestedSnapshot('yes');
+
+    this.chartSubscription.addListener({
+      onSubscription() {
+        console.log('SUBSCRIBED TO CHART DATA =>', market);
+        // console.groupEnd();
+      },
+      onSubscriptionError(code, message) {
+        console.log('Error code: ', code, ', message: ', message);
+      },
+      onUnsubscription() {
+        // console.log('UNSUBSCRIBED');
+      },
+      onItemUpdate(obj) {
+        const BID = parseFloat(obj.getValue('BID'));
+        const OFFER = parseFloat(obj.getValue('OFFER'));
+        const DAY_OPEN_MID = parseFloat(obj.getValue('DAY_OPEN_MID'));
+        const DAY_NET_CHG_MID = parseFloat(obj.getValue('DAY_NET_CHG_MID'));
+        const DAY_PERC_CHG_MID = parseFloat(obj.getValue('DAY_PERC_CHG_MID'));
+        const chartData = {
+          BID,
+          OFFER,
+          DAY_OPEN_MID,
+          DAY_NET_CHG_MID,
+          DAY_PERC_CHG_MID,
+        };
+
+        // console.log('chartSubscription', chartData);
+        callback(chartData);
+      },
+    });
+    /**
+     * CANDLE SUBSCRIPTION
+     */
+    this.candleSubscription = new ls.Subscription(
+      'MERGE',
+      [`CHART:${market}:5MINUTE`],
+      ['LTP_OPEN', 'LTP_HIGH', 'LTP_LOW', 'LTP_CLOSE', 'CONS_TICK_COUNT'],
+    );
+    this.candleSubscription.setDataAdapter();
+    this.candleSubscription.setRequestedSnapshot('yes');
+
+    this.candleSubscription.addListener({
+      onSubscription() {
+        console.log('SUBSCRIBED TO CANDLE DATA =>', market);
+        // console.groupEnd();
+      },
+      onSubscriptionError(code, message) {
+        console.log('Error code: ', code, ', message: ', message);
+      },
+      onUnsubscription() {
+        // console.log('UNSUBSCRIBED');
+      },
+      onItemUpdate(obj) {
+        const LTP_OPEN = parseFloat(obj.getValue('LTP_OPEN'));
+        const LTP_HIGH = parseFloat(obj.getValue('LTP_HIGH'));
+        const LTP_LOW = parseFloat(obj.getValue('LTP_LOW'));
+        const LTP_CLOSE = parseFloat(obj.getValue('LTP_CLOSE'));
+        const CONS_TICK_COUNT = parseFloat(obj.getValue('CONS_TICK_COUNT'));
+        const candleData = {
+          LTP_OPEN,
+          LTP_HIGH,
+          LTP_LOW,
+          LTP_CLOSE,
+          CONS_TICK_COUNT,
+        };
+
+        // console.log('candleSubscription', candleData);
+        callback(candleData);
+      },
+    });
+    this.lsClient.subscribe(this.marketSubscription);
+    this.lsClient.subscribe(this.accountSubscription);
+    this.lsClient.subscribe(this.chartSubscription);
+    this.lsClient.subscribe(this.candleSubscription);
   }
 
   /**
