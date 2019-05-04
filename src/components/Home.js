@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import BackEnd from './Backend';
 // import Tools from './Tools';
 import Contacto from './Contacto';
-import Footer from './Footer';
+import HomeFooter from './HomeFooter';
 import Menu from './Menu';
 
 import '../containers/App.scss';
@@ -39,7 +39,7 @@ class Home extends Component {
         </div>
         <Contacto />
 
-        <Footer />
+        <HomeFooter />
       </div>
     );
   }

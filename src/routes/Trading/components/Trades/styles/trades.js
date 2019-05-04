@@ -48,12 +48,5 @@ export default (theme) => ({
 });
 
 export const TradesContainer = styled.div`
-  margin: 1rem 0;
-`;
-
-export const TradeContainer = styled.div`
-  min-height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* margin: 1rem 0; */
 `;

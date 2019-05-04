@@ -60,13 +60,17 @@ export default (theme) => ({
     },
   },
   h2: {
-    fontWeight: 100,
+    // fontWeight: 100,
     color: theme.palette.secondary.main,
     textShadow: `0.05rem 0.05rem ${theme.palette.primary.light}`,
     '@media (max-width: 768px)': {
       margin: 0,
       fontSize: '1rem',
     },
+    lineHeight: '1rem',
+  },
+  titleIcon: {
+    marginRight: '.5rem',
   },
 });
 
@@ -75,7 +79,10 @@ export const TradingSection = styled.section`
   border: 1px solid #8ee7ff;
   border-radius: 0.5rem;
   box-shadow: 0 0 1rem 0.01rem #8ee7ff;
-  margin: 4rem 0;
+  margin: 2rem 0;
+  @media (min-width: 768px) {
+    margin: 4rem 0;
+  }
 `;
 
 export const TradingContent = styled.div`
@@ -107,4 +114,10 @@ export const Banner = styled.img`
   max-width: 100%;
   max-height: 100vh;
   margin: auto;
+`;
+
+export const BoxTitle = styled.div`
+  height: 50px;
+  display: flex;
+  align-items: center;
 `;

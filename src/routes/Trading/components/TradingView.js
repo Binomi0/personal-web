@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
-import { withStyles, Typography } from '@material-ui/core';
+import { withStyles, Typography, Button } from '@material-ui/core';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 import Positions from './Positions';
 import Trades from './Trades';
+import Separator from '../../../components/Separator';
 
 import literals from '../../../i18n/es-ES';
 
@@ -16,6 +19,7 @@ import styles, {
   Banner,
   TradingSection,
   TradingViewContainer,
+  BoxTitle,
 } from '../styles/trading';
 import bannerImg from '../../../assets/img/banner-trading.png';
 
@@ -65,20 +69,49 @@ class TradingView extends Component {
         {this.state.auth ? (
           <TradingContent>
             <TradingSection>
-              <h1 className={classes.h1}>Reto Real Trading 2019</h1>
+              <BoxTitle>
+                <AccountBalanceIcon
+                  color="secondary"
+                  className={classes.titleIcon}
+                />
+                <h1 className={classes.h1}>Reto Real Trading 2019</h1>
+              </BoxTitle>
 
-              <h2 className={classes.h2}>
+              <Typography className={classes.h2} paragraph>
                 La meta es conseguir 99.000€ en un año con una cuenta real de
                 1.000€
-              </h2>
+              </Typography>
+
+              <BoxTitle>
+                <AccountBalanceWalletIcon
+                  color="secondary"
+                  className={classes.titleIcon}
+                />
+                <h1 className={classes.h1}>Objetivo diario 4,48%</h1>
+              </BoxTitle>
+              <Typography variant="caption" color="secondary">
+                Beneficio: <b>47 pips</b>
+              </Typography>
+              <Typography variant="caption" color="secondary" paragraph>
+                Pérdida: <b>20 pips</b>
+              </Typography>
+              <Separator />
+              <Button
+                onClick={this.handleMoreInfoClick}
+                variant="contained"
+                color="secondary"
+                size="small"
+              >
+                Más información
+              </Button>
+            </TradingSection>
+            <TradingSection>
+              <Trades />
             </TradingSection>
             <TradingSection>
               <h1 className={classes.h1}>{literals.TRADING.title}</h1>
               <h2 className={classes.h2}>{literals.TRADING.subtitle}</h2>
               <Positions />
-            </TradingSection>
-            <TradingSection>
-              <Trades />
             </TradingSection>
 
             {/* {this.props.match.url === '/trading/trades' && <Trades />} */}

@@ -10,7 +10,23 @@ export default () => ({
   fullList: {
     width: 'auto',
   },
+  footerItem: {
+    // width: '33%',
+    padding: '1rem',
+    border: '1px solid red',
+  },
 });
+
+export const SeparatorStyled = styled.div`
+  width: 100%;
+  height: 1px;
+  margin: 1rem 0;
+  border-bottom: 1px solid #8ee7ff;
+  padding: 1rem;
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
+`;
 
 export const StyledContent = styled.div`
   margin: 1rem;
@@ -91,4 +107,36 @@ export const SubtitleStyled = styled.span`
   font-size: 0.8rem;
   display: block;
   line-height: 0.4rem;
+`;
+
+export const FooterColumns = styled.div`
+  /* background: #8ee7ff; */
+  display: flex;
+  margin: 1rem;
+
+  ul {
+    list-style: none;
+  }
+
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const FooterContainer = styled.div`
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const FooterHeader = styled.div`
+  font-size: 0.9rem;
+  color: #8ee7ff;
+  margin: 1rem;
+`;
+export const FooterSocials = styled.div`
+  margin: 1rem;
+  display: flex;
+  justify-content: space-around;
 `;
