@@ -15,6 +15,7 @@ export default () => ({
     padding: '1rem',
     border: '1px solid red',
   },
+  h5: {},
 });
 
 export const SeparatorStyled = styled.div`

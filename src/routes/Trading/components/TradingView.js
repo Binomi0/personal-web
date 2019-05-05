@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
@@ -6,8 +6,8 @@ import { withStyles, Typography, Button } from '@material-ui/core';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
-import Positions from './Positions';
-import Trades from './Trades';
+// import Positions from './Positions';
+// import Trades from './Trades';
 import Separator from '../../../components/Separator';
 
 import literals from '../../../i18n/es-ES';
@@ -23,6 +23,9 @@ import styles, {
 } from '../styles/trading';
 import bannerImg from '../../../assets/img/banner-trading.png';
 
+const LazyPositions = React.lazy(() => import('./Positions'));
+const LazyTrades = React.lazy(() => import('./Trades'));
+
 class TradingView extends Component {
   state = {
     auth: true,
@@ -37,7 +40,7 @@ class TradingView extends Component {
       nonInteraction: true,
     });
     // this.props.getTrades();
-    this.props.getChartData('DOW', 100);
+    // this.props.getChartData('DOW', 100);
     // this.props.getChartData('DAX', 100);
     // const auth = prompt('Introduce la clave de acceso', '');
     // if (auth) {
@@ -106,12 +109,16 @@ class TradingView extends Component {
               </Button>
             </TradingSection>
             <TradingSection>
-              <Trades />
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyTrades />
+              </Suspense>
             </TradingSection>
             <TradingSection>
               <h1 className={classes.h1}>{literals.TRADING.title}</h1>
               <h2 className={classes.h2}>{literals.TRADING.subtitle}</h2>
-              <Positions />
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyPositions />
+              </Suspense>
             </TradingSection>
 
             {/* {this.props.match.url === '/trading/trades' && <Trades />} */}

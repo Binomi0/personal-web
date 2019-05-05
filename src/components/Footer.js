@@ -1,8 +1,12 @@
 import React from 'react';
-import { withStyles, Typography, Link } from '@material-ui/core';
+import {
+  withStyles,
+  // Typography,
+  Link,
+} from '@material-ui/core';
 
-import styled, {
-  FooterColumns,
+import styles, {
+  // FooterColumns,
   FooterContainer,
   FooterHeader,
   FooterSocials,
@@ -17,6 +21,8 @@ const Footer = ({ classes }) => {
     <FooterContainer>
       <FooterHeader>&#169; Copyright 2019 | Adolfo Onrubia</FooterHeader>
       <FooterSocials>
+        <h5 className={classes.h5}>Sígueme en</h5>
+
         <Link
           to="https://www.youtube.com/channel/UCXA7Xl1fJ8oErsEg0UNUPRQ?view_as=subscriber"
           href="https://www.youtube.com/channel/UCXA7Xl1fJ8oErsEg0UNUPRQ?view_as=subscriber"
@@ -65,4 +71,4 @@ const Footer = ({ classes }) => {
   );
 };
 
-export default withStyles(styled)(Footer);
+export default withStyles(styles)(Footer);

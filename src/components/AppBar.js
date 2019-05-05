@@ -11,6 +11,7 @@ import {
 import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import history from '../redux/history';
 import { actions as drawerActions } from '../reducers/drawer';
 import LogoAppBar from '../components/LogoAppBar';
 import { SubtitleStyled } from './styles';
@@ -25,7 +26,12 @@ const MyAppBar = ({ title, subtitle, color, classes, openDrawer }) => {
           <Link to="/">
             <LogoAppBar />
           </Link>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography
+            variant="h6"
+            color="inherit"
+            className={classes.grow}
+            onClick={() => history.goBack()}
+          >
             {title}
             <SubtitleStyled>{subtitle}</SubtitleStyled>
           </Typography>

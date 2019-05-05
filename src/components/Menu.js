@@ -7,11 +7,10 @@ export default class Menu extends Component {
   render() {
     return (
       <StyledContent>
-        <Link to="/trading">Trader</Link>
+        <Link to="/trading">Trading</Link>
         <Link to="/portfolio">Portfolio</Link>
         <Link to="/frontend">Frontend</Link>
         <Link to="/backend">Backend</Link>
-        <Link to="/tools">Tools</Link>
         {/* <FrontEnd>
             <Link to="/frontend">Frontend</Link>
           </FrontEnd>
