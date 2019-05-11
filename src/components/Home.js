@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
-// import FrontEnd from './FrontEnd';
-// import BackEnd from './Backend';
-// import Tools from './Tools';
 import Contacto from './Contacto';
-import HomeFooter from './HomeFooter';
-import Menu from './Menu';
 
 import '../containers/App.scss';
 
@@ -25,8 +20,7 @@ class Home extends Component {
   render() {
     // console.log('this.props', this.props);
     return (
-      <div className="App">
-        <Menu />
+      <div>
         <div className="App-Home">
           <div className="App-logo logo1" />
           <div className="App-logo logo2" />
@@ -38,8 +32,6 @@ class Home extends Component {
           <p>Trader</p>
         </div>
         <Contacto />
-
-        <HomeFooter />
       </div>
     );
   }

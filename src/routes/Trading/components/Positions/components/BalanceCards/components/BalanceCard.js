@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TrendingDownIcon from '@material-ui/icons/TrendingDown';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 
 import styles from '../styles/balanceCards'; // GraphContent,
 import formatter from '../../../../../../../utils/formatAmount';
@@ -66,7 +67,11 @@ class BalanceCard extends React.Component {
               {title} {bull} {market} {bull} <b>{cryptoPrice || indexPrice}</b>(
               {indexSpread})
             </Typography>
-            <TrendingDownIcon fontSize="small" color="error" />
+            {market === 'ETH' ? (
+              <TrendingUpIcon fontSize="small" color="action" />
+            ) : (
+              <TrendingDownIcon fontSize="small" color="error" />
+            )}
           </TitleContent>
           {equity ? (
             <>
@@ -79,8 +84,8 @@ class BalanceCard extends React.Component {
                 {equity.amount && formatter.format(equity.amount)}
               </Typography>
               <Typography color="textSecondary">
-                {equity.direction === 'Long' && 'Largo: '}
-                {equity.direction === 'Short' && 'Corto: '}
+                {equity.direction === 'Long' && 'Comprado a '}
+                {equity.direction === 'Short' && 'Vendido a '}
                 {!equity.direction && 'Cerrada'}
                 {equity.mediumPrice && equity.mediumPrice}{' '}
                 {equity.quantity &&

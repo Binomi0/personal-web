@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { FooterStyled } from './styles';
+
 const Footer = () => (
-  <footer>
+  <FooterStyled>
     <a
       href="https://github.com/Binomi0/"
       alt="GitHub"
@@ -10,7 +12,7 @@ const Footer = () => (
     >
       @Binomio 2019
     </a>
-  </footer>
+  </FooterStyled>
 );
 
 export default Footer;

@@ -201,6 +201,11 @@ export default createMuiTheme({
     //     color: '#fff',
     //   },
     // },
+    MuiIcon: {
+      colorAction: {
+        color: green[500],
+      },
+    },
     MuiAppBar: {
       root: {
         background: '#282c33',

@@ -141,3 +141,16 @@ export const FooterSocials = styled.div`
   display: flex;
   justify-content: space-around;
 `;
+
+export const FooterStyled = styled.footer`
+  /* height: 0; */
+  a {
+    color: #ccc;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    &:hover {
+      color: #8ee7ff;
+    }
+  }
+`;

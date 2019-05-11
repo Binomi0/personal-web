@@ -12,7 +12,7 @@ import theme from './styles/theme';
 
 if (process.env.NODE_ENV === 'development') {
   console.log('process.env =>', process.env);
-  ReactGA.initialize(process.env.REACT_APP_GA_ID);
+  ReactGA.initialize(process.env.REACT_APP_GA_ID, { debug: true });
 } else {
   // Analytics
   ReactGA.initialize(process.env.REACT_APP_GA_ID);
