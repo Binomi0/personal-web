@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactGa from 'react-ga';
-
-import { TradesContainer } from '../styles/trades';
-import Balance from './BalanceView';
 import { Button } from '@material-ui/core';
+
 import Separator from '../../../../../components/Separator';
+import { TradesContainer } from '../styles/trades';
+import Modals from '../modals';
+import Balance from './BalanceView';
 
 class Trades extends Component {
   componentDidMount() {
-    this.getTrades();
+    // this.getTrades();
   }
 
   handleMoreInfoClick = () => {
-    ReactGa.event({});
+    this.props.openModal('TRADES_MORE_INFO');
+    ReactGa.event({
+      label: 'Trades',
+      category: 'Trading',
+      action: 'More Info',
+      nonInteraction: false,
+    });
   };
 
   getTrades = () => {
@@ -30,6 +37,7 @@ class Trades extends Component {
     // console.log(this.constructor.name, this.props);
     return (
       <TradesContainer>
+        <Modals {...this.props} />
         {/* <h1 className={classes.h1}>Histórico de operaciones</h1> */}
         {/* <Balance classes={classes} equity={equity} /> */}
 
@@ -57,6 +65,10 @@ Trades.propTypes = {
   classes: PropTypes.object.isRequired,
   equity: PropTypes.array.isRequired,
   tournament: PropTypes.array.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  modalOpen: PropTypes.bool.isRequired,
+  modalType: PropTypes.string.isRequired,
 };
 
 export default Trades;

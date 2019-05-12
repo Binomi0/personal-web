@@ -9,7 +9,7 @@ import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 // import Positions from './Positions';
 // import Trades from './Trades';
 import Separator from '../../../components/Separator';
-
+import TradingModals from '../modals';
 import literals from '../../../i18n/es-ES';
 
 import styles, {
@@ -66,6 +66,7 @@ class TradingView extends Component {
     // console.log(this.constructor.name, '=>', this.props);
     return (
       <TradingViewContainer>
+        <TradingModals />
         <TradingBanner>
           <Banner src={bannerImg} alt="banner" />
         </TradingBanner>

@@ -38,3 +38,14 @@ export const SET_SELECTED_MARKET = requestAction(
 export const SET_NEW_POSITION = requestAction('/trading/SET_NEW_POSITION');
 export const DELETE_POSITION = requestAction('/trading/DELETE_POSITION');
 export const SET_SPREAD = requestAction('/trading/SET_SPREAD');
+
+// USER
+export const LOG_OUT = requestAction('/user/LOG_OUT');
+export const LOG_IN = requestAction('/user/LOG_IN');
+export const SET_USER_NAME = requestAction('/user/SET_USER_NAME');
+export const GET_USER = requestAction('/user/GET_USER');
+export const SET_USER = requestAction('/user/SET_USER');
+export const CREATE_NEW_USER = requestAction('/user/CREATE_NEW_USER');
+export const SET_TRAIDING_ACCOUNT_TYPE = requestAction(
+  '/user/SET_TRAIDING_ACCOUNT_TYPE',
+);

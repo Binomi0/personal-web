@@ -30,8 +30,8 @@ class PositionsView extends Component {
   };
 
   componentDidMount() {
-    this.getPositions();
-    this.getPrices();
+    // this.getPositions();
+    // this.getPrices();
   }
 
   onExitPosition = (market) => {

@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
+import ExitIcon from '@material-ui/icons/ExitToApp';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import FaceIcon from '@material-ui/icons/Face';
@@ -16,10 +17,15 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import HomeIcon from '@material-ui/icons/Home';
 
 import { actions as drawerActions } from '../reducers/drawer';
+import { actions as authActions } from '../reducers/auth';
 
 import styles from './styles';
 
 class TradingDrawer extends React.Component {
+  handleExitApp = () => {
+    this.props.logOut();
+  };
+
   render() {
     const { classes, closeDrawer, openDrawer } = this.props;
 
@@ -56,6 +62,15 @@ class TradingDrawer extends React.Component {
               <ListItemText primary={text} />
             </ListItem>
           ))}
+        </List>
+        <Divider />
+        <List>
+          <ListItem button onClick={this.handleExitApp}>
+            <ListItemIcon>
+              <ExitIcon />
+            </ListItemIcon>
+            <ListItemText primary="Salir" />
+          </ListItem>
         </List>
       </div>
     );
@@ -95,7 +110,7 @@ const mapStateToProps = ({ drawer }) => ({
   open: drawer.open,
 });
 
-const mapDispatchToProps = { ...drawerActions };
+const mapDispatchToProps = { ...drawerActions, ...authActions };
 
 export default connect(
   mapStateToProps,

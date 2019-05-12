@@ -4,20 +4,25 @@ import { connect } from 'react-redux';
 import SelectMarket from '../modals/SelectMarket';
 import NewTrade from '../modals/NewTrade';
 import ExitPosition from '../modals/ExitPosition';
+import AddUser from '../modals/AddUserModal';
 
+import { actions as userActions } from '../../../reducers/user';
 import { actions as modalActions } from '../../../reducers/modal';
+import { actions as authActions } from '../../../reducers/auth';
 import { actions as positionActions } from '../components/Positions/modules/positions';
 
 const MODAL_TYPES = {
   SELECT_MARKET: 'SELECT_MARKET',
   NEW_TRADE: 'NEW_TRADE',
   EXIT_POSITION: 'EXIT_POSITION',
+  ADD_USER: 'ADD_USER',
 };
 
 const Modals = ({ type, onExitPosition, onOpenPosition, ...other }) => {
   const [modalType, useModalType] = useState('');
 
   if (type !== modalType) {
+    console.log('type', type);
     useModalType(type);
   }
 
@@ -30,6 +35,7 @@ const Modals = ({ type, onExitPosition, onOpenPosition, ...other }) => {
       {modalType === MODAL_TYPES.EXIT_POSITION && (
         <ExitPosition {...other} onExitPosition={onExitPosition} />
       )}
+      {modalType === MODAL_TYPES.ADD_USER && <AddUser {...other} />}
     </>
   );
 };
@@ -48,7 +54,12 @@ const mapStateToProps = ({ modal, trading }) => ({
   ig: trading.prices.ig,
 });
 
-const mapDispatchToProps = { ...modalActions, ...positionActions };
+const mapDispatchToProps = {
+  ...modalActions,
+  ...positionActions,
+  ...userActions,
+  ...authActions,
+};
 
 export default connect(
   mapStateToProps,
