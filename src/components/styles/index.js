@@ -16,6 +16,9 @@ export default () => ({
     border: '1px solid red',
   },
   h5: {},
+  menuButton: {
+    padding: 0,
+  },
 });
 
 export const SeparatorStyled = styled.div`

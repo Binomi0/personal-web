@@ -10,20 +10,17 @@ import {
 } from '../action-types';
 
 export const setUser = (user) => (dispatch) => {
+  if (!user) {
+    dispatch({ type: SET_USER.FAILURE });
+  }
   dispatch({ type: SET_USER.SET, payload: user });
 };
 
 export const getUser = (email) => async (dispatch) => {
   dispatch({ type: GET_USER.REQUEST });
-  try {
-    const binoUser = localStorage.getItem('binoUser');
-    if (!binoUser) {
-      localStorage.setItem('binoUser', email);
-      console.error('No tengo usuario en localStorage');
-      return;
-    }
 
-    const URL = `user/${email || binoUser}`;
+  try {
+    const URL = `user/${email}`;
     const response = await axios(URL);
 
     dispatch({ type: GET_USER.SUCCESS });
@@ -81,6 +78,7 @@ const ACTION_HANDLER = {
     ...state,
     ...payload,
   }),
+  [SET_USER.FAILURE]: () => ({}),
   [SET_TRAIDING_ACCOUNT_TYPE.SET]: (state, { payload }) => ({
     ...state,
     tradingAccountType: payload,

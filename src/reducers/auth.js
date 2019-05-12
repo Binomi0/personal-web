@@ -1,38 +1,35 @@
-import axios from '../config/axios';
+// import axios from '../config/axios';
 import createReducer from '../redux/create-reducer';
-import { getUser } from './user';
-import { LOG_IN, LOG_OUT } from '../action-types';
-import { auth } from 'firebase';
+import { getUser, setUser } from './user';
+import { LOG_IN, LOG_OUT, CHECK_USER } from '../action-types';
+import firebase from '../config/firebase';
 
-const logIn = (user) => async (dispatch) => {
-  console.log('auth', auth);
-  console.log('user', user);
-  dispatch({ type: LOG_IN.REQUEST });
-
-  try {
-    const loggedInUser = getUser();
-    if (loggedInUser) {
-      return;
+export const checkUser = () => (dispatch) => {
+  dispatch({ type: CHECK_USER.REQUEST });
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      dispatch({ type: CHECK_USER.SUCCESS });
+      dispatch({ type: LOG_IN.SUCCESS });
+      dispatch(getUser(user.providerData[0].email));
+      dispatch(setUser(user.providerData[0]));
+    } else {
+      console.log('No tengo usuaior');
+      dispatch({ type: CHECK_USER.FAILURE });
+      dispatch({ type: LOG_OUT.SET });
+      dispatch(setUser({}));
     }
-    const URL = '/login';
-    await axios.post(URL, user);
-
-    dispatch({ type: LOG_IN.SUCCESS });
-    dispatch({ type: LOG_IN.SET });
-    dispatch(getUser(user.email));
-  } catch (err) {
-    dispatch({ type: LOG_IN.FAILURE });
-  }
+  });
 };
 
 const logOut = () => (dispatch) => {
-  localStorage.removeItem('binoUser');
+  firebase.auth().signOut();
   dispatch({ type: LOG_OUT.SET });
+  dispatch(setUser({}));
 };
 
 export const actions = {
-  logIn,
   logOut,
+  checkUser,
 };
 
 const INITIAL_STATE = {
@@ -40,7 +37,7 @@ const INITIAL_STATE = {
 };
 
 const ACTION_HANDLERS = {
-  [LOG_IN.SET]: () => ({
+  [LOG_IN.SUCCESS]: () => ({
     authenticated: true,
   }),
   [LOG_OUT.SET]: () => ({

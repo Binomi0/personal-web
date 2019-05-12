@@ -5,6 +5,7 @@ import modal from './modal';
 import user from './user';
 import drawer from './drawer';
 import trading from './trading';
+import auth from './auth';
 
 export default combineReducers({
   loadingBar,
@@ -12,4 +13,5 @@ export default combineReducers({
   modal,
   user,
   drawer,
+  auth,
 });

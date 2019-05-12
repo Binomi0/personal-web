@@ -29,7 +29,7 @@ const store = createStore();
 const Root = () => (
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
-      <App />
+      <App store={store} />
     </Provider>
   </MuiThemeProvider>
 );

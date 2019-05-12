@@ -43,6 +43,7 @@ export const SET_SPREAD = requestAction('/trading/SET_SPREAD');
 export const LOG_OUT = requestAction('/user/LOG_OUT');
 export const LOG_IN = requestAction('/user/LOG_IN');
 export const SET_USER_NAME = requestAction('/user/SET_USER_NAME');
+export const CHECK_USER = requestAction('/user/CHECK_USER');
 export const GET_USER = requestAction('/user/GET_USER');
 export const SET_USER = requestAction('/user/SET_USER');
 export const CREATE_NEW_USER = requestAction('/user/CREATE_NEW_USER');

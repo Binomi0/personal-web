@@ -1,7 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
-import ReactGA from 'react-ga';
 
 import RouteWithLayout from '../routes/RouteWithLayout';
 import MainLayout from '../layouts/MainLayout';
@@ -15,7 +14,13 @@ import Backend from '../routes/Backend';
 import Portfolio from '../routes/Portfolio';
 import './App.scss';
 
+import { checkUser } from '../reducers/auth';
+
 class App extends Component {
+  componentDidMount() {
+    this.props.store.dispatch(checkUser());
+  }
+
   render() {
     return (
       <Router>
