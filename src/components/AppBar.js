@@ -9,7 +9,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import MenuIcon from '@material-ui/icons/Menu';
+import Avatar from '@material-ui/core/Avatar';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 import history from '../redux/history';
@@ -64,7 +64,7 @@ class MyAppBar extends React.Component {
               aria-label="Menu"
             >
               {authenticated ? (
-                <MenuIcon />
+                <Avatar src={this.props.user.photoURL} alt="user-profile-img" />
               ) : (
                 <StyledFirebaseAuth
                   uiConfig={uiConfig}
@@ -81,7 +81,10 @@ class MyAppBar extends React.Component {
 
 const StyledAppBar = withStyles(styles)(MyAppBar);
 
-const mapStateToProps = ({ auth }) => ({ authenticated: auth.authenticated });
+const mapStateToProps = ({ auth, user }) => ({
+  authenticated: auth.authenticated,
+  user,
+});
 
 const mapDispatchToProps = { ...drawerActions, ...modalActions };
 
@@ -90,6 +93,7 @@ MyAppBar.propTypes = {
   subtitle: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   openDrawer: PropTypes.func.isRequired,
   closeDrawer: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
