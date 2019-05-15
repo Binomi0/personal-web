@@ -22,7 +22,10 @@ import styles, { SubtitleStyled } from './styles';
 import './styles/firebaseui-styling.global.css';
 const uiConfig = {
   signInFlow: 'popup',
-  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.GithubAuthProvider.PROVIDER_ID,
+  ],
   callbacks: {
     signInSuccessWithAuthResult: () => false,
   },
@@ -40,7 +43,7 @@ class MyAppBar extends React.Component {
   render() {
     const { title, subtitle, color, classes, authenticated } = this.props;
 
-    console.log('this.props', this.props);
+    // console.log('this.props', this.props);
     return (
       <div>
         <AppBar position="sticky" color={color}>

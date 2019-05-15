@@ -39,7 +39,7 @@ class TradingView extends Component {
       label: 'Visited Trading Page',
       nonInteraction: true,
     });
-    // this.props.getTrades();
+    this.props.getTrades();
     // this.props.getChartData('DOW', 100);
     // this.props.getChartData('DAX', 100);
     // const auth = prompt('Introduce la clave de acceso', '');

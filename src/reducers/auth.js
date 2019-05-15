@@ -8,12 +8,12 @@ export const checkUser = () => (dispatch) => {
   dispatch({ type: CHECK_USER.REQUEST });
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
+      console.log('user', user);
       dispatch({ type: CHECK_USER.SUCCESS });
       dispatch({ type: LOG_IN.SUCCESS });
       dispatch(getUser(user.providerData[0].email));
       dispatch(setUser(user.providerData[0]));
     } else {
-      console.log('No tengo usuaior');
       dispatch({ type: CHECK_USER.FAILURE });
       dispatch({ type: LOG_OUT.SET });
       dispatch(setUser({}));

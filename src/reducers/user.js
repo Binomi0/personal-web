@@ -6,14 +6,16 @@ import {
   SET_USER,
   SET_USER_NAME,
   CREATE_NEW_USER,
+  DELETE_USER,
   SET_TRAIDING_ACCOUNT_TYPE,
 } from '../action-types';
 
 export const setUser = (user) => (dispatch) => {
-  if (!user) {
-    dispatch({ type: SET_USER.FAILURE });
-  }
   dispatch({ type: SET_USER.SET, payload: user });
+};
+
+export const deleteUser = () => (dispatch) => {
+  dispatch({ type: DELETE_USER.SET });
 };
 
 export const getUser = (email) => async (dispatch) => {

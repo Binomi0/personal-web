@@ -34,7 +34,7 @@ class TradingDrawer extends React.Component {
         <List>
           <ListItem button>
             <Avatar src={user.photoURL} />
-            <ListItemText primary={user.username} />
+            <ListItemText primary={user.displayName} />
           </ListItem>
         </List>
         <Divider />
