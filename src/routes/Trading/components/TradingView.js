@@ -39,7 +39,6 @@ class TradingView extends Component {
       label: 'Visited Trading Page',
       nonInteraction: true,
     });
-    this.props.getTrades();
     // this.props.getChartData('DOW', 100);
     // this.props.getChartData('DAX', 100);
     // const auth = prompt('Introduce la clave de acceso', '');
@@ -54,9 +53,9 @@ class TradingView extends Component {
     this.props.onOpenPosition(selectedMarket, newPosition);
     ReactGA.event({
       category: 'Trading',
-      action: 'Open a new position',
+      action: 'New position opened',
       value: 1,
-      label: 'Open Position',
+      label: 'New position',
     });
   };
 
@@ -94,10 +93,10 @@ class TradingView extends Component {
                 <h1 className={classes.h1}>Objetivo diario 4,48%</h1>
               </BoxTitle>
               <Typography variant="caption" color="secondary">
-                Beneficio: <b>47 pips</b>
+                Profit Objetivo: <b>23,5 pips</b>
               </Typography>
               <Typography variant="caption" color="secondary" paragraph>
-                Pérdida: <b>20 pips</b>
+                Stop Loss: <b>10 pips</b>
               </Typography>
               <Separator />
               <Button

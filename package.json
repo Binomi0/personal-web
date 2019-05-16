@@ -14,6 +14,7 @@
     "moment": "^2.24.0",
     "mui-datatables": "^2.0.0-beta-41",
     "node-sass": "^4.11.0",
+    "notistack": "^0.8.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-firebaseui": "^3.1.2",

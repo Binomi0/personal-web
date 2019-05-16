@@ -157,3 +157,10 @@ export const FooterStyled = styled.footer`
     }
   }
 `;
+
+export const CircularProgressStyled = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

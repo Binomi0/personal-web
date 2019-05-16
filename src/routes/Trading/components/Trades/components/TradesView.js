@@ -10,7 +10,7 @@ import Balance from './BalanceView';
 
 class Trades extends Component {
   componentDidMount() {
-    // this.getTrades();
+    this.getTrades();
   }
 
   handleMoreInfoClick = () => {
@@ -41,12 +41,8 @@ class Trades extends Component {
         {/* <h1 className={classes.h1}>Histórico de operaciones</h1> */}
         {/* <Balance classes={classes} equity={equity} /> */}
 
-        <h1 className={classes.h1}>Balance en tiempo real</h1>
-        <Balance
-          title="Reto De 1.000 a 100.000"
-          classes={classes}
-          equity={tournament}
-        />
+        <h1 className={classes.h1}>Trades finalizados</h1>
+        <Balance title="Número de pips" classes={classes} equity={tournament} />
         <Separator />
         <Button
           onClick={this.handleMoreInfoClick}
