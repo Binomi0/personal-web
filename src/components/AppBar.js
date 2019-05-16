@@ -6,11 +6,11 @@ import {
   Toolbar,
   Typography,
   withStyles,
-  IconButton,
+  // IconButton,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import Avatar from '@material-ui/core/Avatar';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+// import Avatar from '@material-ui/core/Avatar';
+// import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 import history from '../redux/history';
 import { actions as drawerActions } from '../reducers/drawer';
@@ -20,18 +20,27 @@ import firebase from '../config/firebase';
 
 import styles, { SubtitleStyled } from './styles';
 import './styles/firebaseui-styling.global.css';
-const uiConfig = {
-  signInFlow: 'popup',
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
-  ],
-  callbacks: {
-    signInSuccessWithAuthResult: () => false,
-  },
-};
+
+// const uiConfig = {
+//   signInFlow: 'popup',
+//   signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+//   callbacks: {
+//     signInSuccessWithAuthResult: () => false,
+//   },
+// };
 
 class MyAppBar extends React.Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    openDrawer: PropTypes.func.isRequired,
+    closeDrawer: PropTypes.func.isRequired,
+    authenticated: PropTypes.bool.isRequired,
+  };
+
   handleClickMenu = () => {
     if (this.props.authenticated) {
       this.props.openDrawer('TRADING_MENU');
@@ -60,7 +69,7 @@ class MyAppBar extends React.Component {
               {title}
               <SubtitleStyled>{subtitle}</SubtitleStyled>
             </Typography>
-            <IconButton
+            {/* <IconButton
               className={classes.menuButton}
               onClick={this.handleClickMenu}
               color="inherit"
@@ -74,7 +83,7 @@ class MyAppBar extends React.Component {
                   firebaseAuth={firebase.auth()}
                 />
               )}
-            </IconButton>
+            </IconButton> */}
           </Toolbar>
         </AppBar>
       </div>
@@ -90,17 +99,6 @@ const mapStateToProps = ({ auth, user }) => ({
 });
 
 const mapDispatchToProps = { ...drawerActions, ...modalActions };
-
-MyAppBar.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  openDrawer: PropTypes.func.isRequired,
-  closeDrawer: PropTypes.func.isRequired,
-  authenticated: PropTypes.bool.isRequired,
-};
 
 export default connect(
   mapStateToProps,

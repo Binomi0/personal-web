@@ -135,6 +135,9 @@ export const FooterContainer = styled.div`
 `;
 
 export const FooterHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 0.9rem;
   color: #8ee7ff;
   margin: 1rem;

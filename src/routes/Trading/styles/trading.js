@@ -95,13 +95,19 @@ export const TradingViewContainer = styled.div`
 `;
 
 export const ErrorContainer = styled.div`
-  height: 100vh;
+  height: 200px;
   background: #282c33;
   color: #8ee7ff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  h1 {
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const TradingBanner = styled.div`
