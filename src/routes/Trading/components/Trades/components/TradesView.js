@@ -41,7 +41,7 @@ class Trades extends Component {
         {/* <h1 className={classes.h1}>Histórico de operaciones</h1> */}
         {/* <Balance classes={classes} equity={equity} /> */}
 
-        <h1 className={classes.h1}>Trades finalizados</h1>
+        <h1 className={classes.h1}>Trades finalizados Mayo 2019</h1>
         <Balance title="Número de pips" classes={classes} equity={tournament} />
         <Separator />
         <Button

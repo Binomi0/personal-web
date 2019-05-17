@@ -25,6 +25,8 @@ export const getUser = (email) => async (dispatch) => {
     const URL = `user/${email}`;
     const response = await axios(URL);
 
+    console.log('response.headers', response);
+
     dispatch({ type: GET_USER.SUCCESS });
     dispatch(setUser(response.data));
   } catch (err) {

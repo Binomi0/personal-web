@@ -6,17 +6,15 @@ import {
   Toolbar,
   Typography,
   withStyles,
-  // IconButton,
+  IconButton,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-// import Avatar from '@material-ui/core/Avatar';
-// import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import Avatar from '@material-ui/core/Avatar';
 
 import history from '../redux/history';
 import { actions as drawerActions } from '../reducers/drawer';
 import { actions as modalActions } from '../reducers/modal';
 import LogoAppBar from '../components/LogoAppBar';
-import firebase from '../config/firebase';
 
 import styles, { SubtitleStyled } from './styles';
 import './styles/firebaseui-styling.global.css';
@@ -64,26 +62,21 @@ class MyAppBar extends React.Component {
               variant="h6"
               color="inherit"
               className={classes.grow}
-              onClick={() => history.goBack()}
+              onClick={() => history.push('/')}
             >
               {title}
               <SubtitleStyled>{subtitle}</SubtitleStyled>
             </Typography>
-            {/* <IconButton
+            <IconButton
               className={classes.menuButton}
               onClick={this.handleClickMenu}
               color="inherit"
               aria-label="Menu"
             >
-              {authenticated ? (
+              {authenticated && (
                 <Avatar src={this.props.user.photoURL} alt="user-profile-img" />
-              ) : (
-                <StyledFirebaseAuth
-                  uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()}
-                />
               )}
-            </IconButton> */}
+            </IconButton>
           </Toolbar>
         </AppBar>
       </div>
