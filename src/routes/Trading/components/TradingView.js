@@ -38,7 +38,6 @@ const uiConfig = {
 
 class TradingView extends Component {
   componentDidMount() {
-    console.log('this.props', this.props);
     ReactGA.pageview('/trading');
     ReactGA.event({
       category: 'User',
