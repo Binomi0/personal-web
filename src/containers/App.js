@@ -9,9 +9,9 @@ import PortfolioLayout from '../layouts/PortfolioLayout';
 
 import Home from '../components/Home';
 import Trading from '../routes/Trading';
-import Frontend from '../routes/Frontend';
-import Backend from '../routes/Backend';
+import Developer from '../routes/Developer';
 import Portfolio from '../routes/Portfolio';
+import Biography from '../routes/Biography';
 import './App.scss';
 
 import { checkUser } from '../reducers/auth';
@@ -44,21 +44,21 @@ class App extends Component {
             layout={PortfolioLayout}
           />
           <RouteWithLayout
-            path="/frontend"
+            path="/developer"
             exact
-            component={Frontend}
-            layout={MainLayout}
-          />
-          <RouteWithLayout
-            path="/backend"
-            exact
-            component={Backend}
+            component={Developer}
             layout={MainLayout}
           />
           <RouteWithLayout
             path="/tools"
             exact
             component={Home}
+            layout={MainLayout}
+          />
+          <RouteWithLayout
+            path="/biography"
+            exact
+            component={Biography}
             layout={MainLayout}
           />
         </Suspense>
