@@ -47,4 +47,5 @@ const config = {
     console.log('onSuccess registration', registration);
   },
 };
-serviceWorker.register(config);
+// serviceWorker.register(config);
+serviceWorker.unregister();
