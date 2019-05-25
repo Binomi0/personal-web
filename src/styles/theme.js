@@ -270,6 +270,7 @@ export default createMuiTheme({
       fontSize: '16px',
       fontSmoothing: 'auto',
       fontWeight: 300,
+      lineHeight: '16px',
     },
     subtitle1: {
       lineHeight: '1.2rem',
@@ -283,6 +284,8 @@ export default createMuiTheme({
     body2: {
       fontFamily: 'Rubik, sans-serif',
       fontSize: '16px',
+      fontWeight: 500,
+      lineHeight: '16px',
     },
     h1: {},
     h2: {

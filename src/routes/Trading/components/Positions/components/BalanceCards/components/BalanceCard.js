@@ -44,7 +44,6 @@ class BalanceCard extends React.Component {
     const { classes, title, market, equity, prices } = this.props;
     const isAdmin = Boolean(localStorage.getItem('isAdmin'));
 
-    // console.log('market', market);
     const cryptoPrice =
       prices.coinbase[market] && prices.coinbase[market].amount;
     const indexPrice =
