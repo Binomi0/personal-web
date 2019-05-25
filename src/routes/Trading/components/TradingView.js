@@ -9,6 +9,7 @@ import SecurityIcon from '@material-ui/icons/Security';
 
 // import Positions from './Positions';
 // import Trades from './Trades';
+import TradingChat from './Chat';
 import Separator from '../../../components/Separator';
 import TradingModals from '../modals';
 import literals from '../../../i18n/es-ES';
@@ -72,6 +73,7 @@ class TradingView extends Component {
         <TradingBanner>
           <Banner src={bannerImg} alt="banner" />
         </TradingBanner>
+        <TradingChat />
         {authenticated ? (
           <TradingContent>
             <TradingSection>

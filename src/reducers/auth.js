@@ -1,8 +1,7 @@
-// import axios from '../config/axios';
 import createReducer from '../redux/create-reducer';
-import { getUser, setUser } from './user';
 import { LOG_IN, LOG_OUT, CHECK_USER } from '../action-types';
 import firebase from '../config/firebase';
+import { getUser, setUser } from './user';
 
 export const checkUser = () => (dispatch) => {
   dispatch({ type: CHECK_USER.REQUEST });
@@ -10,18 +9,17 @@ export const checkUser = () => (dispatch) => {
     if (user) {
       dispatch({ type: CHECK_USER.SUCCESS });
       dispatch({ type: LOG_IN.SUCCESS });
-      dispatch(getUser(user.providerData[0].email));
-      dispatch(setUser(user.providerData[0]));
+      dispatch(getUser(user.providerData[0]));
     } else {
       dispatch({ type: CHECK_USER.FAILURE });
-      dispatch({ type: LOG_OUT.SET });
-      dispatch(setUser({}));
+      dispatch(logOut());
     }
   });
 };
 
 const logOut = () => (dispatch) => {
   firebase.auth().signOut();
+  localStorage.clear();
   dispatch({ type: LOG_OUT.SET });
   dispatch(setUser({}));
 };

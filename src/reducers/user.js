@@ -18,21 +18,30 @@ export const deleteUser = () => (dispatch) => {
   dispatch({ type: DELETE_USER.SET });
 };
 
-export const getUser = (email) => async (dispatch) => {
+export const getUser = (user) => async (dispatch) => {
   dispatch({ type: GET_USER.REQUEST });
 
-  try {
-    const URL = `user/${email}`;
-    const response = await axios(URL);
+  if (user.email) {
+    try {
+      const URL = `user/${user.email}`;
+      const response = await axios(URL);
 
-    dispatch({ type: GET_USER.SUCCESS });
-    dispatch(setUser(response.data));
-  } catch (err) {
-    dispatch({ type: GET_USER.FAILURE });
+      if (response.data.email) {
+        localStorage.setItem('userId', user.uid);
+        dispatch(setUser({ ...user, ...response.data }));
+      } else {
+        dispatch(createNewUser(user));
+      }
+
+      dispatch({ type: GET_USER.SUCCESS });
+    } catch (err) {
+      dispatch({ type: GET_USER.FAILURE });
+    }
   }
 };
 
 const createNewUser = (user) => async (dispatch) => {
+  console.log('user', user);
   dispatch({ type: CREATE_NEW_USER.REQUEST });
 
   try {
@@ -40,7 +49,7 @@ const createNewUser = (user) => async (dispatch) => {
     await axios.post(URL, user);
 
     dispatch({ type: CREATE_NEW_USER.SUCCESS });
-    dispatch(getUser(user.email));
+    dispatch(getUser(user));
   } catch (err) {
     dispatch({ type: CREATE_NEW_USER.FAILURE });
   }
@@ -68,7 +77,6 @@ export const actions = {
 const INITIAL_STATE = {
   accountType: '',
   email: '',
-  password: '',
   positions: [],
   role: '',
   trades: [],
