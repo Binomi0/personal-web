@@ -1,5 +1,8 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 //MuiTableRow - root - 138 MuiTableRow - head - 141 MUIDataTableHeadRow - root - 137
+
+const mainColor = '#282c33';
 
 export default createMuiTheme({
   overrides: {
@@ -12,6 +15,12 @@ export default createMuiTheme({
       },
       fixedHeader: {
         background: '#ddd',
+      },
+    },
+
+    MuiDrawer: {
+      paperAnchorRight: {
+        background: '#8ee7ff',
       },
     },
 
@@ -194,6 +203,19 @@ export default createMuiTheme({
     //     color: '#fff',
     //   },
     // },
+    // MuiSnackbar: {
+    //   // root: {
+    //   //   background: green[500],
+    //   // },
+    //   anchorOriginTopCenter: {
+    //     background: green[500],
+    //   },
+    // },
+    MuiIcon: {
+      colorAction: {
+        color: green[500],
+      },
+    },
     MuiAppBar: {
       root: {
         background: '#282c33',
@@ -248,6 +270,7 @@ export default createMuiTheme({
       fontSize: '16px',
       fontSmoothing: 'auto',
       fontWeight: 300,
+      lineHeight: '16px',
     },
     subtitle1: {
       lineHeight: '1.2rem',
@@ -261,6 +284,8 @@ export default createMuiTheme({
     body2: {
       fontFamily: 'Rubik, sans-serif',
       fontSize: '16px',
+      fontWeight: 500,
+      lineHeight: '16px',
     },
     h1: {},
     h2: {
@@ -288,6 +313,10 @@ export default createMuiTheme({
   },
   palette: {
     // type: 'dark',
+    action: {
+      main: green[600],
+      light: green[200],
+    },
     primary: {
       main: '#282c33',
       light: '#3f5782',
@@ -313,6 +342,7 @@ export default createMuiTheme({
     common: {
       black: '#282c33',
       gray: '#8ee7ff',
+      white: '#8ee7ff',
     },
   },
 });

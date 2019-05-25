@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
 
 import { PortfolioContainer } from '../styles/portfolio';
 import PortfolioGrid from './PortfolioGrid';

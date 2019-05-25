@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+
 import Menu from '../../../components/Menu';
 
-export default class BackendView extends Component {
+export default class DeveloperView extends Component {
   render() {
     return (
       <div>
@@ -13,8 +14,8 @@ export default class BackendView extends Component {
           <div className="App-logo logo3" />
           <div className="App-logo logo4" />
           <h4>Adolfo J. Onrubia Albalá</h4>
-          <p>Backend Developer</p>
-          <p>NODEJS</p>
+          <p>FrontEnd ReactJS</p>
+          <p>Backend NodeJS</p>
         </div>
       </div>
     );

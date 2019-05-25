@@ -12,7 +12,7 @@ const RouteWithLayout = ({ layout, component, ...rest }) => (
 );
 
 RouteWithLayout.propTypes = {
-  layout: PropTypes.func.isRequired,
+  layout: PropTypes.any.isRequired,
   component: PropTypes.object.isRequired,
 };
 

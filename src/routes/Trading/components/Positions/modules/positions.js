@@ -16,13 +16,11 @@ import { finishTrade } from '../../Trades/modules/trades';
 import { getCurrentBalance } from './balance';
 import { MARKETS } from '../../../modules/constants';
 
-const version = 'v1';
-
 const onOpenPosition = (market, position) => async (dispatch) => {
   dispatch({ type: ADD_POSITION.REQUEST });
 
   try {
-    const URL = `${version}/trading/position`;
+    const URL = 'trading/position';
     const newPosition = {
       enterPrice: position.enterPrice,
       direction: position.direction,
@@ -53,10 +51,9 @@ export const getPositions = () => async (dispatch) => {
   dispatch({ type: GET_POSITIONS.REQUEST });
 
   try {
-    const URL = 'v1/trading/positions';
+    const URL = 'trading/positions';
     const response = await axios(URL);
 
-    // console.log('getPositions => response.data', response.data);
     dispatch({ type: GET_POSITIONS.SUCCESS });
     dispatch({ type: GET_POSITIONS.SET, payload: response.data });
 
@@ -85,7 +82,7 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
 
   if (position.quantity !== currentPosition.quantity) {
     try {
-      const URL = `${version}/trading/position/exit/${market}`;
+      const URL = `trading/position/exit/${market}`;
       await axios.post(URL, position);
 
       dispatch({ type: EXIT_POSITION.SUCCESS });
@@ -121,7 +118,7 @@ const onExitPosition = (market, position) => async (dispatch, getState) => {
 const deletePosition = (market) => async (dispatch, getState) => {
   dispatch({ type: DELETE_POSITION.REQUEST });
   try {
-    const URL = `v1/trading/position/${market}`;
+    const URL = `trading/position/${market}`;
     await axios.delete(URL);
 
     const positions = getState().trading.positions.open.filter(

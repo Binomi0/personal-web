@@ -4,8 +4,6 @@ import axios from '../../../config/axios';
 import { GET_IG_PRICES, GET_CHART_DATA } from '../../../action-types';
 import { MARKETS } from './constants';
 
-const version = '/v1';
-
 /**
  *@name getCoinbasePrice
   @description Get buy price from coinbase
@@ -16,7 +14,7 @@ const version = '/v1';
 const getChartData = (market, bars) => async (dispatch) => {
   dispatch({ type: GET_CHART_DATA.REQUEST });
   try {
-    const URL = `${version}/trading/prices/chart/${MARKETS[market]}/${bars}`;
+    const URL = `trading/prices/chart/${MARKETS[market]}/${bars}`;
     const response = await axios(URL);
 
     const DAX = market.includes('DAX') && 'DAX';

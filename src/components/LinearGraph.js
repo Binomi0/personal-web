@@ -1,11 +1,19 @@
 import React from 'react';
 import * as V from 'victory';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { CircularProgressStyled } from './styles';
 
 class LinearGraph extends React.Component {
   render() {
-    // if (!this.props.data.length) {
-    //   return 'Cargando';
-    // }
+    if (!this.props.data.length) {
+      return (
+        <CircularProgressStyled>
+          <CircularProgress size={60} color="secondary" thickness={1.6} />
+        </CircularProgressStyled>
+      );
+    }
+
     return (
       <div>
         <V.VictoryChart
@@ -42,7 +50,7 @@ class LinearGraph extends React.Component {
               tickLabels: { fontSize: 12, padding: 5, fill: '#8ee7ff' },
             }}
             tickFormat={(t) => `${parseInt(t)}`}
-            label="€"
+            label="Pips"
           />
           <V.VictoryLine
             style={{ data: { stroke: '#8ee7ff', strokeWidth: 1 } }}
@@ -51,7 +59,7 @@ class LinearGraph extends React.Component {
           />
           <V.VictoryScatter
             data={this.props.data || []}
-            size={this.props.data.length ? 2 : 1}
+            size={this.props.data.length ? 1 : 1}
             style={{ data: { fill: '#8ee7ff' } }}
           />
         </V.VictoryChart>

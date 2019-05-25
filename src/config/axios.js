@@ -4,9 +4,15 @@ import axios from 'axios';
 // axios.defaults.headers['CB-ACCESS-TIMESTAMP'] = Date.now();
 
 if (process.env.NODE_ENV !== 'development') {
-  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+  const URL = `${process.env.REACT_APP_API_URL}/${
+    process.env.REACT_APP_API_VERSION
+  }`;
+  axios.defaults.baseURL = URL;
 } else {
-  axios.defaults.baseURL = process.env.REACT_APP_LOCAL_API_URL;
+  const URL = `${process.env.REACT_APP_LOCAL_API_URL}/${
+    process.env.REACT_APP_API_VERSION
+  }`;
+  axios.defaults.baseURL = URL;
 }
 
 export default axios;

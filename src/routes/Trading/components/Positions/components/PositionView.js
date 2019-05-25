@@ -7,6 +7,9 @@ import Table from '../../../../../components/Table';
 import { PositionsContainer, PositionContainer } from '../styles/positions';
 import BalanceCards from '../components/BalanceCards';
 import { MARKETS, CRYPTOS } from '../../../modules/constants';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { CircularProgressStyled } from '../../../../../components/styles';
 
 class PositionsView extends Component {
   static propType = {
@@ -61,6 +64,13 @@ class PositionsView extends Component {
     const mobile = ['xl', 'lg', 'md'].includes(this.props.width);
 
     // console.log(this.constructor.name, this.props);
+    if (!positions.open.length) {
+      return (
+        <CircularProgressStyled>
+          <CircularProgress size={60} color="secondary" thickness={1.6} />
+        </CircularProgressStyled>
+      );
+    }
     return (
       <PositionsContainer>
         <BalanceCards positions={positions} />

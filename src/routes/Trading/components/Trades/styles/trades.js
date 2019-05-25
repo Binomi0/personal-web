@@ -45,13 +45,11 @@ export default (theme) => ({
       fontSize: '1rem',
     },
   },
+  moreInfo: {
+    color: theme.palette.primary.main,
+  },
 });
 
 export const TradesContainer = styled.div`
-  margin: 1rem 0;
-`;
-
-export const TradeContainer = styled.div`
-  min-height: 100px;
-  background: #282c33;
+  /* margin: 1rem 0; */
 `;

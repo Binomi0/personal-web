@@ -27,6 +27,8 @@ export const GET_POSITION_EQUITY = requestAction(
 // MODALS
 export const OPEN_MODAL = requestAction('/modals/OPEN_MODAL');
 export const CLOSE_MODAL = requestAction('/modals/CLOSE_MODAL');
+export const OPEN_DRAWER = requestAction('/modals/OPEN_DRAWER');
+export const CLOSE_DRAWER = requestAction('/modals/CLOSE_DRAWER');
 
 // TRADING
 export const IG_LIVESTREAM = requestAction('/trading/IG_LIVESTREAM');
@@ -36,3 +38,19 @@ export const SET_SELECTED_MARKET = requestAction(
 export const SET_NEW_POSITION = requestAction('/trading/SET_NEW_POSITION');
 export const DELETE_POSITION = requestAction('/trading/DELETE_POSITION');
 export const SET_SPREAD = requestAction('/trading/SET_SPREAD');
+
+// USER
+export const DELETE_USER = requestAction('/user/DELETE_USER');
+export const LOG_OUT = requestAction('/user/LOG_OUT');
+export const LOG_IN = requestAction('/user/LOG_IN');
+export const SET_USER_NAME = requestAction('/user/SET_USER_NAME');
+export const CHECK_USER = requestAction('/user/CHECK_USER');
+export const GET_USER = requestAction('/user/GET_USER');
+export const SET_USER = requestAction('/user/SET_USER');
+export const CREATE_NEW_USER = requestAction('/user/CREATE_NEW_USER');
+export const SET_TRAIDING_ACCOUNT_TYPE = requestAction(
+  '/user/SET_TRAIDING_ACCOUNT_TYPE',
+);
+
+// SERVICE WORKER
+export const NEW_APP_AVAILABLE = requestAction('worker/NEW_APP_AVAILABLE');

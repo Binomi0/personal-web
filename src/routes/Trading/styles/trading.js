@@ -49,7 +49,6 @@ export default (theme) => ({
     fontWeight: 100,
   },
   h1: {
-    margin: '1rem 0',
     textTransform: 'uppercase',
     color: theme.palette.secondary.main,
     textShadow: `0.1rem 0.1rem ${theme.palette.primary.light}`,
@@ -61,32 +60,70 @@ export default (theme) => ({
     },
   },
   h2: {
-    margin: '1rem 0',
-    fontWeight: 100,
+    // fontWeight: 100,
     color: theme.palette.secondary.main,
     textShadow: `0.05rem 0.05rem ${theme.palette.primary.light}`,
     '@media (max-width: 768px)': {
       margin: 0,
       fontSize: '1rem',
     },
+    lineHeight: '1rem',
+  },
+  titleIcon: {
+    marginRight: '.5rem',
   },
 });
 
-export const TradingContent = styled.div`
-  margin: 1rem;
+export const TradingSection = styled.section`
+  padding: 1rem;
+  border: 1px solid #8ee7ff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1rem 0.01rem #8ee7ff;
+  margin: 2rem 0;
+  @media (min-width: 768px) {
+    margin: 4rem 0;
+  }
 `;
 
-export const TradingContainer = styled.div`
-  min-height: 100px;
-  background: #282c33;
+export const TradingContent = styled.div`
+  /* padding: 1rem;
+  margin: 4rem 1rem; */
+`;
+
+export const TradingViewContainer = styled.div`
+  padding: 1rem;
 `;
 
 export const ErrorContainer = styled.div`
-  height: 100vh;
+  height: 200px;
   background: #282c33;
   color: #8ee7ff;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+
+  h1 {
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+`;
+
+export const TradingBanner = styled.div`
+  margin: 2rem 0;
+  display: grid;
+  /* height: 100%; */
+`;
+
+export const Banner = styled.img`
+  max-width: 100%;
+  max-height: 100vh;
+  margin: auto;
+`;
+
+export const BoxTitle = styled.div`
+  height: 50px;
+  display: flex;
   align-items: center;
 `;
