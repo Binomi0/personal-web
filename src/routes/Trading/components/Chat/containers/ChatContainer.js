@@ -5,9 +5,12 @@ import { withStyles } from '@material-ui/core';
 import ChatView from '../components/ChatView';
 import styles from '../styles/chat';
 
-const socket = io.connect(process.env.REACT_APP_SOCKET_HOST, {
-  forceNew: true,
-});
+let host = process.env.REACT_APP_SOCKET_HOST;
+if (process.env.NODE_ENV === 'production') {
+  host = process.env.REACT_APP_API_URL;
+}
+
+const socket = io.connect(host, { forceNew: true });
 
 const mapStateToProps = ({ user }) => ({
   user,
