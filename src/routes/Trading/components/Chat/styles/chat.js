@@ -47,6 +47,7 @@ export default (theme) => ({
   },
   cardIcon: {
     margin: '1rem',
+    cursor: 'pointer',
   },
 });
 

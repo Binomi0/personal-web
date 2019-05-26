@@ -2,7 +2,6 @@ import createReducer from '../redux/create-reducer';
 import { OPEN_DRAWER, CLOSE_DRAWER } from '../action-types';
 
 const openDrawer = (drawerType) => (dispatch) => {
-  console.log('drawerType =>', drawerType);
   dispatch({ type: OPEN_DRAWER.SET, payload: drawerType });
 };
 

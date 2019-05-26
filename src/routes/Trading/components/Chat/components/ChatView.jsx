@@ -25,15 +25,20 @@ export default class ChatView extends Component {
     chatActive: PropTypes.bool.isRequired,
   };
 
-  state = {
-    message: {
-      text: '',
-    },
-  };
+  constructor() {
+    super();
+    this.state = {
+      message: {
+        text: '',
+      },
+    };
+    this.chatRef = React.createRef();
+  }
 
   handleActiveChat = (activeChat) => {
     this.props.initChatSocket(this.props.user);
     this.props.toogleChat(activeChat);
+    window.scrollTo(0, 300);
   };
 
   handleChange = (e) => {
