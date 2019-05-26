@@ -32,7 +32,6 @@ export default class ChatView extends Component {
   };
 
   handleActiveChat = (activeChat) => {
-    console.log('activeChat', activeChat);
     this.props.initChatSocket(this.props.user);
     this.props.toogleChat(activeChat);
   };
