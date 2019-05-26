@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import createStore from './redux/create-store';
 import './index.scss';
 import theme from './styles/theme';
-import { NEW_APP_AVAILABLE } from './action-types';
+// import { NEW_APP_AVAILABLE } from './action-types';
 
 if (process.env.NODE_ENV === 'development') {
   console.log('process.env =>', process.env);

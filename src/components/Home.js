@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Contacto from './Contacto';
 
 import '../containers/App.scss';
-import { Snackbar, Button, IconButton, withStyles } from '@material-ui/core';
+import { Snackbar, IconButton, withStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 const styles = (theme) => ({

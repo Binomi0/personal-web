@@ -94,7 +94,7 @@ export default createMuiTheme({
     // },
     MuiButton: {
       root: {
-        color: '#282c33',
+        color: mainColor,
         background: '#fff',
         '&:hover': {
           backgroundColor: '#D8604B',
@@ -109,7 +109,7 @@ export default createMuiTheme({
     },
     MuiButtonBase: {
       root: {
-        color: '#282c33',
+        color: mainColor,
         background: '#fff',
         '&:hover': {
           backgroundColor: '#D8604B',
@@ -139,7 +139,7 @@ export default createMuiTheme({
     // },
     // MuiTabs: {
     //   root: {
-    //     background: '#282c33',
+    //     background: mainColor,
     //   },
     // },
     // MuiPaper: {
@@ -218,31 +218,31 @@ export default createMuiTheme({
     },
     MuiAppBar: {
       root: {
-        background: '#282c33',
+        background: mainColor,
       },
       positionFixed: {
-        background: '#282c33',
+        background: mainColor,
       },
       positionAbsolute: {
-        background: '#282c33',
+        background: mainColor,
       },
       positionSticky: {
-        background: '#282c33',
+        background: mainColor,
       },
       positionStatic: {
-        background: '#282c33',
+        background: mainColor,
       },
       positionRelative: {
-        background: '#282c33',
+        background: mainColor,
       },
       colorDefault: {
-        background: '#282c33',
+        background: mainColor,
       },
       colorPrimary: {
-        background: '#282c33',
+        background: mainColor,
       },
       colorSecondary: {
-        background: '#282c33',
+        background: mainColor,
       },
     },
     MUIDataTableSelectCell: {

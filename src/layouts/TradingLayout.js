@@ -2,7 +2,7 @@ import React from 'react';
 import { LoadingBar } from 'react-redux-loading-bar';
 import { connect } from 'react-redux';
 
-import firebase from '../config/firebase';
+// import firebase from '../config/firebase';
 import Modals from '../routes/Trading/modals';
 import AppBar from '../components/AppBar';
 import Drawers from '../components/Drawer';
