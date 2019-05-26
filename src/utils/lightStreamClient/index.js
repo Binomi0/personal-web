@@ -11,9 +11,9 @@ const IGUrls = {
   prices: 'https://demo-api.ig.com/gateway/deal/prices',
 };
 
-function log(message) {
+function log(message, data) {
   if (process.env.NODE_ENV !== 'production') {
-    console.log(message);
+    console.log(message, data);
   }
 }
 
@@ -101,7 +101,8 @@ class LightStreamService {
         // console.groupEnd();
       },
       onSubscriptionError(code, message) {
-        log('Error code: ', code, ', message: ', message);
+        log('Error code: ', code);
+        log('message: ', message);
       },
       onUnsubscription() {
         // console.log('UNSUBSCRIBED');
