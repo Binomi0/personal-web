@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
   TextField,
@@ -14,20 +15,19 @@ import KeyboardArrowRigthIcon from '@material-ui/icons/KeyboardArrowRightRounded
 import { StyledChat, StyledItems, StyledName } from '../styles/chat';
 
 export default class ChatView extends Component {
-  constructor(props) {
-    super(props);
-    this.socket = props.socket;
-    this.state = {
-      message: {
-        author: 'Invitado',
-        text: '',
-      },
-      messages: [],
-    };
-  }
+  static propTypes = {
+    user: PropTypes.object.isRequired,
+    initChatSocket: PropTypes.func.isRequired,
+  };
+
+  state = {
+    message: {
+      text: '',
+    },
+  };
 
   componentDidMount() {
-    this.initSocketChat();
+    this.initChatSocket();
   }
 
   handleChange = (e) => {
@@ -35,29 +35,24 @@ export default class ChatView extends Component {
   };
 
   handleSubmit = () => {
-    if (this.state.message.text) {
-      this.socket.emit('new-message', {
-        text: this.state.message.text,
-        author: this.props.user._id,
-      });
+    const { text } = this.state.message;
+    const { user } = this.props;
+
+    console.log('user', user);
+
+    if (text && user._id) {
+      this.props.newMessage({ text, user });
       this.setState({ message: { text: '' } });
     }
   };
 
-  initSocketChat = () => {
-    this.socket.on('nuevo-mensaje', (message) => {
-      console.log('message', message);
-      this.setState({ messages: [message, ...this.state.messages] });
-    });
-
-    this.socket.on('messages', (messages) => {
-      this.setState({ messages });
-    });
+  initChatSocket = () => {
+    this.props.initChatSocket();
   };
 
   render() {
     const { classes } = this.props;
-    const renderMessages = this.state.messages.map((message, index) => (
+    const renderMessages = this.props.messages.map((message, index) => (
       <ListItem key={index} className={classes.listItem}>
         <StyledItems>
           <StyledName>
