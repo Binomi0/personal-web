@@ -45,6 +45,9 @@ export default (theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  cardIcon: {
+    margin: '1rem',
+  },
 });
 
 export const StyledItems = styled.div`

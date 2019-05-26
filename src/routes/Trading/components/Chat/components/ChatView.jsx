@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import KeyboardArrowRigthIcon from '@material-ui/icons/KeyboardArrowRightRounded';
+import OnIcon from '@material-ui/icons/Chat';
+import OffIcon from '@material-ui/icons/ChatBubble';
 
 import { StyledChat, StyledItems, StyledName } from '../styles/chat';
 
@@ -20,6 +22,7 @@ export default class ChatView extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
     initChatSocket: PropTypes.func.isRequired,
+    chatActive: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -28,9 +31,10 @@ export default class ChatView extends Component {
     },
   };
 
-  componentDidMount() {
-    this.initChatSocket();
-  }
+  handleActiveChat = (activeChat) => {
+    this.props.initChatSocket(this.props.user);
+    this.props.toogleChat(activeChat);
+  };
 
   handleChange = (e) => {
     this.setState({ message: { ...this.state.message, text: e.target.value } });
@@ -46,12 +50,8 @@ export default class ChatView extends Component {
     }
   };
 
-  initChatSocket = () => {
-    this.props.initChatSocket();
-  };
-
   render() {
-    const { classes } = this.props;
+    const { classes, chatActive } = this.props;
     const renderMessages = this.props.messages.map((message, index) => (
       <ListItem key={index} className={classes.listItem}>
         <StyledItems>
@@ -87,31 +87,53 @@ export default class ChatView extends Component {
 
     return (
       <StyledChat className={classes.card}>
-        <CardHeader title="Chat en vivo" />
+        <CardHeader
+          action={
+            chatActive ? (
+              <OnIcon
+                className={classes.cardIcon}
+                fontSize="large"
+                color="primary"
+                onClick={() => this.handleActiveChat(false)}
+              />
+            ) : (
+              <OffIcon
+                className={classes.cardIcon}
+                fontSize="large"
+                color="primary"
+                onClick={() => this.handleActiveChat(true)}
+              />
+            )
+          }
+          title="¿Hablamos?"
+          subheader="Puedes dejarme un mensaje a continuación..."
+        />
         <CardContent className={classes.cardContent}>
-          <List>{renderMessages}</List>
+          {chatActive && <List>{renderMessages}</List>}
         </CardContent>
-        <CardContent>
-          <TextField
-            type="textarea"
-            inputProps={{ maxLength: 255 }}
-            InputProps={{
-              endAdornment: (
-                <KeyboardReturnIcon
-                  className={classes.inputIcon}
-                  onClick={this.handleSubmit}
-                />
-              ),
-            }}
-            label="Escribe tu mensaje"
-            autoFocus
-            fullWidth
-            multiline
-            value={this.state.message.text}
-            onChange={this.handleChange}
-            helperText="Max 255 caracteres"
-          />
-        </CardContent>
+        {chatActive && (
+          <CardContent>
+            <TextField
+              type="textarea"
+              inputProps={{ maxLength: 255 }}
+              InputProps={{
+                endAdornment: (
+                  <KeyboardReturnIcon
+                    className={classes.inputIcon}
+                    onClick={this.handleSubmit}
+                  />
+                ),
+              }}
+              label="Escribe tu mensaje"
+              autoFocus
+              fullWidth
+              multiline
+              value={this.state.message.text}
+              onChange={this.handleChange}
+              helperText="Max 255 caracteres"
+            />
+          </CardContent>
+        )}
       </StyledChat>
     );
   }
