@@ -1,7 +1,7 @@
 import createReducer from '../redux/create-reducer';
 import { LOG_IN, LOG_OUT, CHECK_USER } from '../action-types';
 import firebase from '../config/firebase';
-import { getUser, setUser } from './user';
+import { getUser, setUser, deleteUser } from './user';
 
 export const checkUser = () => (dispatch) => {
   dispatch({ type: CHECK_USER.REQUEST });
@@ -22,6 +22,7 @@ const logOut = () => (dispatch) => {
   localStorage.clear();
   dispatch({ type: LOG_OUT.SET });
   dispatch(setUser({}));
+  dispatch(deleteUser());
 };
 
 export const actions = {

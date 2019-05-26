@@ -17,7 +17,7 @@ class TradesMoreInfo extends React.Component {
   };
 
   render() {
-    const { classes, closeModal, modalOpen } = this.props;
+    const { closeModal, modalOpen } = this.props;
 
     // console.log(this.constructor.name, this.props);
 

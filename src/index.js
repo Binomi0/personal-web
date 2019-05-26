@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import createStore from './redux/create-store';
 import './index.scss';
 import theme from './styles/theme';
-import { NEW_APP_AVAILABLE } from './action-types';
+// import { NEW_APP_AVAILABLE } from './action-types';
 
 if (process.env.NODE_ENV === 'development') {
   console.log('process.env =>', process.env);
@@ -37,15 +37,15 @@ const Root = () => (
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 
-const config = {
-  onUpdate(registration) {
-    store.dispatch({ type: NEW_APP_AVAILABLE.SET });
-    console.log('onUpdate registration', registration);
-  },
-  onSuccess(registration) {
-    store.dispatch({ type: NEW_APP_AVAILABLE.SET });
-    console.log('onSuccess registration', registration);
-  },
-};
+// const config = {
+//   onUpdate(registration) {
+//     store.dispatch({ type: NEW_APP_AVAILABLE.SET });
+//     console.log('onUpdate registration', registration);
+//   },
+//   onSuccess(registration) {
+//     store.dispatch({ type: NEW_APP_AVAILABLE.SET });
+//     console.log('onSuccess registration', registration);
+//   },
+// };
 // serviceWorker.register(config);
 serviceWorker.unregister();

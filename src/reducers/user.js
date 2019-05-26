@@ -88,6 +88,7 @@ const ACTION_HANDLER = {
     ...state,
     ...payload,
   }),
+  [DELETE_USER.SET]: () => INITIAL_STATE,
   [SET_USER.FAILURE]: () => ({}),
   [SET_TRAIDING_ACCOUNT_TYPE.SET]: (state, { payload }) => ({
     ...state,

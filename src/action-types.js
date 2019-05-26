@@ -54,3 +54,7 @@ export const SET_TRAIDING_ACCOUNT_TYPE = requestAction(
 
 // SERVICE WORKER
 export const NEW_APP_AVAILABLE = requestAction('worker/NEW_APP_AVAILABLE');
+
+// SOCKET.IO
+export const INIT_CHAT_SOCKET = requestAction('socket/INIT_CHAT_SOCKET');
+export const NEW_CHAT_MESSAGE = requestAction('socket/NEW_CHAT_MESSAGE');

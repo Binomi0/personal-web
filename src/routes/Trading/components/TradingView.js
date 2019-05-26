@@ -73,7 +73,7 @@ class TradingView extends Component {
         <TradingBanner>
           <Banner src={bannerImg} alt="banner" />
         </TradingBanner>
-        <TradingChat />
+        {authenticated && <TradingChat />}
         {authenticated ? (
           <TradingContent>
             <TradingSection>
