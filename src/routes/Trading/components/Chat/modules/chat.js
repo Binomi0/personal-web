@@ -4,6 +4,7 @@ import createReducer from '../../../../../redux/create-reducer';
 import {
   INIT_CHAT_SOCKET,
   NEW_CHAT_MESSAGE,
+  ACTIVATE_CHAT,
 } from '../../../../../action-types';
 
 let socket;
@@ -11,6 +12,10 @@ let host = process.env.REACT_APP_SOCKET_HOST;
 if (process.env.NODE_ENV === 'production') {
   host = process.env.REACT_APP_API_URL;
 }
+
+const toogleChat = (chatActive) => (dispatch) => {
+  dispatch({ type: ACTIVATE_CHAT.SET, payload: chatActive });
+};
 
 const initChatSocket = () => (dispatch) => {
   dispatch({ type: INIT_CHAT_SOCKET.REQUEST });
@@ -43,11 +48,13 @@ const newMessage = ({ text, user }) => (dispatch) => {
 
 export const actions = {
   initChatSocket,
+  toogleChat,
   newMessage,
 };
 
 export const INITIAL_STATE = {
   messages: [],
+  chatActive: false,
 };
 
 export const ACTION_HANDLERS = {
@@ -58,6 +65,10 @@ export const ACTION_HANDLERS = {
   [NEW_CHAT_MESSAGE.SET]: (state, { payload }) => ({
     ...state,
     messages: [payload, ...state.messages],
+  }),
+  [ACTIVATE_CHAT.SET]: (state, { payload }) => ({
+    ...state,
+    chatActive: payload,
   }),
 };
 

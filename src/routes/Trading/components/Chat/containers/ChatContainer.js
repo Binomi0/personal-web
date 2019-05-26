@@ -7,6 +7,7 @@ import { actions as chatActions } from '../modules/chat';
 
 const mapStateToProps = ({ user, chat }) => ({
   messages: chat.messages,
+  chatActive: chat.chatActive,
   user,
 });
 

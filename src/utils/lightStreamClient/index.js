@@ -98,14 +98,13 @@ class LightStreamService {
     this.marketSubscription.addListener({
       onSubscription() {
         log('SUBSCRIBED TO =>', market);
-        // console.groupEnd();
       },
       onSubscriptionError(code, message) {
         log('Error code: ', code);
         log('message: ', message);
       },
       onUnsubscription() {
-        // console.log('UNSUBSCRIBED');
+        log('UNSUBSCRIBED');
       },
       onItemUpdate(obj) {
         const BID = parseFloat(obj.getValue('BID'));
