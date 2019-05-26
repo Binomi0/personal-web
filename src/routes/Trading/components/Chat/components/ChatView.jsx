@@ -40,8 +40,6 @@ export default class ChatView extends Component {
     const { text } = this.state.message;
     const { user } = this.props;
 
-    console.log('user', user);
-
     if (text && user._id) {
       this.props.newMessage({ text, user });
       this.setState({ message: { text: '' } });
