@@ -11,6 +11,12 @@ const IGUrls = {
   prices: 'https://demo-api.ig.com/gateway/deal/prices',
 };
 
+function log(message) {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(message);
+  }
+}
+
 class LightStreamService {
   constructor() {
     this.lsClient = new ls.LightstreamerClient(
@@ -91,11 +97,11 @@ class LightStreamService {
 
     this.marketSubscription.addListener({
       onSubscription() {
-        console.log('SUBSCRIBED TO =>', market);
+        log('SUBSCRIBED TO =>', market);
         // console.groupEnd();
       },
       onSubscriptionError(code, message) {
-        console.log('Error code: ', code, ', message: ', message);
+        log('Error code: ', code, ', message: ', message);
       },
       onUnsubscription() {
         // console.log('UNSUBSCRIBED');
@@ -133,11 +139,11 @@ class LightStreamService {
 
     this.accountSubscription.addListener({
       onSubscription() {
-        console.log('SUBSCRIBED TO ACCOUNT DATA');
+        log('SUBSCRIBED TO ACCOUNT DATA');
         // console.groupEnd();
       },
       onSubscriptionError(code, message) {
-        console.log('Error code: ', code, ', message: ', message);
+        log('Error code: ', code, ', message: ', message);
       },
       onUnsubscription() {
         // console.log('UNSUBSCRIBED');
@@ -173,11 +179,11 @@ class LightStreamService {
 
     this.chartSubscription.addListener({
       onSubscription() {
-        console.log('SUBSCRIBED TO CHART DATA =>', market);
+        log('SUBSCRIBED TO CHART DATA =>', market);
         // console.groupEnd();
       },
       onSubscriptionError(code, message) {
-        console.log('Error code: ', code, ', message: ', message);
+        log('Error code: ', code, ', message: ', message);
       },
       onUnsubscription() {
         // console.log('UNSUBSCRIBED');
@@ -213,11 +219,11 @@ class LightStreamService {
 
     this.candleSubscription.addListener({
       onSubscription() {
-        console.log('SUBSCRIBED TO CANDLE DATA =>', market);
+        log('SUBSCRIBED TO CANDLE DATA =>', market);
         // console.groupEnd();
       },
       onSubscriptionError(code, message) {
-        console.log('Error code: ', code, ', message: ', message);
+        log('Error code: ', code, ', message: ', message);
       },
       onUnsubscription() {
         // console.log('UNSUBSCRIBED');
