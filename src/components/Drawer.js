@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -67,22 +68,28 @@ class TradingDrawer extends React.Component {
         </List>
         <Divider />
         <List>
-          {['Home', 'Trading', 'Portfolio'].map((text, index) => (
-            <ListItem button key={text}>
+          <Link to="/" className={classes.link}>
+            <ListItem button>
               <ListItemIcon>
-                {index % 2 === 0 ? <HomeIcon /> : <MailIcon />}
+                <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary="Home" />
             </ListItem>
-          ))}
+          </Link>
+          <Link to="/portfolio" className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <MailIcon />
+              </ListItemIcon>
+              <ListItemText primary="PortFolio" />
+            </ListItem>
+          </Link>
           <ListItem button onClick={this.toogleChat}>
             <ListItemIcon>
               {chatActive ? <ChatIconClose /> : <ChatIconOpen />}
             </ListItemIcon>
             <ListItemText primary="Chat" />
           </ListItem>
-
-          <ListItemText primary="Salir" />
         </List>
         <Divider />
         <List>

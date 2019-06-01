@@ -28,7 +28,6 @@ export default (theme) => ({
     '&:last-child': {
       marginRight: 0,
     },
-    marginRight: '1rem',
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'column',
