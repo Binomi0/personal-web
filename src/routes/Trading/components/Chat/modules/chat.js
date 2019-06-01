@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production') {
   host = process.env.REACT_APP_API_URL;
 }
 
-const toogleChat = (chatActive) => (dispatch) => {
+export const toogleChat = (chatActive) => (dispatch) => {
   dispatch({ type: ACTIVATE_CHAT.SET, payload: chatActive });
 };
 

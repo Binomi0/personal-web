@@ -11,29 +11,50 @@ import {
   ListItem,
   Typography,
 } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import KeyboardArrowRigthIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import OnIcon from '@material-ui/icons/Chat';
 import OffIcon from '@material-ui/icons/ChatBubble';
+import animateScrollTo from 'animated-scroll-to';
 
 import { StyledChat, StyledItems, StyledName } from '../styles/chat';
 
-export default class ChatView extends Component {
+class ChatView extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
     initChatSocket: PropTypes.func.isRequired,
     chatActive: PropTypes.bool.isRequired,
   };
 
-  state = {
-    message: {
-      text: '',
-    },
-  };
+  constructor() {
+    super();
+    this.state = {
+      message: {
+        text: '',
+      },
+    };
+    this.chatRef = React.createRef();
+  }
+
+  componentDidMount() {
+    console.log('this.props', this.props);
+  }
 
   handleActiveChat = (activeChat) => {
     this.props.initChatSocket(this.props.user);
     this.props.toogleChat(activeChat);
+    // const matches = useMediaQuery('(min-width: 768px)');
+    const sizes = {
+      xs: 300,
+      sm: 500,
+      md: 600,
+      lg: 800,
+      xl: 1000,
+    };
+    // if (matches) {
+    animateScrollTo(sizes[this.props.width]);
+    // }
   };
 
   handleChange = (e) => {
@@ -138,3 +159,5 @@ export default class ChatView extends Component {
     );
   }
 }
+
+export default ChatView;

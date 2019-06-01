@@ -19,6 +19,9 @@ export default () => ({
   menuButton: {
     padding: 0,
   },
+  link: {
+    textDecoration: 'none',
+  },
 });
 
 export const SeparatorStyled = styled.div`

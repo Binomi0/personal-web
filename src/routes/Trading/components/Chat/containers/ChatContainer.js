@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
+import { withStyles, withWidth } from '@material-ui/core';
 
 import ChatView from '../components/ChatView';
 import styles from '../styles/chat';
@@ -13,7 +13,7 @@ const mapStateToProps = ({ user, chat }) => ({
 
 const mapDispatchToProps = { ...chatActions };
 
-const StyledChat = withStyles(styles)(ChatView);
+const StyledChat = withStyles(styles)(withWidth()(ChatView));
 
 export default connect(
   mapStateToProps,
