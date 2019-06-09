@@ -9,11 +9,11 @@ export default class BiographyView extends Component {
         <Typography color="secondary">
           Nací en Madrid el 26 de Marzo de 1978
         </Typography>
-        <Typography color="secondary" paragraph>
+        <Typography color="secondary" paragraph variant='h6'>
           Desde pequeño me apasionaba la tecnología, recuerdo tener alrededor de
           8 o 9 años y fascinarme un monitor verde con letritas...
         </Typography>
-        <Typography color="secondary" variant="h6">
+        <Typography color="secondary">
           To be continued...
         </Typography>
       </div>

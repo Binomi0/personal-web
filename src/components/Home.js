@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
-import Contacto from './Contacto';
-
-import '../containers/App.scss';
 import { Snackbar, IconButton, withStyles } from '@material-ui/core';
+import Zoom from '@material-ui/core/Zoom';
 import CloseIcon from '@material-ui/icons/Close';
+
+import Contacto from './Contacto';
+import '../containers/App.scss';
 
 const styles = (theme) => ({
   close: {
@@ -77,16 +78,18 @@ class Home extends Component {
             </IconButton>,
           ]}
         />
-        <div className="App-Home">
-          <div className="App-logo logo1" />
-          <div className="App-logo logo2" />
-          <div className="App-logo logo3" />
-          <div className="App-logo logo4" />
-          <h4>Adolfo J. Onrubia Albalá</h4>
-          <p>Full Stack Developer</p>
-          <p>Entrepreneur</p>
-          <p>Trader</p>
-        </div>
+        <Zoom in style={{ transitionDelay: '500ms' }} timeout={{ enter: 2000 }}>
+          <div className="App-Home">
+            <div className="App-logo logo1" />
+            <div className="App-logo logo2" />
+            <div className="App-logo logo3" />
+            <div className="App-logo logo4" />
+            <h4>Adolfo J. Onrubia Albalá</h4>
+            <p>Full Stack Developer</p>
+            <p>Entrepreneur</p>
+            <p>Trader</p>
+          </div>
+        </Zoom>
         <Contacto />
       </div>
     );

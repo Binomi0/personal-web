@@ -11,7 +11,6 @@ import {
   ListItem,
   Typography,
 } from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import KeyboardArrowRigthIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import OnIcon from '@material-ui/icons/Chat';
@@ -37,24 +36,17 @@ class ChatView extends Component {
     this.chatRef = React.createRef();
   }
 
-  componentDidMount() {
-    console.log('this.props', this.props);
-  }
-
   handleActiveChat = (activeChat) => {
     this.props.initChatSocket(this.props.user);
     this.props.toogleChat(activeChat);
-    // const matches = useMediaQuery('(min-width: 768px)');
     const sizes = {
       xs: 300,
       sm: 500,
       md: 600,
-      lg: 800,
-      xl: 1000,
+      lg: 700,
+      xl: 900,
     };
-    // if (matches) {
     animateScrollTo(sizes[this.props.width]);
-    // }
   };
 
   handleChange = (e) => {
