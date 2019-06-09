@@ -1,0 +1,13 @@
+.firebase/*
+.vscode/*
+build/*
+functions/*
+node_modules/
+
+firebase.indexes.json
+firebase.rules
+firebase.json
+database.rules.json
+storage.rules
+.firebaserc
+
