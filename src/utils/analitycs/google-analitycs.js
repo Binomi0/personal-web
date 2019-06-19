@@ -15,7 +15,9 @@ class ReactAnalitycs {
 
     if (process.env.NODE_ENV !== 'production') {
       console.log('process.env =>', process.env);
-      this.ReactGA.initialize(process.env.REACT_APP_GA_ID, { debug: true });
+      this.ReactGA.initialize(process.env.REACT_APP_GA_ID, {
+        debug: process.env.REACT_APP_DEBUG,
+      });
     } else {
       this.ReactGA.initialize(process.env.REACT_APP_GA_ID, {
         gaOptions: { userId },

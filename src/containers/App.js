@@ -1,6 +1,7 @@
-import React, { Component, Suspense } from 'react';
+import React, { memo, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
+import { connect } from 'react-redux';
 
 import RouteWithLayout from '../routes/RouteWithLayout';
 import MainLayout from '../layouts/MainLayout';
@@ -16,55 +17,48 @@ import './App.scss';
 
 import { checkUser } from '../reducers/auth';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.store.dispatch(checkUser());
-  }
+const App = memo(function App({ dispatch }) {
+  useEffect(() => {
+    dispatch(checkUser());
+  }, [dispatch]);
 
-  render() {
-    return (
-      <Router>
-        <Suspense fallback={LoadingBar}>
-          <RouteWithLayout
-            path="/"
-            exact
-            component={Home}
-            layout={MainLayout}
-          />
-          <RouteWithLayout
-            path="/trading*"
-            exact
-            component={Trading}
-            layout={TradingLayout}
-          />
-          <RouteWithLayout
-            path="/portfolio"
-            exact
-            component={Portfolio}
-            layout={PortfolioLayout}
-          />
-          <RouteWithLayout
-            path="/developer"
-            exact
-            component={Developer}
-            layout={MainLayout}
-          />
-          <RouteWithLayout
-            path="/tools"
-            exact
-            component={Home}
-            layout={MainLayout}
-          />
-          <RouteWithLayout
-            path="/biography"
-            exact
-            component={Biography}
-            layout={MainLayout}
-          />
-        </Suspense>
-      </Router>
-    );
-  }
-}
+  return (
+    <Router>
+      <Suspense fallback={LoadingBar}>
+        <RouteWithLayout path="/" exact component={Home} layout={MainLayout} />
+        <RouteWithLayout
+          path="/trading*"
+          exact
+          component={Trading}
+          layout={TradingLayout}
+        />
+        <RouteWithLayout
+          path="/portfolio"
+          exact
+          component={Portfolio}
+          layout={PortfolioLayout}
+        />
+        <RouteWithLayout
+          path="/developer"
+          exact
+          component={Developer}
+          layout={MainLayout}
+        />
+        <RouteWithLayout
+          path="/tools"
+          exact
+          component={Home}
+          layout={MainLayout}
+        />
+        <RouteWithLayout
+          path="/biography"
+          exact
+          component={Biography}
+          layout={MainLayout}
+        />
+      </Suspense>
+    </Router>
+  );
+});
 
-export default App;
+export default connect()(App);
