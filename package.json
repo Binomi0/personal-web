@@ -40,7 +40,14 @@
     "deploy": "react-scripts build && firebase deploy"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "plugins": [
+      "react-hooks"
+    ],
+    "extends": "react-app",
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    }
   },
   "browserslist": [
     ">0.2%",
@@ -49,6 +56,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "babel-plugin-syntax-dynamic-import": "^6.18.0"
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-to-json": "^3.3.5",
+    "eslint-plugin-react-hooks": "^1.6.0"
   }
 }
