@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { Snackbar, IconButton, withStyles } from '@material-ui/core';
 import Zoom from '@material-ui/core/Zoom';
@@ -7,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import Contacto from './Contacto';
 import '../containers/App.scss';
+import Analitycs from '../utils/analitycs/google-analitycs';
 
 const styles = (theme) => ({
   close: {
@@ -21,8 +21,8 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    ReactGA.pageview('/', [], 'Home');
-    ReactGA.event({
+    Analitycs.pageview('/', 'Home');
+    Analitycs.event({
       category: 'User',
       action: 'Navigates to home',
       value: 1,
