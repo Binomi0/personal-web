@@ -9,10 +9,11 @@ import * as serviceWorker from './serviceWorker';
 import createStore from './redux/create-store';
 import './index.scss';
 import theme from './styles/theme';
+import { NEW_APP_AVAILABLE } from './action-types';
 
 if (process.env.NODE_ENV === 'development') {
   console.log('process.env =>', process.env);
-  ReactGA.initialize(process.env.REACT_APP_GA_ID);
+  // ReactGA.initialize(process.env.REACT_APP_GA_ID, { debug: true });
 } else {
   // Analytics
   ReactGA.initialize(process.env.REACT_APP_GA_ID);
@@ -29,11 +30,21 @@ const store = createStore();
 const Root = () => (
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
-      <App />
+      <App store={store} />
     </Provider>
   </MuiThemeProvider>
 );
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 
-serviceWorker.register();
+const config = {
+  onUpdate(registration) {
+    store.dispatch({ type: NEW_APP_AVAILABLE.SET });
+    console.log('onUpdate registration', registration);
+  },
+  onSuccess(registration) {
+    store.dispatch({ type: NEW_APP_AVAILABLE.SET });
+    console.log('onSuccess registration', registration);
+  },
+};
+serviceWorker.register(config);

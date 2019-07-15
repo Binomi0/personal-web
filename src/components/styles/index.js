@@ -16,6 +16,9 @@ export default () => ({
     border: '1px solid red',
   },
   h5: {},
+  menuButton: {
+    padding: 0,
+  },
 });
 
 export const SeparatorStyled = styled.div`
@@ -132,6 +135,9 @@ export const FooterContainer = styled.div`
 `;
 
 export const FooterHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 0.9rem;
   color: #8ee7ff;
   margin: 1rem;
@@ -140,4 +146,24 @@ export const FooterSocials = styled.div`
   margin: 1rem;
   display: flex;
   justify-content: space-around;
+`;
+
+export const FooterStyled = styled.footer`
+  /* height: 0; */
+  a {
+    color: #ccc;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    &:hover {
+      color: #8ee7ff;
+    }
+  }
+`;
+
+export const CircularProgressStyled = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

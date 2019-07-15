@@ -84,8 +84,7 @@ export const getCryptoBalance = (crypto, price) => (dispatch, getState) => {
     let equity = {};
     equity.mediumPrice = calculateMediumPrice(marketPositions);
     equity.quantity = calculateContracts(marketPositions);
-    equity.amount =
-      (price.amount - calculateMediumPrice(marketPositions)) * equity.quantity;
+    equity.amount = (price.amount - equity.mediumPrice) * equity.quantity;
     equity.startTrade = marketPositions[0].startDate;
     equity.direction = marketPositions[0].direction;
 

@@ -2,6 +2,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 //MuiTableRow - root - 138 MuiTableRow - head - 141 MUIDataTableHeadRow - root - 137
 
+const mainColor = '#282c33';
+
 export default createMuiTheme({
   overrides: {
     MUITableHead: {
@@ -201,6 +203,19 @@ export default createMuiTheme({
     //     color: '#fff',
     //   },
     // },
+    // MuiSnackbar: {
+    //   // root: {
+    //   //   background: green[500],
+    //   // },
+    //   anchorOriginTopCenter: {
+    //     background: green[500],
+    //   },
+    // },
+    MuiIcon: {
+      colorAction: {
+        color: green[500],
+      },
+    },
     MuiAppBar: {
       root: {
         background: '#282c33',

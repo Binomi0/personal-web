@@ -45,6 +45,9 @@ export default (theme) => ({
       fontSize: '1rem',
     },
   },
+  moreInfo: {
+    color: theme.palette.primary.main,
+  },
 });
 
 export const TradesContainer = styled.div`

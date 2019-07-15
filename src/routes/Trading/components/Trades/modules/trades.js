@@ -12,7 +12,7 @@ export const getTrades = () => async (dispatch) => {
   dispatch({ type: GET_TRADES.REQUEST });
 
   try {
-    const URL = '/v1/trading/trades';
+    const URL = 'trading/trades';
     const response = await axios(URL);
     const tradeList = response.data.sort(orderTrades);
 
@@ -88,7 +88,7 @@ export const finishTrade = (_currentPosition, _exitPosition, _market) => async (
 
   // console.log('newTrade', newTrade);
 
-  const tradeURL = 'v1/trading/trade';
+  const tradeURL = 'trading/trade';
   await axios.post(tradeURL, newTrade);
 
   dispatch(getTrades());

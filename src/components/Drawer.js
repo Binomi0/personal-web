@@ -9,31 +9,33 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
+import ExitIcon from '@material-ui/icons/ExitToApp';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import FaceIcon from '@material-ui/icons/Face';
+import Avatar from '@material-ui/core/Avatar';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HomeIcon from '@material-ui/icons/Home';
 
 import { actions as drawerActions } from '../reducers/drawer';
+import { actions as authActions } from '../reducers/auth';
 
 import styles from './styles';
 
 class TradingDrawer extends React.Component {
+  handleExitApp = () => {
+    this.props.logOut();
+  };
+
   render() {
-    const { classes, closeDrawer, openDrawer } = this.props;
+    const { classes, closeDrawer, openDrawer, user } = this.props;
 
     const sideList = (
       <div className={classes.list}>
         <List>
-          {['Perfil', 'Opciones'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <FaceIcon /> : <SettingsIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button>
+            <Avatar src={user.photoURL} />
+            <ListItemText primary={user.displayName} />
+          </ListItem>
         </List>
         <Divider />
         <List>
@@ -43,6 +45,7 @@ class TradingDrawer extends React.Component {
                 {index % 2 === 0 ? <AccountBalanceIcon /> : <AssignmentIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
+              <SettingsIcon />
             </ListItem>
           ))}
         </List>
@@ -56,6 +59,15 @@ class TradingDrawer extends React.Component {
               <ListItemText primary={text} />
             </ListItem>
           ))}
+        </List>
+        <Divider />
+        <List>
+          <ListItem button onClick={this.handleExitApp}>
+            <ListItemIcon>
+              <ExitIcon />
+            </ListItemIcon>
+            <ListItemText primary="Salir" />
+          </ListItem>
         </List>
       </div>
     );
@@ -87,15 +99,17 @@ class TradingDrawer extends React.Component {
 
 TradingDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const TradingDrawerWrapped = withStyles(styles)(TradingDrawer);
 
-const mapStateToProps = ({ drawer }) => ({
+const mapStateToProps = ({ drawer, user }) => ({
   open: drawer.open,
+  user,
 });
 
-const mapDispatchToProps = { ...drawerActions };
+const mapDispatchToProps = { ...drawerActions, ...authActions };
 
 export default connect(
   mapStateToProps,

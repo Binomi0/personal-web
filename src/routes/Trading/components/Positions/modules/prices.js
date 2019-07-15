@@ -12,7 +12,6 @@ import LightStreamer from '../../../../../utils/lightStreamClient';
 import { getIndexBalance, getCryptoBalance } from './balance';
 
 const lightStreamer = new LightStreamer();
-const version = '/v1';
 
 const getCoinbasePrice = (crypto) => async (dispatch) => {
   if (!crypto) {
@@ -21,9 +20,7 @@ const getCoinbasePrice = (crypto) => async (dispatch) => {
   dispatch({ type: COINBASE_PRICE.REQUEST });
 
   try {
-    const response = await axios(
-      `${version}/trading/prices/coinbase/${crypto}`,
-    );
+    const response = await axios(`trading/prices/coinbase/${crypto}`);
 
     dispatch({ type: COINBASE_PRICE.SUCCESS });
     dispatch({
@@ -36,6 +33,7 @@ const getCoinbasePrice = (crypto) => async (dispatch) => {
     console.error(err);
   }
 };
+
 const getIGAuthentication = (callback) => () => {
   lightStreamer.authenticate().then(() => {
     lightStreamer.createConnection();

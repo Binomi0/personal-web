@@ -1,4 +1,4 @@
-import FrontendView from '../components/FrontendView';
+import FrontendView from '../components/DeveloperView';
 
 import { connect } from 'react-redux';
 

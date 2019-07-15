@@ -7,10 +7,6 @@ $xx-large: 440px;
 // $sizes: "$small", "medium", "large", "x-large", "xx-large";
 $sizes: $small, $medium, $large, $x-large, $xx-large;
 
-.App {
-    box-sizing: border-box;
-}
-
 *,
 *::before,
 *::after {
@@ -72,46 +68,6 @@ $sizes: $small, $medium, $large, $x-large, $xx-large;
         height: $small;
         animation: App-logo-reverse-spin infinite 20s 2s ease-in;
         opacity: .1;
-    }
-}
-
-.App-Home {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-
-    h4 {
-        color: #61dafb;
-        text-shadow: 1px 1px #2b6474;
-        font-weight: 100;
-        font-size: 1.7rem;
-
-        @media (max-width: 768px) {
-            font-size: 1.6rem;
-        }
-    }
-
-    p {
-        font-size: .7rem;
-        text-transform: uppercase;
-        letter-spacing: .45rem;
-        font-weight: 600;
-    }
-
-    footer {
-        position: absolute;
-        bottom: .1rem;
-        right: .1rem;
-
-        a {
-            font-size: .5rem;
-            color: #61dafb;
-        }
     }
 }
 

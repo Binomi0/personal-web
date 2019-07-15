@@ -19,7 +19,6 @@ import logoProrealcode from '../assets/img/prorealcode.jpg';
 const Footer = ({ classes }) => {
   return (
     <FooterContainer>
-      <FooterHeader>&#169; Copyright 2019 | Adolfo Onrubia</FooterHeader>
       <FooterSocials>
         <h5 className={classes.h5}>Sígueme en</h5>
 
@@ -38,6 +37,8 @@ const Footer = ({ classes }) => {
           <img src={logoProrealcode} alt="logo-prorealcode" />
         </Link>
       </FooterSocials>
+      <FooterHeader>&#169; Copyright 2019 | Adolfo Onrubia</FooterHeader>
+
       {/* <FooterColumns>
         <div className={classes.footerItem}>
           <Typography color="secondary" variant="h6">

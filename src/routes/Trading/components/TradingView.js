@@ -1,15 +1,16 @@
 import React, { Component, Suspense } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 import { withStyles, Typography, Button } from '@material-ui/core';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import SecurityIcon from '@material-ui/icons/Security';
 
 // import Positions from './Positions';
 // import Trades from './Trades';
 import Separator from '../../../components/Separator';
-
+import TradingModals from '../modals';
 import literals from '../../../i18n/es-ES';
 
 import styles, {
@@ -22,14 +23,20 @@ import styles, {
   BoxTitle,
 } from '../styles/trading';
 import bannerImg from '../../../assets/img/banner-trading.png';
+import firebase from '../../../config/firebase';
 
 const LazyPositions = React.lazy(() => import('./Positions'));
 const LazyTrades = React.lazy(() => import('./Trades'));
 
+const uiConfig = {
+  signInFlow: 'popup',
+  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+  callbacks: {
+    signInSuccessWithAuthResult: () => false,
+  },
+};
+
 class TradingView extends Component {
-  state = {
-    auth: true,
-  };
   componentDidMount() {
     ReactGA.pageview('/trading');
     ReactGA.event({
@@ -39,13 +46,8 @@ class TradingView extends Component {
       label: 'Visited Trading Page',
       nonInteraction: true,
     });
-    // this.props.getTrades();
     // this.props.getChartData('DOW', 100);
     // this.props.getChartData('DAX', 100);
-    // const auth = prompt('Introduce la clave de acceso', '');
-    // if (auth) {
-    //   this.setState({ auth: auth === 'koky' && true });
-    // }
   }
 
   // TODO Add doc to handleOpenPosition
@@ -54,22 +56,23 @@ class TradingView extends Component {
     this.props.onOpenPosition(selectedMarket, newPosition);
     ReactGA.event({
       category: 'Trading',
-      action: 'Open a new position',
+      action: 'New position opened',
       value: 1,
-      label: 'Open Position',
+      label: 'New position',
     });
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, authenticated } = this.props;
 
     // console.log(this.constructor.name, '=>', this.props);
     return (
       <TradingViewContainer>
+        <TradingModals />
         <TradingBanner>
           <Banner src={bannerImg} alt="banner" />
         </TradingBanner>
-        {this.state.auth ? (
+        {authenticated ? (
           <TradingContent>
             <TradingSection>
               <BoxTitle>
@@ -93,10 +96,10 @@ class TradingView extends Component {
                 <h1 className={classes.h1}>Objetivo diario 4,48%</h1>
               </BoxTitle>
               <Typography variant="caption" color="secondary">
-                Beneficio: <b>47 pips</b>
+                Profit Objetivo: <b>23,5 pips</b>
               </Typography>
               <Typography variant="caption" color="secondary" paragraph>
-                Pérdida: <b>20 pips</b>
+                Stop Loss: <b>10 pips</b>
               </Typography>
               <Separator />
               <Button
@@ -125,12 +128,15 @@ class TradingView extends Component {
           </TradingContent>
         ) : (
           <ErrorContainer>
+            <SecurityIcon style={{ fontSize: 60 }} />
             <h1>No tienes acceso para ver esta sección</h1>
-            <Link to="/">
-              <Typography variant="subtitle2">
-                Ir a la página principal
-              </Typography>
-            </Link>
+            <Typography color="secondary">
+              Accede para ver el contenido
+            </Typography>
+            <StyledFirebaseAuth
+              uiConfig={uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
           </ErrorContainer>
         )}
       </TradingViewContainer>
@@ -141,6 +147,7 @@ class TradingView extends Component {
 TradingView.propTypes = {
   selectedMarket: PropTypes.string.isRequired,
   newPosition: PropTypes.object.isRequired,
+  authenticated: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(TradingView);

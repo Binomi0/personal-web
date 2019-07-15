@@ -7,10 +7,11 @@ import { actions as modalActions } from '../../../reducers/modal';
 
 import styles from '../styles/trading';
 
-export const mapStateToProps = ({ trading, modal }) => ({
+export const mapStateToProps = ({ trading, modal, auth }) => ({
   selectedMarket: trading.positions.selectedMarket,
   newPosition: trading.positions.newPosition,
   modal,
+  authenticated: auth.authenticated,
 });
 
 export const mapDispatchToProps = {

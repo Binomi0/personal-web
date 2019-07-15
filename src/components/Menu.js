@@ -9,8 +9,8 @@ export default class Menu extends Component {
       <StyledContent>
         <Link to="/trading">Trading</Link>
         <Link to="/portfolio">Portfolio</Link>
-        <Link to="/frontend">Frontend</Link>
-        <Link to="/backend">Backend</Link>
+        <Link to="/biography">Biography</Link>
+        <Link to="/developer">Developer</Link>
         {/* <FrontEnd>
             <Link to="/frontend">Frontend</Link>
           </FrontEnd>

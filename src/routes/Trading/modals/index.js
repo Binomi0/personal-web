@@ -12,12 +12,14 @@ const MODAL_TYPES = {
   SELECT_MARKET: 'SELECT_MARKET',
   NEW_TRADE: 'NEW_TRADE',
   EXIT_POSITION: 'EXIT_POSITION',
+  ADD_USER: 'ADD_USER',
 };
 
 const Modals = ({ type, onExitPosition, onOpenPosition, ...other }) => {
   const [modalType, useModalType] = useState('');
 
   if (type !== modalType) {
+    console.log('type', type);
     useModalType(type);
   }
 
@@ -48,7 +50,10 @@ const mapStateToProps = ({ modal, trading }) => ({
   ig: trading.prices.ig,
 });
 
-const mapDispatchToProps = { ...modalActions, ...positionActions };
+const mapDispatchToProps = {
+  ...modalActions,
+  ...positionActions,
+};
 
 export default connect(
   mapStateToProps,
