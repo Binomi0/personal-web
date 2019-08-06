@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
-
+import BiographyContext from '../context/BiographyContext';
 import BiographyView from '../components/BiographyView';
 import styles from '../styles';
 
@@ -10,9 +10,11 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {};
 
+BiographyView.contextType = BiographyContext;
 const StyledBiographyView = withStyles(styles)(BiographyView);
-
-export default connect(
+const ConnectedBiography = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(StyledBiographyView);
+
+export default ConnectedBiography;

@@ -1,41 +1,58 @@
 import React from 'react';
 
 import RouteWithLayout from './RouteWithLayout';
+
 import Home from '../components/Home';
 import MainLayout from '../layouts/MainLayout';
 import TradingLayout from '../layouts/TradingLayout';
 import PortfolioLayout from '../layouts/PortfolioLayout';
 
 const Trading = React.lazy(() => import('./Trading'));
-const Frontend = React.lazy(() => import('./Frontend'));
-const Backend = React.lazy(() => import('./Backend'));
+const Developer = React.lazy(() => import('./Developer'));
 const Portfolio = React.lazy(() => import('./Portfolio'));
+const Biography = React.lazy(() => import('./Biography'));
 
 export default [
-  <RouteWithLayout path="/" exact component={Home} layout={MainLayout} />,
   <RouteWithLayout
+    key="home"
+    path="/"
+    exact
+    component={Home}
+    layout={MainLayout}
+  />,
+  <RouteWithLayout
+    key="trading"
     path="/trading*"
     exact
     component={Trading}
     layout={TradingLayout}
   />,
   <RouteWithLayout
+    key="portfolio"
     path="/portfolio"
     exact
     component={Portfolio}
     layout={PortfolioLayout}
   />,
   <RouteWithLayout
-    path="/frontend"
+    key="biography"
+    path="/biography"
     exact
-    component={Frontend}
+    component={Biography}
     layout={MainLayout}
   />,
   <RouteWithLayout
-    path="/backend"
+    key="developer"
+    path="/developer"
     exact
-    component={Backend}
+    component={Developer}
     layout={MainLayout}
   />,
-  <RouteWithLayout path="/tools" exact component={Home} layout={MainLayout} />,
+  <RouteWithLayout
+    key="tools"
+    path="/tools"
+    exact
+    component={Home}
+    layout={MainLayout}
+  />,
 ];
