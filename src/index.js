@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
+import * as Sentry from '@sentry/browser';
 
 import App from './containers/App';
 import createStore from './redux/create-store';
