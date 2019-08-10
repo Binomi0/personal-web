@@ -15,7 +15,7 @@ import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import KeyboardArrowRigthIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import OnIcon from '@material-ui/icons/Chat';
 import OffIcon from '@material-ui/icons/ChatBubble';
-import animateScrollTo from 'animated-scroll-to';
+// import animateScrollTo from 'animated-scroll-to';
 
 import { StyledChat, StyledItems, StyledName } from '../styles/chat';
 
@@ -46,7 +46,7 @@ class ChatView extends Component {
       lg: 700,
       xl: 900,
     };
-    animateScrollTo(sizes[this.props.width]);
+    // animateScrollTo(sizes[this.props.width]);
   };
 
   handleChange = (e) => {

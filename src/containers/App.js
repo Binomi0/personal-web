@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 
 import RouteWithLayout from '../routes/RouteWithLayout';
 import MainLayout from '../layouts/MainLayout';
-import TradingLayout from '../layouts/TradingLayout';
-import PortfolioLayout from '../layouts/PortfolioLayout';
+// import TradingLayout from '../layouts/TradingLayout';
+// import PortfolioLayout from '../layouts/PortfolioLayout';
 
 import Home from '../components/Home';
-import Trading from '../routes/Trading';
-import Developer from '../routes/Developer';
-import Portfolio from '../routes/Portfolio';
-import Biography from '../routes/Biography';
+// import Trading from '../routes/Trading';
+// import Developer from '../routes/Developer';
+// import Portfolio from '../routes/Portfolio';
+// import Biography from '../routes/Biography';
 import './App.scss';
 
 import { checkUser } from '../reducers/auth';
@@ -26,7 +26,7 @@ const App = memo(function App({ dispatch }) {
     <Router>
       <Suspense fallback={LoadingBar}>
         <RouteWithLayout path="/" exact component={Home} layout={MainLayout} />
-        <RouteWithLayout
+        {/* <RouteWithLayout
           path="/trading*"
           exact
           component={Trading}
@@ -55,7 +55,7 @@ const App = memo(function App({ dispatch }) {
           exact
           component={Biography}
           layout={MainLayout}
-        />
+        /> */}
       </Suspense>
     </Router>
   );
