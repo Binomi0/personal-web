@@ -11,22 +11,7 @@ import './utils/analitycs/google-analitycs';
 import serviceWorker from './utils/serviceWorker/notifications';
 import initIndexedDB from './databases';
 
-const DB_OS_COMPRADORES = 'compradores';
-
-initIndexedDB(1, (request) => {
-  const transaction = request.transaction([DB_OS_COMPRADORES]);
-  const objectStore = transaction.objectStore(DB_OS_COMPRADORES);
-  const comprador = objectStore.get("1");
-  comprador.onerror = function(event) {
-    console.error('error! =>' )
-  // Handle errors!
-  };
-  comprador.onsuccess = function(event) {
-  // Do something with the request.result!
-  console.log("Name for 1  " + comprador.result);
-  };
-
-});
+initIndexedDB(4);
 const store = createStore();
 serviceWorker(store);
 
