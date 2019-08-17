@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import banner from '../../../assets/img/banner-trading.jpg';
 
 class PortfolioItem extends Component {
   state = { expanded: false };
@@ -15,7 +16,9 @@ class PortfolioItem extends Component {
         }}
       >
         <div>
-          <div className="card__avatar" />
+          <div className="card__avatar">
+            <img alt="banner" src={banner} />
+          </div>
           <div className="card__title" />
           <div className="card__description" />
         </div>

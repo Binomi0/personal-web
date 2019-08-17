@@ -12,6 +12,7 @@ const Developer = React.lazy(() => import('./Developer'));
 const Portfolio = React.lazy(() => import('./Portfolio'));
 const Biography = React.lazy(() => import('./Biography'));
 
+
 export default [
   <RouteWithLayout
     key="home"
