@@ -8,7 +8,6 @@ import Contacto from './Contacto';
 import '../containers/App.scss';
 import Analitycs from '../utils/analitycs/google-analitycs';
 
-const DB_OS_COMPRADORES = 'compradores';
 const styles = (theme) => ({
   close: {
     padding: theme.spacing.unit / 2,
@@ -30,24 +29,6 @@ class Home extends Component {
       label: 'Visited HomePage',
       nonInteraction: true,
     });
-    const request = window.maestrosIDB;
-    console.log('[Home] (componentDidMount) maestrosIDB =>', request);
-    request.onsuccess = (event) => {
-      const maestrosIDB = event.target.result;
-
-      //     // const compradores = transaction.objectStore('compradores');
-      try {
-        maestrosIDB
-          .transaction(DB_OS_COMPRADORES)
-          .objectStore(DB_OS_COMPRADORES)
-          .getAll().onsuccess = function(event) {
-          // Do something with the request.result!
-          console.log('compradores ', event.target.result);
-        };
-      } catch (err) {
-        console.error('ojet =>', err);
-      }
-    };
   }
 
   componentWillUpdate(nextProps, nextState) {

@@ -9,9 +9,7 @@ import theme from './styles/theme';
 import './index.scss';
 import './utils/analitycs/google-analitycs';
 import serviceWorker from './utils/serviceWorker/notifications';
-import initIndexedDB from './databases';
 
-initIndexedDB(4);
 const store = createStore();
 serviceWorker(store);
 
