@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { wrapGrid } from 'animate-css-grid';
-import Item from './PortfolioItem';
+import PortFolioItem from './PortfolioItem';
 
 import '../styles/portfolio.scss';
 
@@ -22,7 +22,7 @@ class PortfolioGrid extends Component {
     return (
       <div className={classes} ref={(el) => (this.grid = el)}>
         {[...Array(32).keys()].map((i) => (
-          <Item key={i} />
+          <PortFolioItem key={i} />
         ))}
       </div>
     );
