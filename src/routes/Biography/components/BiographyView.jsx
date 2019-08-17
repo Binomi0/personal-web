@@ -18,6 +18,7 @@ function RenderStyledSection({ context }) {
         tener alrededor de 8 o 9 años y fascinarme un monitor verde con
         letritas...
       </Typography>
+      <Typography color="secondary">To be continued...</Typography>
     </StyledSection>
   );
 }
@@ -50,14 +51,6 @@ export default class BiographyView extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.biography}>
-        <Typography color="secondary">
-          Nací en Madrid el 26 de Marzo de 1978
-        </Typography>
-        <Typography color="secondary" paragraph variant="h6">
-          Desde pequeño me apasionaba la tecnología, recuerdo tener alrededor de
-          8 o 9 años y fascinarme un monitor verde con letritas...
-        </Typography>
-        <Typography color="secondary">To be continued...</Typography>
         <video
           ref={this.videoRef}
           onClick={this.handleVideoClick}
